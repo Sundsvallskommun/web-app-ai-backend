@@ -1,8 +1,9 @@
+import { APIS } from '@/config';
 import { ApiKey } from '@/data-contracts/intric/data-contracts';
 import { HttpException } from '@/exceptions/HttpException';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import { ApiKeyApiResponse } from '@/responses/apikey.response';
-import IntricApiService from '@/services/intric-api.service';
+import ApiService from '@/services/api.service';
 import { logger } from '@/utils/logger';
 import prisma from '@/utils/prisma';
 import adminMiddleware from '@middlewares/admin.middleware';
@@ -15,7 +16,9 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @UseBefore(adminMiddleware)
 @Controller()
 export class AdminApiKeyController {
-  private intricApiService = new IntricApiService();
+  private apiService = new ApiService();
+  private api = APIS.find(api => api.name === 'eneo/sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
 
   @Get('/admin/apikey/:id')
   @OpenAPI({ summary: 'Get apikey for assistant' })
@@ -37,9 +40,9 @@ export class AdminApiKeyController {
         throw new HttpException(403, 'No private api key found');
       }
 
-      const url = `/assistants/${id}/api-keys/`;
+      const url = `${this.basePath}/assistants/${id}/api-keys/`;
 
-      const res = await this.intricApiService.get<ApiKey>({ url, headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<ApiKey>(url, { headers: { 'api-key': apiKey } });
       return response.send({ data: res.data.key, message: 'success' });
     } catch (e) {
       logger.error('Error getting api key for assistant', e);

@@ -11,7 +11,6 @@
     "prisma:new-migrate": "dotenv -e .env.development.local yarn prisma migrate dev",
     "prisma:generate": "prisma generate",
     "generate:contracts": "cross-env NODE_ENV=development ts-node ./src/swagger-typescript-api.ts",
-    "generate:intric": "cross-env NODE_ENV=development ts-node ./src/swagger-typescript-intric-api.ts",
     "build": "tsc && tsc-alias",
     "build:swc": "swc src -d dist --source-maps --copy-files",
     "test": "jest --forceExit --detectOpenHandles",

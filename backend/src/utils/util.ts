@@ -1,4 +1,4 @@
-import { API_BASE_URL, BASE_URL_PREFIX, INTRIC_API_BASE_PATH, INTRIC_API_BASE_URL } from '@config';
+import { API_BASE_URL, BASE_URL_PREFIX } from '@config';
 /**
  * @method isEmpty
  * @param {String | Number | Object} value
@@ -49,9 +49,7 @@ export enum OrgNumberFormat {
   DASH,
 }
 
- 
-const withTrailingSlash = (url: string) => url + '/'; 
-
+const withTrailingSlash = (url: string) => url + '/';
 
 export const formatOrgNr = (orgNr: string, format: OrgNumberFormat = OrgNumberFormat.DASH): string | undefined => {
   const orgNumber = orgNr.replace(/\D/g, '');
@@ -70,9 +68,3 @@ export const isValidUrl = (string: string) => {
   }
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
-
- 
-export const intricApiURL = (...parts: string[]): string => { 
-  const urlParts = [INTRIC_API_BASE_URL, INTRIC_API_BASE_PATH, ...parts]; 
-  return withTrailingSlash(urlParts.map(pathPart => pathPart.replace(/(^\/|\/$)/g, '')).join('/')); 
-}; 
