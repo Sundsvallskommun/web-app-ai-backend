@@ -12,7 +12,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
 import passport from 'passport';
-import { Strategy, VerifiedCallback } from 'passport-saml';
+import { Strategy, VerifiedCallback } from '@node-saml/passport-saml';
 import bodyParser from 'body-parser';
 import { useExpressServer, getMetadataArgsStorage, Redirect } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
@@ -66,16 +66,18 @@ const samlStrategy = new Strategy(
   {
     disableRequestedAuthnContext: true,
     identifierFormat: 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
-    callbackUrl: SAML_CALLBACK_URL,
-    entryPoint: SAML_ENTRY_SSO,
+    callbackUrl: SAML_CALLBACK_URL ?? '',
+    entryPoint: SAML_ENTRY_SSO ?? '',
     // decryptionPvk: SAML_PRIVATE_KEY,
-    privateKey: SAML_PRIVATE_KEY,
+    privateKey: SAML_PRIVATE_KEY ?? '',
     // Identity Provider's public key
-    cert: SAML_IDP_PUBLIC_CERT,
-    issuer: SAML_ISSUER,
+    idpCert: SAML_IDP_PUBLIC_CERT ?? '',
+    issuer: SAML_ISSUER ?? '',
     wantAssertionsSigned: false,
+    wantAuthnResponseSigned: false,
     acceptedClockSkewMs: 1000,
-    logoutCallbackUrl: SAML_LOGOUT_CALLBACK_URL,
+    audience: false,
+    logoutCallbackUrl: SAML_LOGOUT_CALLBACK_URL ?? '',
   },
   async function (profile: Profile, done: VerifiedCallback) {
     if (!profile) {
@@ -86,15 +88,15 @@ const samlStrategy = new Strategy(
     }
 
     const {
-      givenname,
-      givenName,
       surname,
       username,
       citizenIdentifier,
       attributes: { groups },
     } = profile;
 
-    if (!(givenname || givenName) || !surname || !groups || !citizenIdentifier) {
+    const giverName = profile?.givenName ?? profile?.givenname;
+
+    if (!giverName || !surname || !groups || !citizenIdentifier) {
       return done({
         name: 'SAML_MISSING_ATTRIBUTES',
         message: 'Missing profile attributes',
@@ -114,7 +116,7 @@ const samlStrategy = new Strategy(
       const findUser: User = {
         userId: citizenIdentifier,
         username: username,
-        name: `${givenname || givenName} ${surname}`,
+        name: `${giverName} ${surname}`,
         isAdmin: isAdmin,
       };
 
@@ -125,6 +127,9 @@ const samlStrategy = new Strategy(
       }
       done(err);
     }
+  },
+  async function (profile: Profile, done: VerifiedCallback) {
+    return done(null, {});
   },
 );
 
@@ -174,7 +179,7 @@ class App {
 
     this.app.use(
       session({
-        secret: SECRET_KEY,
+        secret: SECRET_KEY ?? '',
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
@@ -365,7 +370,7 @@ class App {
     const storage = getMetadataArgsStorage();
     const spec = routingControllersToSpec(storage, routingControllersOptions, {
       components: {
-        schemas: schemas as { [schema: string]: unknown },
+        schemas: schemas,
         securitySchemes: {
           basicAuth: {
             scheme: 'basic',
