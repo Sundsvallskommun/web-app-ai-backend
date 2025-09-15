@@ -26,7 +26,8 @@ export const localApi = (...parts: string[]): string => {
 
 export const apiURL = (...parts: string[]): string => {
   const urlParts = [API_BASE_URL, ...parts];
-  return urlParts.map(pathPart => pathPart?.replace(/(^\/|\/$)/g, '')).join('/');
+  const trailingSlash = urlParts.at(-1).endsWith('/') ? '/' : '';
+  return urlParts.map(pathPart => pathPart?.replace(/(^\/|\/$)/g, '')).join('/') + trailingSlash;
 };
 
 export const luhnCheck = (str = ''): boolean => {
@@ -48,8 +49,6 @@ export const luhnCheck = (str = ''): boolean => {
 export enum OrgNumberFormat {
   DASH,
 }
-
-const withTrailingSlash = (url: string) => url + '/';
 
 export const formatOrgNr = (orgNr: string, format: OrgNumberFormat = OrgNumberFormat.DASH): string | undefined => {
   const orgNumber = orgNr.replace(/\D/g, '');

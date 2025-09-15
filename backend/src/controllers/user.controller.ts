@@ -23,8 +23,11 @@ export class UserController {
   })
   @ResponseSchema(UserPublic)
   @UseBefore(hashMiddleware)
-  async get_me(@Req() req: Request, @Res() response: Response<UserPublicInterface>): Promise<Response<UserPublicInterface>> {
-    const url = `${this.basePath}/users/me`;
+  async get_me(
+    @Req() req: Request,
+    @Res() response: Response<UserPublicInterface>,
+  ): Promise<Response<UserPublicInterface>> {
+    const url = `${this.basePath}/users/me/`;
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.get<UserPublicInterface>(url, { headers: { 'api-key': apiKey } });

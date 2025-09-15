@@ -51,7 +51,10 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, { headers: { 'api-key': apiKey }, responseType });
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+        headers: { 'api-key': apiKey },
+        responseType,
+      });
       const datastream = res.data;
       datastream.on('data', (buf: Buffer) => {
         return buf;
@@ -95,7 +98,10 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, { headers: { 'api-key': apiKey }, responseType });
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+        headers: { 'api-key': apiKey },
+        responseType,
+      });
       const datastream = res.data;
       datastream.on('data', (buf: Buffer) => {
         return buf;
@@ -131,7 +137,9 @@ export class QueryController {
     const url = `${this.basePath}/assistants/${assistant_id}/sessions/${session_id}/feedback/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error leaving feedback', e);

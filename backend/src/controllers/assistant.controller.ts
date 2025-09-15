@@ -16,7 +16,19 @@ import ApiService from '@/services/api.service';
 import { getApiKey } from '@/services/intric-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
-import { Body, Controller, Delete, Get, HttpError, Param, Post, QueryParam, Req, Res, UseBefore } from 'routing-controllers';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpError,
+  Param,
+  Post,
+  QueryParam,
+  Req,
+  Res,
+  UseBefore,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 
 @UseBefore(applicationModeMiddleware)
@@ -39,7 +51,9 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseAssistantPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<PaginatedResponseAssistantPublicInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error getting assistants: ', e);
@@ -66,7 +80,9 @@ export class AssistantController {
     }
     for (let index = 0; index < ids.length; index++) {
       try {
-        const res = await this.apiService.get<AssistantPublicInterface>(`${url}${ids[index]}`, { headers: { 'api-key': apiKey } });
+        const res = await this.apiService.get<AssistantPublicInterface>(`${url}${ids[index]}`, {
+          headers: { 'api-key': apiKey },
+        });
         if (res) {
           items.push(res.data);
         }
@@ -93,7 +109,7 @@ export class AssistantController {
     @Param('id') id: string,
     @Res() response: Response<AssistantPublicInterface>,
   ): Promise<Response<AssistantPublicInterface>> {
-    const url = `${this.basePath}/assistants/${id}`;
+    const url = `${this.basePath}/assistants/${id}/`;
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.get<AssistantPublicInterface>(url, { headers: { 'api-key': apiKey } });
@@ -161,7 +177,9 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/${id}/sessions/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error getting assistant sessions: ', e);
@@ -181,7 +199,7 @@ export class AssistantController {
     @Param('session_id') session_id: string,
     @Res() response: Response<SessionPublicInterface>,
   ): Promise<Response<SessionPublicInterface>> {
-    const url = `${this.basePath}/assistants/${id}/sessions/${session_id}`;
+    const url = `${this.basePath}/assistants/${id}/sessions/${session_id}/`;
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });

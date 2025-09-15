@@ -36,7 +36,9 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error getting info blobs.', e);

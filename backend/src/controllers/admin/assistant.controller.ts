@@ -12,8 +12,8 @@ import {
   AssistantSetting,
   AssistantSettingApiResponse,
   AssistantSettingsApiResponse,
-  UpdateAssistantSetting,
 } from '../../responses/assistant-setting.response';
+import { CreateAssistantSetting, UpdateAssistantSetting } from '@/dtos/assistant-setting.dto';
 
 @UseBefore(authMiddleWare)
 @UseBefore(adminMiddleware)
@@ -27,7 +27,10 @@ export class AdminAsisstantController {
   async getMany(@Res() res: Response<AssistantSettingsApiResponse>): Promise<Response<AssistantSettingsApiResponse>> {
     try {
       const assistants = await prisma.assistant.findMany();
-      return res.send({ data: assistants.map(assistant => ({ ...assistant, apiKey: maskApiKey(assistant?.apiKey) })), message: 'success' });
+      return res.send({
+        data: assistants.map(assistant => ({ ...assistant, apiKey: maskApiKey(assistant?.apiKey) })),
+        message: 'success',
+      });
     } catch (e) {
       logger.error('Error getting assistant settings', e);
       throw new HttpException(e?.httpCode ?? 404, e?.message ?? 'No assistant settings found');
@@ -39,7 +42,10 @@ export class AdminAsisstantController {
     summary: 'Get a single assistant setting',
   })
   @ResponseSchema(AssistantSettingApiResponse)
-  async getOne(@Param('id') id: number, @Res() res: Response<AssistantSettingApiResponse>): Promise<Response<AssistantSettingApiResponse>> {
+  async getOne(
+    @Param('id') id: number,
+    @Res() res: Response<AssistantSettingApiResponse>,
+  ): Promise<Response<AssistantSettingApiResponse>> {
     try {
       const assistant = await prisma.assistant.findFirst({ where: { id } });
       return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
@@ -54,7 +60,10 @@ export class AdminAsisstantController {
     summary: 'Create new assistant setting',
   })
   @ResponseSchema(AssistantSettingApiResponse)
-  async create(@Body() body: AssistantSetting, @Res() res: Response<AssistantSettingApiResponse>): Promise<Response<AssistantSettingApiResponse>> {
+  async create(
+    @Body() body: CreateAssistantSetting,
+    @Res() res: Response<AssistantSettingApiResponse>,
+  ): Promise<Response<AssistantSettingApiResponse>> {
     try {
       const assistant = await prisma.assistant.create({ data: body });
       return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
@@ -87,7 +96,10 @@ export class AdminAsisstantController {
   @OpenAPI({
     summary: 'Delete assistant',
   })
-  async delete(@Param('id') id: number, @Res() response: Response<ApiResponse<boolean>>): Promise<Response<ApiResponse<boolean>>> {
+  async delete(
+    @Param('id') id: number,
+    @Res() response: Response<ApiResponse<boolean>>,
+  ): Promise<Response<ApiResponse<boolean>>> {
     try {
       await prisma.assistant.delete({
         where: { id },

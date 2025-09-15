@@ -1,13 +1,14 @@
 import { HttpException } from '@/exceptions/HttpException';
 import ApiResponse from '@/interfaces/api-service.interface';
 import adminMiddleware from '@/middlewares/admin.middleware';
-import { HostApiResponse, HostsApiResponse, UpdateHost } from '@/responses/host.response';
+import { HostApiResponse, HostsApiResponse } from '@/responses/host.response';
 import { logger } from '@/utils/logger';
 import prisma from '@/utils/prisma';
 import { Response } from 'express';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseBefore } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import authMiddleWare from '../../middlewares/auth.middleware';
+import { HostDto } from '@/dtos/host.dto';
 
 @UseBefore(authMiddleWare)
 @UseBefore(adminMiddleware)
@@ -48,7 +49,7 @@ export class AdminHostsController {
     summary: 'Creates a new host',
   })
   @ResponseSchema(HostApiResponse)
-  async create(@Body() body: UpdateHost, @Res() res: Response<HostApiResponse>): Promise<Response<HostApiResponse>> {
+  async create(@Body() body: HostDto, @Res() res: Response<HostApiResponse>): Promise<Response<HostApiResponse>> {
     try {
       const data = await prisma.host.create({ data: body });
       return res.send({ data, message: 'success' });
@@ -63,7 +64,11 @@ export class AdminHostsController {
     summary: 'Updates a host',
   })
   @ResponseSchema(HostApiResponse)
-  async update(@Body() body: UpdateHost, @Param('id') id: number, @Res() res: Response<HostApiResponse>): Promise<Response<HostApiResponse>> {
+  async update(
+    @Body() body: HostDto,
+    @Param('id') id: number,
+    @Res() res: Response<HostApiResponse>,
+  ): Promise<Response<HostApiResponse>> {
     try {
       const data = await prisma.host.update({ where: { id }, data: body });
       return res.send({ data, message: 'success' });
@@ -77,7 +82,10 @@ export class AdminHostsController {
   @OpenAPI({
     summary: 'Deletes a host',
   })
-  async delete(@Param('id') id: number, @Res() response: Response<ApiResponse<boolean>>): Promise<Response<ApiResponse<boolean>>> {
+  async delete(
+    @Param('id') id: number,
+    @Res() response: Response<ApiResponse<boolean>>,
+  ): Promise<Response<ApiResponse<boolean>>> {
     try {
       await prisma.host.delete({
         where: { id },

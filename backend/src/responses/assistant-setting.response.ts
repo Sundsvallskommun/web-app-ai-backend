@@ -1,24 +1,16 @@
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsInt, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { AssistantSetting as AssistantSettingInterface } from '../interfaces/assistant.interface';
 import { Type } from 'class-transformer';
 import ApiResponse from '../interfaces/api-service.interface';
 
 export class AssistantSetting implements AssistantSettingInterface {
+  @IsInt()
+  id: number;
   @IsString()
   app: string;
   @IsString()
   assistantId: string;
   @IsString()
-  apiKey: string;
-}
-
-export class UpdateAssistantSetting implements AssistantSettingInterface {
-  @IsString()
-  app: string;
-  @IsString()
-  assistantId: string;
-  @IsString()
-  @IsOptional()
   apiKey: string;
 }
 

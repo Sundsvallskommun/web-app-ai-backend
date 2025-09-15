@@ -12,7 +12,19 @@ import { fileUploadOptions } from '@/utils/fileUploadOptions';
 import { formDataFromMulterFiles } from '@/utils/formDataFromMulterFile';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
-import { Body, Controller, Delete, Get, HttpError, Param, Post, Req, Res, UploadedFile, UseBefore } from 'routing-controllers';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpError,
+  Param,
+  Post,
+  Req,
+  Res,
+  UploadedFile,
+  UseBefore,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 
 @Controller()
@@ -34,7 +46,9 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error getting files', e);
@@ -98,7 +112,7 @@ export class FileController {
   @UseBefore(hashMiddleware)
   async delete_file(@Req() req: Request, @Param('id') id: string, @Res() response: Response): Promise<Response> {
     try {
-      const url = `${this.basePath}/files/${id}`;
+      const url = `${this.basePath}/files/${id}/`;
       const apiKey = await getApiKey(req);
       const res = await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
       if (res) {

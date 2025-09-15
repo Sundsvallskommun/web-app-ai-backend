@@ -12,7 +12,12 @@ import applicationModeMiddleware from '@/middlewares/application-mode.middleware
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
 import { AssistantPublic } from '@/responses/intric/assistant.response';
-import { Applications, PaginatedResponseSpacePublic, PaginatedResponseSpaceSparse, SpacePublic } from '@/responses/intric/space.response';
+import {
+  Applications,
+  PaginatedResponseSpacePublic,
+  PaginatedResponseSpaceSparse,
+  SpacePublic,
+} from '@/responses/intric/space.response';
 import ApiService from '@/services/api.service';
 import { getApiKey } from '@/services/intric-api-key.service';
 import { logger } from '@/utils/logger';
@@ -43,7 +48,9 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       if (personal) {
         try {
           const personal_url = `${this.basePath}/spaces/type/personal/`;
@@ -72,7 +79,10 @@ export class SpaceController {
   })
   @ResponseSchema(SpacePublic)
   @UseBefore(hashMiddleware)
-  async get_personal_space(@Req() req: Request, @Res() response: Response<SpacePublicInterface>): Promise<Response<SpacePublicInterface>> {
+  async get_personal_space(
+    @Req() req: Request,
+    @Res() response: Response<SpacePublicInterface>,
+  ): Promise<Response<SpacePublicInterface>> {
     try {
       const url = `${this.basePath}/spaces/type/personal/`;
       const apiKey = await getApiKey(req);
@@ -106,7 +116,9 @@ export class SpaceController {
 
     for (let index = 0; index < ids.length; index++) {
       try {
-        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}`, { headers: { 'api-key': apiKey } });
+        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}/`, {
+          headers: { 'api-key': apiKey },
+        });
         if (res) {
           spaces.push(res.data);
         }
@@ -135,7 +147,7 @@ export class SpaceController {
     @Res() response: Response<SpacePublicInterface>,
   ): Promise<Response<SpacePublicInterface>> {
     try {
-      const url = `${this.basePath}/spaces/${id}`;
+      const url = `${this.basePath}/spaces/${id}/`;
       const apiKey = await getApiKey(req);
       const res = await this.apiService.get<SpacePublicInterface>(url, { headers: { 'api-key': apiKey } });
 
@@ -159,7 +171,7 @@ export class SpaceController {
     @Res() response: Response<ApplicationsInterface>,
   ): Promise<Response<ApplicationsInterface>> {
     try {
-      const url = `${this.basePath}/spaces/${id}/applications`;
+      const url = `${this.basePath}/spaces/${id}/applications/`;
       const apiKey = await getApiKey(req);
       const res = await this.apiService.get<ApplicationsInterface>(url, { headers: { 'api-key': apiKey } });
 
@@ -185,7 +197,7 @@ export class SpaceController {
     @Res() response: Response<AssistantPublicInterface>,
   ): Promise<Response<AssistantPublicInterface>> {
     try {
-      const url = `${this.basePath}/spaces/${id}/applications/assistants`;
+      const url = `${this.basePath}/spaces/${id}/applications/assistants/`;
       const apiKey = await getApiKey(req);
       const res = await this.apiService.post<AssistantPublicInterface, CreateSpaceAssistantRequest>(url, body, {
         headers: { 'api-key': apiKey },

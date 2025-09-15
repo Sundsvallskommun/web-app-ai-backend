@@ -11,12 +11,28 @@ import applicationModeMiddleware from '@/middlewares/application-mode.middleware
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
 import { AskResponse } from '@/responses/intric/query.response';
-import { CursorPaginatedResponseSessionMetadataPublic, SessionFeedback, SessionPublic } from '@/responses/intric/session.response';
+import {
+  CursorPaginatedResponseSessionMetadataPublic,
+  SessionFeedback,
+  SessionPublic,
+} from '@/responses/intric/session.response';
 import ApiService from '@/services/api.service';
 import { getApiKey } from '@/services/intric-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
-import { Body, Controller, Delete, Get, HttpError, Param, Post, QueryParam, Req, Res, UseBefore } from 'routing-controllers';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpError,
+  Param,
+  Post,
+  QueryParam,
+  Req,
+  Res,
+  UseBefore,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import { Stream } from 'stream';
 
@@ -55,7 +71,10 @@ export class ConversationController {
         });
         return response.send(res.data);
       } else {
-        const res = await this.apiService.post<Stream, ConversationRequest>(url, data, { headers: { 'api-key': apiKey }, responseType });
+        const res = await this.apiService.post<Stream, ConversationRequest>(url, data, {
+          headers: { 'api-key': apiKey },
+          responseType,
+        });
         const datastream = res.data;
         datastream.on('data', (buf: Buffer) => {
           return buf;
@@ -144,7 +163,11 @@ export class ConversationController {
     summary: 'Delete a conversation',
   })
   @UseBefore(applicationModeMiddleware)
-  async delete_conversation(@Req() req: Request, @Param('session_id') session_id: string, @Res() response: Response): Promise<Response> {
+  async delete_conversation(
+    @Req() req: Request,
+    @Param('session_id') session_id: string,
+    @Res() response: Response,
+  ): Promise<Response> {
     const url = `${this.basePath}/conversations/${session_id}/`;
     const apiKey = await getApiKey(req);
     try {

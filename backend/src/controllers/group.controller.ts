@@ -13,7 +13,11 @@ import applicationModeMiddleware from '@/middlewares/application-mode.middleware
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
 import { CollectionPublic } from '@/responses/intric/group.response';
-import { JobPublic, PaginatedResponseInfoBlobPublic, PaginatedResponseInfoBlobPublicNoText } from '@/responses/intric/info-blob.response';
+import {
+  JobPublic,
+  PaginatedResponseInfoBlobPublic,
+  PaginatedResponseInfoBlobPublicNoText,
+} from '@/responses/intric/info-blob.response';
 import ApiService from '@/services/api.service';
 import { getApiKey } from '@/services/intric-api-key.service';
 import { fileUploadOptions } from '@/utils/fileUploadOptions';
@@ -21,7 +25,19 @@ import { formDataFromMulterFiles } from '@/utils/formDataFromMulterFile';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import FormData from 'form-data';
-import { Body, Controller, Delete, Get, HttpError, Param, Post, Req, Res, UploadedFiles, UseBefore } from 'routing-controllers';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpError,
+  Param,
+  Post,
+  Req,
+  Res,
+  UploadedFiles,
+  UseBefore,
+} from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 
 @UseBefore(applicationModeMiddleware)
@@ -110,7 +126,9 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+        headers: { 'api-key': apiKey },
+      });
       return response.send(res.data);
     } catch (e) {
       logger.error('Error getting group info blobs:', e);
@@ -134,9 +152,13 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<PaginatedResponseInfoBlobPublicInterface, InfoBlobUpsertRequest>(url, body, {
-        headers: { 'api-key': apiKey },
-      });
+      const res = await this.apiService.post<PaginatedResponseInfoBlobPublicInterface, InfoBlobUpsertRequest>(
+        url,
+        body,
+        {
+          headers: { 'api-key': apiKey },
+        },
+      );
       return response.send(res.data);
     } catch (e) {
       logger.error('Error adding group info blobs:', e);

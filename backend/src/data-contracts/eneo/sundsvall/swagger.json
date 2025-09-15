@@ -1,1 +1,1 @@
-{"code":"404","type":"Status report","message":"Runtime Error","description":"No matching resource found for given API Request"}
+{"code":"0","type":"Status report","message":"Runtime Error","description":"Error while performing the call operation"}

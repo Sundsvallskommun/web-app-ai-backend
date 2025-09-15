@@ -11,11 +11,6 @@ export class Host implements HostType {
   host: string;
 }
 
-export class UpdateHost implements HostType {
-  @IsString()
-  host: string;
-}
-
 export class HostsApiResponse implements ApiResponse<HostType[]> {
   @ValidateNested({ each: true })
   @Type(() => Host)

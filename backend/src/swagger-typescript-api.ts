@@ -26,12 +26,14 @@ const main = async () => {
     }
     if (api.name.startsWith('eneo')) {
       console.log('ENEO');
-      await exec(`curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/openapi.json`, () =>
-        console.log(`- ${api.name} ${api.version}`),
+      await exec(
+        `curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/openapi.json`,
+        () => console.log(`- ${api.name} ${api.version}`),
       );
     } else {
-      await exec(`curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/api-docs`, () =>
-        console.log(`- ${api.name} ${api.version}`),
+      await exec(
+        `curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/api-docs`,
+        () => console.log(`- ${api.name} ${api.version}`),
       );
     }
     await exec(
