@@ -114,7 +114,7 @@ export interface AppInTemplatePublic {
   name: string;
   completion_model: CompletionModelPublicAppTemplate | null;
   /** Completion Model Kwargs */
-  completion_model_kwargs: object;
+  completion_model_kwargs: Record<string, any>;
   prompt: PromptPublicAppTemplate | null;
   /** Input Description */
   input_description: string | null;
@@ -335,7 +335,7 @@ export interface AskAssistant {
   session_id?: string | null;
   /**
    * Files
-   * @maxItems 5
+   * @maxItems 1
    * @default []
    */
   files?: ModelId[];
@@ -456,7 +456,7 @@ export interface AssistantInTemplatePublic {
    * Completion Model Kwargs
    * @default {}
    */
-  completion_model_kwargs?: object;
+  completion_model_kwargs?: Record<string, any>;
   prompt: PromptPublicAssistantTemplate | null;
 }
 
@@ -539,7 +539,7 @@ export interface AssistantPublic {
    * Metadata Json
    * Metadata for the assistant
    */
-  metadata_json?: object | null;
+  metadata_json?: Record<string, any> | null;
 }
 
 /** AssistantSparse */
@@ -583,7 +583,7 @@ export interface AssistantSparse {
    * Metadata Json
    * Metadata for the assistant
    */
-  metadata_json?: object | null;
+  metadata_json?: Record<string, any> | null;
   type: AssistantType;
 }
 
@@ -783,6 +783,8 @@ export interface CompletionModel {
   reasoning: boolean;
   /** Base Url */
   base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -834,6 +836,8 @@ export interface CompletionModelPublic {
   reasoning: boolean;
   /** Base Url */
   base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -914,6 +918,8 @@ export interface CompletionModelSecurityStatus {
   reasoning: boolean;
   /** Base Url */
   base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -978,6 +984,8 @@ export interface CompletionModelSparse {
   reasoning: boolean;
   /** Base Url */
   base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
 }
 
 /** CompletionModelUpdateFlags */
@@ -1030,7 +1038,7 @@ export interface ConversationRequest {
   group_chat_id?: string | null;
   /**
    * Files
-   * @maxItems 5
+   * @maxItems 1
    * @default []
    */
   files?: ModelId[];
@@ -1138,7 +1146,7 @@ export interface CreateSpaceServiceResponse {
   /** Output Format */
   output_format?: CreateSpaceServiceResponseOutputFormatEnum | null;
   /** Json Schema */
-  json_schema?: object | null;
+  json_schema?: Record<string, any> | null;
   /** Groups */
   groups: GroupPublicWithMetadata[];
   completion_model: CompletionModelSparse | null;
@@ -1264,7 +1272,7 @@ export interface DefaultAssistant {
    * Metadata Json
    * Metadata for the assistant
    */
-  metadata_json?: object | null;
+  metadata_json?: Record<string, any> | null;
 }
 
 /** DeleteResponse */
@@ -1309,6 +1317,8 @@ export interface EmbeddingModelLegacy {
   /** Description */
   description?: string | null;
   org?: ModelOrg | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -1392,6 +1402,8 @@ export interface EmbeddingModelPublicLegacy {
   /** Description */
   description?: string | null;
   org?: ModelOrg | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -1480,47 +1492,6 @@ export interface EmbeddingModelUpdateFlags {
    */
   is_org_enabled?: boolean | null;
 }
-
-/**
- * Enum
- * Create a collection of name/value pairs.
- *
- * Example enumeration:
- *
- * >>> class Color(Enum):
- * ...     RED = 1
- * ...     BLUE = 2
- * ...     GREEN = 3
- *
- * Access them by:
- *
- * - attribute access::
- *
- * >>> Color.RED
- * <Color.RED: 1>
- *
- * - value lookup:
- *
- * >>> Color(1)
- * <Color.RED: 1>
- *
- * - name lookup:
- *
- * >>> Color['RED']
- * <Color.RED: 1>
- *
- * Enumerations can be iterated over, and know how many members they have:
- *
- * >>> len(Color)
- * 3
- *
- * >>> list(Color)
- * [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
- *
- * Methods can be added to enumerations, and members can have their own
- * attributes -- see the documentation for details.
- */
-export type Enum = any;
 
 /** ErrorCodes */
 export enum ErrorCodes {
@@ -1708,7 +1679,7 @@ export interface GroupChatPublic {
   /** Permissions */
   permissions: ResourcePermission[];
   /** Metadata Json */
-  metadata_json: object | null;
+  metadata_json: Record<string, any> | null;
 }
 
 /** GroupChatSparse */
@@ -1745,7 +1716,7 @@ export interface GroupChatSparse {
   /** Type */
   type: 'group-chat';
   /** Metadata Json */
-  metadata_json: object | null;
+  metadata_json: Record<string, any> | null;
 }
 
 /** GroupChatTools */
@@ -1785,7 +1756,7 @@ export interface GroupChatUpdateSchema {
    * Metadata for the group chat.
    * @default "NOT_PROVIDED"
    */
-  metadata_json?: object | null;
+  metadata_json?: Record<string, any> | null;
 }
 
 /** GroupChatUpdateTools */
@@ -1990,16 +1961,6 @@ export interface Integration {
   integration_type: IntegrationType;
 }
 
-/** IntegrationCreate */
-export interface IntegrationCreate {
-  /** Name */
-  name: string;
-  /** Description */
-  description: string;
-  /** Integration Type */
-  integration_type: IntegrationCreateIntegrationTypeEnum;
-}
-
 /** IntegrationKnowledgeMetaData */
 export interface IntegrationKnowledgeMetaData {
   /** Size */
@@ -2164,7 +2125,7 @@ export interface LoggingDetailsPublic {
   /** Context */
   context?: string | null;
   /** Model Kwargs */
-  model_kwargs: object;
+  model_kwargs: Record<string, any>;
   /** Json Body */
   json_body: any;
 }
@@ -2261,6 +2222,18 @@ export interface ModelKwargs {
   temperature?: number | null;
   /** Top P */
   top_p?: number | null;
+  /** Reasoning Effort */
+  reasoning_effort?: string | null;
+  /** Verbosity */
+  verbosity?: string | null;
+  /** Response Format */
+  response_format?: Record<string, any> | null;
+  /** Presence Penalty */
+  presence_penalty?: number | null;
+  /** Frequency Penalty */
+  frequency_penalty?: number | null;
+  /** Top K */
+  top_k?: number | null;
 }
 
 /** ModelOrg */
@@ -2272,6 +2245,7 @@ export enum ModelOrg {
   Mistral = 'Mistral',
   KBLab = 'KBLab',
   Google = 'Google',
+  Berget = 'Berget',
 }
 
 /** ModelStability */
@@ -3029,7 +3003,7 @@ export interface PartialAssistantUpdatePublic {
    * Metadata Json
    * Metadata for the assistant
    */
-  metadata_json?: object | null;
+  metadata_json?: Record<string, any> | null;
 }
 
 /** PartialPropUserUpdate */
@@ -3043,7 +3017,7 @@ export interface PartialServiceUpdatePublic {
   /** Output Format */
   output_format?: PartialServiceUpdatePublicOutputFormatEnum | null;
   /** Json Schema */
-  json_schema?: object | null;
+  json_schema?: Record<string, any> | null;
   /** Name */
   name?: string | null;
   /** Prompt */
@@ -3203,6 +3177,12 @@ export interface PromptSparse {
   user: UserSparse;
 }
 
+/** PromptUpdateRequest */
+export interface PromptUpdateRequest {
+  /** Description */
+  description?: string | null;
+}
+
 /** PropUserInvite */
 export interface PropUserInvite {
   predefined_role?: ModelId | null;
@@ -3326,7 +3306,7 @@ export interface RunService {
   input: string;
   /**
    * Files
-   * @maxItems 5
+   * @maxItems 1
    * @default []
    */
   files?: ModelId[];
@@ -3495,7 +3475,7 @@ export interface ServiceCreatePublic {
   /** Output Format */
   output_format?: ServiceCreatePublicOutputFormatEnum | null;
   /** Json Schema */
-  json_schema?: object | null;
+  json_schema?: Record<string, any> | null;
   /** Name */
   name: string;
   /** Prompt */
@@ -3513,7 +3493,7 @@ export interface ServiceCreatePublic {
 /** ServiceOutput */
 export interface ServiceOutput {
   /** Output */
-  output: object | any[] | string | boolean;
+  output: Record<string, any> | any[] | string | boolean;
   /**
    * Files
    * @default []
@@ -3531,7 +3511,7 @@ export interface ServicePublicWithUser {
   /** Output Format */
   output_format?: ServicePublicWithUserOutputFormatEnum | null;
   /** Json Schema */
-  json_schema?: object | null;
+  json_schema?: Record<string, any> | null;
   /** Created At */
   created_at?: string | null;
   /** Updated At */
@@ -3564,7 +3544,7 @@ export interface ServiceRun {
   /** Input */
   input: string;
   /** Output */
-  output: object | any[] | string;
+  output: Record<string, any> | any[] | string;
   completion_model: CompletionModelPublic;
   /** References */
   references: InfoBlobPublic[];
@@ -3584,7 +3564,7 @@ export interface ServiceSparse {
   /** Output Format */
   output_format?: ServiceSparseOutputFormatEnum | null;
   /** Json Schema */
-  json_schema?: object | null;
+  json_schema?: Record<string, any> | null;
   /** Name */
   name: string;
   /** Prompt */
@@ -3668,18 +3648,7 @@ export interface SettingsPublic {
    * Chatbot Widget
    * @default {}
    */
-  chatbot_widget?: object;
-}
-
-/** SignUpRequest */
-export interface SignUpRequest {
-  /** Tenant Name */
-  tenant_name: string;
-  /**
-   * User Email
-   * @format email
-   */
-  user_email: string;
+  chatbot_widget?: Record<string, any>;
 }
 
 /** SignedURLRequest */
@@ -4313,25 +4282,34 @@ export interface UseTools {
 export interface UserAddAdmin {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
-  /** Password */
+  /**
+   * Password
+   * User password (minimum 7 characters)
+   */
   password?: string | null;
   /**
    * Quota Limit
-   * Size in bytes
+   * Storage limit in bytes (minimum 1000 bytes = 1KB)
    */
   quota_limit?: number | null;
   /**
    * Roles
+   * List of custom role IDs to assign to the user
    * @default []
    */
   roles?: ModelId[];
   /**
    * Predefined Roles
+   * List of predefined role IDs to assign to the user
    * @default []
    */
   predefined_roles?: ModelId[];
@@ -4341,25 +4319,34 @@ export interface UserAddAdmin {
 export interface UserAddSuperAdmin {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
-  /** Password */
+  /**
+   * Password
+   * User password (minimum 7 characters)
+   */
   password?: string | null;
   /**
    * Quota Limit
-   * Size in bytes
+   * Storage limit in bytes (minimum 1000 bytes = 1KB)
    */
   quota_limit?: number | null;
   /**
    * Roles
+   * List of custom role IDs to assign to the user
    * @default []
    */
   roles?: ModelId[];
   /**
    * Predefined Roles
+   * List of predefined role IDs to assign to the user
    * @default []
    */
   predefined_roles?: ModelId[];
@@ -4374,10 +4361,14 @@ export interface UserAddSuperAdmin {
 export interface UserAdminView {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /** Created At */
   created_at?: string | null;
@@ -4414,10 +4405,14 @@ export interface UserAdminView {
 export interface UserCreated {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /**
    * Id
@@ -4477,6 +4472,11 @@ export interface UserCreated {
    * @default 0
    */
   quota_used?: number;
+  /**
+   * Deleted At
+   * Timestamp when user was soft-deleted (null for active users)
+   */
+  deleted_at?: string | null;
   access_token: AccessToken | null;
   /** Modules */
   modules: string[];
@@ -4496,10 +4496,14 @@ export interface UserCreated {
 export interface UserCreatedAdminView {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /** Created At */
   created_at?: string | null;
@@ -4531,6 +4535,34 @@ export interface UserCreatedAdminView {
   /** User Groups */
   user_groups: UserGroupRead[];
   api_key: ApiKey;
+}
+
+/**
+ * UserDeletedListItem
+ * User information for deleted users list operations
+ */
+export interface UserDeletedListItem {
+  /**
+   * Username
+   * User's unique username
+   */
+  username: string;
+  /**
+   * Email
+   * User's email address
+   */
+  email: string;
+  /**
+   * State
+   * User's current state (always 'deleted' for this list)
+   */
+  state: string;
+  /**
+   * Deleted At
+   * When the user was deleted (for external tracking)
+   * @format date-time
+   */
+  deleted_at: string;
 }
 
 /** UserGroupCreateRequest */
@@ -4604,10 +4636,14 @@ export interface UserGroupUpdateRequest {
 export interface UserInDB {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /**
    * Id
@@ -4667,6 +4703,11 @@ export interface UserInDB {
    * @default 0
    */
   quota_used?: number;
+  /**
+   * Deleted At
+   * Timestamp when user was soft-deleted (null for active users)
+   */
+  deleted_at?: string | null;
   /** Modules */
   modules: string[];
   /**
@@ -4717,10 +4758,14 @@ export interface UserProvision {
 export interface UserPublic {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /** Created At */
   created_at?: string | null;
@@ -4752,10 +4797,14 @@ export interface UserPublic {
 export interface UserPublicBase {
   /**
    * Email
+   * Valid email address
    * @format email
    */
   email: string;
-  /** Username */
+  /**
+   * Username
+   * Unique username (optional, will use email prefix if not provided)
+   */
   username?: string | null;
   /** Created At */
   created_at?: string | null;
@@ -4771,6 +4820,18 @@ export interface UserPublicBase {
    * @default 0
    */
   quota_used?: number;
+}
+
+/**
+ * UserSortBy
+ * Enum for user token usage sorting options
+ */
+export enum UserSortBy {
+  TotalTokens = 'total_tokens',
+  Username = 'username',
+  InputTokens = 'input_tokens',
+  OutputTokens = 'output_tokens',
+  Requests = 'requests',
 }
 
 /** UserSparse */
@@ -4801,23 +4862,157 @@ export enum UserState {
   Deleted = 'deleted',
 }
 
+/**
+ * UserStateListItem
+ * Minimal user information for state-based list operations
+ */
+export interface UserStateListItem {
+  /**
+   * Username
+   * User's unique username
+   */
+  username: string;
+  /**
+   * Email
+   * User's email address
+   */
+  email: string;
+  /**
+   * State
+   * User's current state
+   */
+  state: string;
+  /**
+   * State Changed At
+   * When the user state was last changed
+   * @format date-time
+   */
+  state_changed_at: string;
+}
+
+/** UserTokenUsage */
+export interface UserTokenUsage {
+  /**
+   * User Id
+   * @format uuid
+   */
+  user_id: string;
+  /** Username */
+  username: string;
+  /** Email */
+  email: string;
+  /**
+   * Total Input Tokens
+   * Total input tokens used by this user
+   */
+  total_input_tokens: number;
+  /**
+   * Total Output Tokens
+   * Total output tokens used by this user
+   */
+  total_output_tokens: number;
+  /**
+   * Total Tokens
+   * Total tokens (input + output)
+   */
+  total_tokens: number;
+  /**
+   * Total Requests
+   * Total number of requests made by this user
+   */
+  total_requests: number;
+  /**
+   * Models Used
+   * Models used by this user with their usage
+   */
+  models_used: ModelUsage[];
+}
+
+/** UserTokenUsageSummary */
+export interface UserTokenUsageSummary {
+  /**
+   * Users
+   * List of users with their token usage
+   */
+  users: UserTokenUsage[];
+  /**
+   * Start Date
+   * @format date-time
+   */
+  start_date: string;
+  /**
+   * End Date
+   * @format date-time
+   */
+  end_date: string;
+  /**
+   * Total Users
+   * Total number of users with token usage
+   */
+  total_users: number;
+  /**
+   * Total Input Tokens
+   * Total input tokens across all users
+   */
+  total_input_tokens: number;
+  /**
+   * Total Output Tokens
+   * Total output tokens across all users
+   */
+  total_output_tokens: number;
+  /**
+   * Total Tokens
+   * Total tokens across all users
+   */
+  total_tokens: number;
+  /**
+   * Total Requests
+   * Total requests across all users
+   */
+  total_requests: number;
+}
+
+/**
+ * UserTokenUsageSummaryDetail
+ * Response model for single user detail endpoint
+ */
+export interface UserTokenUsageSummaryDetail {
+  user: UserTokenUsage;
+}
+
 /** UserUpdatePublic */
 export interface UserUpdatePublic {
-  /** Email */
+  /**
+   * Email
+   * New email address (must be unique within tenant)
+   */
   email?: string | null;
-  /** Username */
+  /**
+   * Username
+   * Username cannot be updated after creation
+   */
   username?: string | null;
-  /** Password */
+  /**
+   * Password
+   * New password (minimum 7 characters)
+   */
   password?: string | null;
   /**
    * Quota Limit
-   * Size in bytes
+   * New storage limit in bytes (minimum 1000 bytes = 1KB)
    */
   quota_limit?: number | null;
-  /** Roles */
+  /**
+   * Roles
+   * List of custom role IDs to assign (replaces existing roles)
+   */
   roles?: ModelId[] | null;
-  /** Predefined Roles */
+  /**
+   * Predefined Roles
+   * List of predefined role IDs to assign (replaces existing predefined roles)
+   */
   predefined_roles?: ModelId[];
+  /** User state (invited/active/inactive) */
   state?: UserState | null;
 }
 
@@ -5015,96 +5210,14 @@ export interface IntricWebsitesPresentationWebsiteModelsCrawlRunPublic {
   finished_at: string | null;
 }
 
-/** WsOutgoingWebSocketMessage */
-export interface WsOutgoingWebSocketMessage {
-  type: any;
-  /** @default null */
-  data?: null;
-}
-
-/** WsAppRunUpdate */
-export interface WsAppRunUpdate {
-  /**
-   * Id
-   * @format uuid
-   */
-  id: string;
-  status: any;
-  /**
-   * App Id
-   * @default null
-   */
-  app_id?: string | null;
-  /** @default null */
-  space?: null;
-}
-
-/** SSEText */
-export interface SSEText {
-  /**
-   * Session Id
-   * @format uuid
-   */
-  session_id: string;
-  /** Answer */
-  answer: string;
-  /** References */
-  references: any[];
-}
-
-/** SSEIntricEvent */
-export interface SSEIntricEvent {
-  /**
-   * Session Id
-   * @format uuid
-   */
-  session_id: string;
-  intric_event_type: any;
-}
-
-/** SSEFiles */
-export interface SSEFiles {
-  /**
-   * Session Id
-   * @format uuid
-   */
-  session_id: string;
-  /** Generated Files */
-  generated_files: any[];
-}
-
-/** SSEFirstChunk */
-export interface SSEFirstChunk {
-  /**
-   * Session Id
-   * @format uuid
-   */
-  session_id: string;
-  /** Question */
-  question: string;
-  /** Answer */
-  answer: string;
-  /** Files */
-  files: any[];
-  /** Generated Files */
-  generated_files: any[];
-  /** References */
-  references: any[];
-  tools: any;
-  /** Web Search References */
-  web_search_references: any[];
+export enum IntricEventType {
+  GeneratingImage = 'generating_image',
 }
 
 export enum CreateSpaceServiceResponseOutputFormatEnum {
   Json = 'json',
   List = 'list',
   Boolean = 'boolean',
-}
-
-/** Integration Type */
-export enum IntegrationCreateIntegrationTypeEnum {
-  Confluence = 'confluence',
-  Sharepoint = 'sharepoint',
 }
 
 /** Integration Type */

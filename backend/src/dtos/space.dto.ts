@@ -3,7 +3,7 @@ import {
   TemplateCreate as TemplateCreateInterface,
   AdditionalField as AdditionalFieldInterface,
   WizardType,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsEnum, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';

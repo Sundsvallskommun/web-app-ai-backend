@@ -8,7 +8,7 @@ import {
   IntegrationKnowledgeMetaData as IntegrationKnowledgeMetaDataInterface,
   IntegrationKnowledgePublicIntegrationTypeEnum,
   PaginatedPermissionsIntegrationKnowledgePublic as PaginatedPermissionsIntegrationKnowledgePublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { PaginatedPermissionsCollectionPublic } from './group.response';

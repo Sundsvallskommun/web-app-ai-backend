@@ -3,14 +3,14 @@ import {
   InfoBlobPublic as InfoBlobPublicInterface,
   InfoBlobUpdatePublic,
   PaginatedResponseInfoBlobPublicNoText as PaginatedResponseInfoBlobPublicNoTextInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { UpdateInfoBlobDto } from '@/dtos/info-blob.dto';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
-import { InfoBlobPublic, PaginatedResponseInfoBlobPublicNoText } from '@/responses/intric/info-blob.response';
+import { InfoBlobPublic, PaginatedResponseInfoBlobPublicNoText } from '@/responses/eneo/info-blob.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import { Body, Controller, Delete, Get, HttpError, Param, Post, Req, Res, UseBefore } from 'routing-controllers';
@@ -21,8 +21,8 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class InfoBlobController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Get('/info-blobs')
   @OpenAPI({

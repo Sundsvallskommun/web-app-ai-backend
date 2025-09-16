@@ -1,6 +1,6 @@
 import {
   CrawlType,
-  IntricWebsitesPresentationWebsiteModelsCrawlRunPublic as IntricWebsitesPresentationWebsiteModelsCrawlRunPublicInterface,
+  EneoWebsitesPresentationWebsiteModelsCrawlRunPublic as EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface,
   PaginatedPermissionsWebsitePublic as PaginatedPermissionsWebsitePublicInterface,
   ResourcePermission,
   Status,
@@ -8,16 +8,16 @@ import {
   WebsiteMetadata as WebsiteMetadataInterface,
   WebsitePublic as WebsitePublicInterface,
   EmbeddingModelPublic as EmbeddingModelPublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DatesAndId, PaginatedPermissionsDefaults } from './common';
 import { EmbeddingModelPublic } from './models.response';
 
-export class IntricWebsitesPresentationWebsiteModelsCrawlRunPublic
+export class EneoWebsitesPresentationWebsiteModelsCrawlRunPublic
   extends DatesAndId
-  implements IntricWebsitesPresentationWebsiteModelsCrawlRunPublicInterface
+  implements EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface
 {
   @IsNumber()
   @IsNullable()
@@ -63,9 +63,9 @@ export class WebsitePublic extends DatesAndId implements WebsitePublicInterface 
   @IsEnum(UpdateInterval)
   update_interval: UpdateInterval;
   @ValidateNested()
-  @Type(() => IntricWebsitesPresentationWebsiteModelsCrawlRunPublic)
+  @Type(() => EneoWebsitesPresentationWebsiteModelsCrawlRunPublic)
   @IsNullable()
-  latest_crawl: IntricWebsitesPresentationWebsiteModelsCrawlRunPublicInterface;
+  latest_crawl: EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface;
   @ValidateNested()
   @Type(() => EmbeddingModelPublic)
   embedding_model: EmbeddingModelPublicInterface;
@@ -74,7 +74,10 @@ export class WebsitePublic extends DatesAndId implements WebsitePublicInterface 
   metadata: WebsiteMetadataInterface;
 }
 
-export class PaginatedPermissionsWebsitePublic extends PaginatedPermissionsDefaults implements PaginatedPermissionsWebsitePublicInterface {
+export class PaginatedPermissionsWebsitePublic
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsWebsitePublicInterface
+{
   @ValidateNested({ each: true })
   @Type(() => WebsitePublic)
   items: WebsitePublicInterface[];

@@ -5,7 +5,7 @@ import {
   Permission,
   PredefinedRolePublic as PredefinedRolePublicInterface,
   UserGroupRead as UserGroupReadInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { DatesAndId } from './common';
 import { IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { IsNullable } from '@/utils/custom-validation-classes';

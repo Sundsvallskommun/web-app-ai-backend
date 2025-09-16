@@ -8,11 +8,17 @@ import {
   SessionMetadataPublic as SessionMetadataPublicInterface,
   SessionPublic as SessionPublicInterface,
   CompletionModel as CompletionModelInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { DatesAndId, UseTools, UseToolsInterface, WebSearchResultPublic, WebSearchResultPublicInterface } from './common';
+import {
+  DatesAndId,
+  UseTools,
+  UseToolsInterface,
+  WebSearchResultPublic,
+  WebSearchResultPublicInterface,
+} from './common';
 import { InfoBlobPublicNoText } from './info-blob.response';
 import { FilePublic } from './file.response';
 import { CompletionModel } from './models.response';
@@ -22,7 +28,9 @@ class SessionMetadataPublic extends DatesAndId implements SessionMetadataPublicI
   name: string;
 }
 
-export class CursorPaginatedResponseSessionMetadataPublic implements CursorPaginatedResponseSessionMetadataPublicInterface {
+export class CursorPaginatedResponseSessionMetadataPublic
+  implements CursorPaginatedResponseSessionMetadataPublicInterface
+{
   @ValidateNested({ each: true })
   @Type(() => SessionMetadataPublic)
   items: SessionMetadataPublicInterface[];

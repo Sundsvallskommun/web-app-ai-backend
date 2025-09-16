@@ -1,4 +1,4 @@
-import { INTRIC_SALT } from '@/config';
+import { ENEO_SALT } from '@/config';
 import { logger } from '@/utils/logger';
 import 'crypto';
 import { createHash, createHmac } from 'crypto';
@@ -20,7 +20,7 @@ export const verifyHash = (user: string, assistant_id: string, app: string, hash
     logger.error('Hash value missing');
     return false;
   }
-  const salt = INTRIC_SALT;
+  const salt = ENEO_SALT;
   const input = `${user}${assistant_id}${app}${salt}`;
   console.log('Using input:');
   console.log(input);

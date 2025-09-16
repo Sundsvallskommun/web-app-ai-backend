@@ -1,10 +1,10 @@
 import { APIS } from '@/config';
-import { UserPublic as UserPublicInterface } from '@/data-contracts/intric/data-contracts';
+import { UserPublic as UserPublicInterface } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
-import { UserPublic } from '@/responses/intric/user.response';
+import { UserPublic } from '@/responses/eneo/user.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import { Controller, Get, HttpError, Req, Res, UseBefore } from 'routing-controllers';
@@ -14,12 +14,12 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class UserController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Get('/users/me')
   @OpenAPI({
-    summary: 'Get my user from Intric',
+    summary: 'Get my user from Eneo',
   })
   @ResponseSchema(UserPublic)
   @UseBefore(hashMiddleware)

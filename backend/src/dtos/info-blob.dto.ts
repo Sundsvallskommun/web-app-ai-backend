@@ -1,4 +1,9 @@
-import { InfoBlobAddPublic, InfoBlobMetadataUpsertPublic, InfoBlobUpdatePublic, InfoBlobUpsertRequest } from '@/data-contracts/intric/data-contracts';
+import {
+  InfoBlobAddPublic,
+  InfoBlobMetadataUpsertPublic,
+  InfoBlobUpdatePublic,
+  InfoBlobUpsertRequest,
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';

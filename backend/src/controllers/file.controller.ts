@@ -2,12 +2,12 @@ import { APIS } from '@/config';
 import {
   FilePublic as FilePublicInterface,
   PaginatedResponseFilePublic as PaginatedResponseFilePublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { UploadFileDto } from '@/dtos/file.dto';
 import hashMiddleware from '@/middlewares/hash.middleware';
-import { FilePublic, PaginatedResponseFilePublic } from '@/responses/intric/file.response';
+import { FilePublic, PaginatedResponseFilePublic } from '@/responses/eneo/file.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { fileUploadOptions } from '@/utils/fileUploadOptions';
 import { formDataFromMulterFiles } from '@/utils/formDataFromMulterFile';
 import { logger } from '@/utils/logger';
@@ -30,8 +30,8 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class FileController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Get('/files')
   @OpenAPI({

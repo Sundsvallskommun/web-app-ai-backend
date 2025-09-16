@@ -5,7 +5,7 @@ import {
   InfoBlobAskAssistantPublic as InfoBlobAskAssistantPublicInterface,
   InfoBlobMetadata as InfoBlobMetadataInterface,
   UseTools as UseToolsInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';

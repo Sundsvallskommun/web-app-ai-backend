@@ -4,7 +4,7 @@ import {
   FileRestrictions as FileRestrictionsInterface,
   Limit as LimitInterface,
   PaginatedResponseFilePublic as PaginatedResponseFilePublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';

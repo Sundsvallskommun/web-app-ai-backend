@@ -5,21 +5,21 @@ import {
   CreateSpaceAssistantRequest,
   PaginatedResponseSpaceSparse as PaginatedResponseSpaceSparseInterface,
   SpacePublic as SpacePublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { CreateSpaceAssistantDto } from '@/dtos/space.dto';
 import { PaginatedResponseSpacePublicInterface } from '@/interfaces/space.interface';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
-import { AssistantPublic } from '@/responses/intric/assistant.response';
+import { AssistantPublic } from '@/responses/eneo/assistant.response';
 import {
   Applications,
   PaginatedResponseSpacePublic,
   PaginatedResponseSpaceSparse,
   SpacePublic,
-} from '@/responses/intric/space.response';
+} from '@/responses/eneo/space.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import { Body, Controller, Get, HttpError, Param, Post, QueryParam, Req, Res, UseBefore } from 'routing-controllers';
@@ -29,8 +29,8 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class SpaceController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Get('/spaces')
   @OpenAPI({

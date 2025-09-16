@@ -3,7 +3,7 @@ import {
   ResourcePermission,
   ServiceSparse as ServiceSparseInterface,
   ServiceSparseOutputFormatEnum,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { DatesAndId, ModelKwargs } from './common';
 import { IsEnum, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { IsNullable } from '@/utils/custom-validation-classes';

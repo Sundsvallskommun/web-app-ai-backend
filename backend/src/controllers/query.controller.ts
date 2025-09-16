@@ -4,14 +4,14 @@ import {
   AskResponse as AskResponseInterface,
   SessionFeedback as SessionFeedbackInterface,
   SessionPublic,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { HttpException } from '@/exceptions/HttpException';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
-import { AskResponse } from '@/responses/intric/query.response';
-import { SessionFeedback } from '@/responses/intric/session.response';
+import { AskResponse } from '@/responses/eneo/query.response';
+import { SessionFeedback } from '@/responses/eneo/session.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import { Body, Controller, HttpError, Param, Post, QueryParam, Req, Res, UseBefore } from 'routing-controllers';
@@ -21,8 +21,8 @@ import { Stream } from 'stream';
 @Controller()
 export class QueryController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Post('/assistants/:assistant_id/sessions')
   @OpenAPI({
@@ -37,7 +37,7 @@ export class QueryController {
     @Body() body: Pick<AskAssistant, 'question' | 'files'> & { body?: string },
     @Res() response: Response<AskResponseInterface | Stream>,
   ): Promise<AskResponseInterface | Stream> {
-    //NOTE: Added same type as Intric, but kept the old type for backwards compatibility
+    //NOTE: Added same type as Eneo, but kept the old type for backwards compatibility
     const query = body?.question ?? body?.body;
     if (!query || query === '') {
       throw new HttpException(400, 'Empty body');
@@ -84,7 +84,7 @@ export class QueryController {
     @Body() body: Pick<AskAssistant, 'question' | 'files'> & { body?: string },
     @Res() response: Response<AskResponseInterface>,
   ): Promise<Stream> {
-    //NOTE: Added same type as Intric, but kept the old type for backwards compatibility
+    //NOTE: Added same type as Eneo, but kept the old type for backwards compatibility
     const query = body?.question ?? body?.body;
     if (!query || query === '') {
       throw new HttpException(400, 'Empty body');

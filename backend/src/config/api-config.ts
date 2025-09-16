@@ -5,7 +5,7 @@ export const APIS = [
     version: '2.0',
   },
   {
-    name: 'eneo/sundsvall',
+    name: 'eneo-sundsvall',
     version: 'v1',
   },
 ] as const;

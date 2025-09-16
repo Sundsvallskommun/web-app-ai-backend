@@ -4,8 +4,8 @@ import {
   ModelKwargs as ModelKwargsInterface,
   PartialAssistantUpdatePublic,
   PromptCreate,
-} from '@/data-contracts/intric/data-contracts';
-import { ModelId, ModelKwargs } from '@/responses/intric/common';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
+import { ModelId, ModelKwargs } from '@/responses/eneo/common';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';

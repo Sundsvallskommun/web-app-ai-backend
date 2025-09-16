@@ -5,15 +5,15 @@ import {
   PaginatedResponseAssistantPublic as PaginatedResponseAssistantPublicInterface,
   PartialAssistantUpdatePublic,
   SessionPublic as SessionPublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { UpdateAssistantDto } from '@/dtos/assistant.dto';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
-import { AssistantPublic, PaginatedResponseAssistantPublic } from '@/responses/intric/assistant.response';
-import { CursorPaginatedResponseSessionMetadataPublic, SessionPublic } from '@/responses/intric/session.response';
+import { AssistantPublic, PaginatedResponseAssistantPublic } from '@/responses/eneo/assistant.response';
+import { CursorPaginatedResponseSessionMetadataPublic, SessionPublic } from '@/responses/eneo/session.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import {
@@ -35,12 +35,12 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class AssistantController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Get('/assistants')
   @OpenAPI({
-    summary: 'Get assitants from Intric',
+    summary: 'Get assitants from Eneo',
   })
   @ResponseSchema(PaginatedResponseAssistantPublic)
   @UseBefore(hashMiddleware)
@@ -63,7 +63,7 @@ export class AssistantController {
 
   @Get('/assistants/batch')
   @OpenAPI({
-    summary: 'Batch get assitants from Intric',
+    summary: 'Batch get assitants from Eneo',
   })
   @UseBefore(hashMiddleware)
   @ResponseSchema(PaginatedResponseAssistantPublic)
@@ -100,7 +100,7 @@ export class AssistantController {
 
   @Get('/assistants/:id')
   @OpenAPI({
-    summary: 'Get assitant from Intric',
+    summary: 'Get assitant from Eneo',
   })
   @UseBefore(hashMiddleware)
   @ResponseSchema(AssistantPublic)
@@ -122,7 +122,7 @@ export class AssistantController {
 
   @Post('/assistants/:id')
   @OpenAPI({
-    summary: 'Update Intric assistant',
+    summary: 'Update Eneo assistant',
   })
   @UseBefore(hashMiddleware)
   @UseBefore(validationMiddleware(UpdateAssistantDto, 'body'))
@@ -148,7 +148,7 @@ export class AssistantController {
 
   @Delete('/assistants/:id')
   @OpenAPI({
-    summary: 'Delete Intric assistant',
+    summary: 'Delete Eneo assistant',
   })
   @UseBefore(hashMiddleware)
   async delete_assistant(@Req() req: Request, @Param('id') id: string, @Res() response: Response): Promise<Response> {
@@ -165,7 +165,7 @@ export class AssistantController {
 
   @Get('/assistants/:id/sessions')
   @OpenAPI({
-    summary: 'Get sessions from Intric assistant',
+    summary: 'Get sessions from Eneo assistant',
   })
   @UseBefore(hashMiddleware)
   @ResponseSchema(CursorPaginatedResponseSessionMetadataPublic)
@@ -189,7 +189,7 @@ export class AssistantController {
 
   @Get('/assistants/:id/sessions/:session_id')
   @OpenAPI({
-    summary: 'Get session from Intric assistant',
+    summary: 'Get session from Eneo assistant',
   })
   @UseBefore(hashMiddleware)
   @ResponseSchema(SessionPublic)

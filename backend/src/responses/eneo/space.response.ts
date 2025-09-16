@@ -21,7 +21,7 @@ import {
   PaginatedPermissionsSpaceMember as PaginatedPermissionsSpaceMemberInterface,
   DefaultAssistant as DefaultAssistantInterface,
   SpaceRole as SpaceRoleInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsBoolean, IsEnum, IsIn, IsInt, IsOptional, IsString, Validate, ValidateNested } from 'class-validator';
 import {
   DatesAndId,
@@ -54,25 +54,37 @@ class SpaceSparse extends DatesAndId implements SpaceSparseInterface {
   personal: boolean;
 }
 
-class PaginatedPermissionsAssistantSparse extends PaginatedPermissionsDefaults implements PaginatedPermissionsAssistantSparseInterface {
+class PaginatedPermissionsAssistantSparse
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsAssistantSparseInterface
+{
   @ValidateNested({ each: true })
   @Type(() => AssistantSparse)
   items: AssistantSparseInterface[];
 }
 
-class PaginatedPermissionsGroupChatSparse extends PaginatedPermissionsDefaults implements PaginatedPermissionsGroupChatSparseInterface {
+class PaginatedPermissionsGroupChatSparse
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsGroupChatSparseInterface
+{
   @ValidateNested({ each: true })
   @Type(() => GroupChatSparse)
   items: GroupChatSparseInterface[];
 }
 
-class PaginatedPermissionsServiceSparse extends PaginatedPermissionsDefaults implements PaginatedPermissionsServiceSparseInterface {
+class PaginatedPermissionsServiceSparse
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsServiceSparseInterface
+{
   @ValidateNested({ each: true })
   @Type(() => ServiceSparse)
   items: ServiceSparseInterface[];
 }
 
-class PaginatedPermissionsAppSparse extends PaginatedPermissionsDefaults implements PaginatedPermissionsAppSparseInterface {
+class PaginatedPermissionsAppSparse
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsAppSparseInterface
+{
   @ValidateNested({ each: true })
   @Type(() => AppSparse)
   items: AppSparseInterface[];
@@ -104,7 +116,10 @@ class SpaceMember extends DatesAndId implements SpaceMemberInterface {
   role: SpaceRoleValue;
 }
 
-class PaginatedPermissionsSpaceMember extends PaginatedPermissionsDefaults implements PaginatedPermissionsSpaceMemberInterface {
+class PaginatedPermissionsSpaceMember
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsSpaceMemberInterface
+{
   @ValidateNested({ each: true })
   @Type(() => SpaceMember)
   items: SpaceMemberInterface[];

@@ -24,18 +24,12 @@ const main = async () => {
     if (!fs.existsSync(`${PATH_TO_OUTPUT_DIR}/${api.name}`)) {
       fs.mkdirSync(`${PATH_TO_OUTPUT_DIR}/${api.name}`, { recursive: true });
     }
-    if (api.name.startsWith('eneo')) {
-      console.log('ENEO');
-      await exec(
-        `curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/openapi.json`,
-        () => console.log(`- ${api.name} ${api.version}`),
-      );
-    } else {
-      await exec(
-        `curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/api-docs`,
-        () => console.log(`- ${api.name} ${api.version}`),
-      );
-    }
+
+    await exec(
+      `curl -o ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json ${API_BASE_URL}/${api.name}/${api.version}/api-docs`,
+      () => console.log(`- ${api.name} ${api.version}`),
+    );
+
     await exec(
       `npx swagger-typescript-api --modular -p ${PATH_TO_OUTPUT_DIR}/${api.name}/swagger.json -o ${PATH_TO_OUTPUT_DIR}/${api.name} --no-client --clean-output --extract-enums`,
       stdout,

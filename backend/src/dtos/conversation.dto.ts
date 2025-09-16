@@ -1,5 +1,9 @@
-import { ConversationRequest, ModelId as ModelIdInterface, UseTools as UseToolsInterface } from '@/data-contracts/intric/data-contracts';
-import { ModelId, UseTools } from '@/responses/intric/common';
+import {
+  ConversationRequest,
+  ModelId as ModelIdInterface,
+  UseTools as UseToolsInterface,
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
+import { ModelId, UseTools } from '@/responses/eneo/common';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator';

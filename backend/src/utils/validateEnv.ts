@@ -8,7 +8,7 @@ const validateEnv = () => {
     API_BASE_URL: str(),
     CLIENT_KEY: str(),
     CLIENT_SECRET: str(),
-    INTRIC_SALT: str(),
+    ENEO_SALT: str(),
     APPLICATION_MODE: str({ choices: ['INTERNAL', 'EXTERNAL'] }),
     RATE_LIMIT_WINDOW: num(),
     RATE_LIMIT_MAX: num(),

@@ -10,7 +10,7 @@ Dessa APIer används i projektet, applikationsanvändaren i WSO2 måste prenumer
 | API             | Version |
 | --------------- | ------: |
 | SimulatorServer |     2.0 |
-| Eneo-Sundsvall  |     1.0 |
+| Eneo-Sundsvall  |      v1 |
 
 ## Utveckling
 
@@ -69,7 +69,7 @@ För att kunna använda Azure via proxyn måste du fylla i följande
 - `AZURE_SUBSCRIPTION_KEY`
 - `AZURE_TRANSLATOR_KEY`
 
-`INTRIC_SALT` används för att generera hashar som dina appar använder för prata med Eneo via denna proxy.
+`ENEO_SALT` används för att generera hashar som dina appar använder för prata med Eneo via denna proxy.
 Om din applikation genererar hashar måste ni ha samma saltvärde.
 
 5. Initiera databas för backend

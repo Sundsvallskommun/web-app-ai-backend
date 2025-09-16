@@ -7,7 +7,7 @@ import {
   UseTools as UseToolsInterface,
   ModelId as ModelIdInterface,
   WebSearchResultPublic as WebSearchResultPublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
@@ -58,7 +58,10 @@ export class PaginatedDefaults implements Pick<PaginatedPermissionsAppSparse, 'c
   @IsInt()
   count: number;
 }
-export class PaginatedPermissionsDefaults extends PaginatedDefaults implements Pick<PaginatedPermissionsAppSparse, 'count' | 'permissions'> {
+export class PaginatedPermissionsDefaults
+  extends PaginatedDefaults
+  implements Pick<PaginatedPermissionsAppSparse, 'count' | 'permissions'>
+{
   @IsEnum(ResourcePermission, { each: true })
   @IsOptional()
   permissions?: ResourcePermission[];
@@ -82,4 +85,9 @@ export class WebSearchResultPublic implements WebSearchResultPublicInterface {
   url: string;
 }
 
-export type { ModelKwargsInterface, SecurityClassificationPublicInterface, UseToolsInterface, WebSearchResultPublicInterface };
+export type {
+  ModelKwargsInterface,
+  SecurityClassificationPublicInterface,
+  UseToolsInterface,
+  WebSearchResultPublicInterface,
+};

@@ -1,5 +1,5 @@
 import { APIS } from '@/config';
-import { ApiKey } from '@/data-contracts/intric/data-contracts';
+import { ApiKey } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { HttpException } from '@/exceptions/HttpException';
 import { RequestWithUser } from '@/interfaces/auth.interface';
 import { ApiKeyApiResponse } from '@/responses/apikey.response';
@@ -17,7 +17,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class AdminApiKeyController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
   private basePath = `${this.api.name}/${this.api.version}/api/v1`;
 
   @Get('/admin/apikey/:id')

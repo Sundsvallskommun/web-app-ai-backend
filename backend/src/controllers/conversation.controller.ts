@@ -5,19 +5,19 @@ import {
   CursorPaginatedResponseSessionMetadataPublic as CursorPaginatedResponseSessionMetadataPublicInterface,
   SessionFeedback as SessionFeedbackInterface,
   SessionPublic as SessionPublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { ConversationRequestDto } from '@/dtos/conversation.dto';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
-import { AskResponse } from '@/responses/intric/query.response';
+import { AskResponse } from '@/responses/eneo/query.response';
 import {
   CursorPaginatedResponseSessionMetadataPublic,
   SessionFeedback,
   SessionPublic,
-} from '@/responses/intric/session.response';
+} from '@/responses/eneo/session.response';
 import ApiService from '@/services/api.service';
-import { getApiKey } from '@/services/intric-api-key.service';
+import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
 import { Request, Response } from 'express';
 import {
@@ -40,8 +40,8 @@ import { Stream } from 'stream';
 @UseBefore(hashMiddleware)
 export class ConversationController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo/sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private api = APIS.find(api => api.name === 'eneo-sundsvall');
+  private basePath = `${this.api.name}/${this.api.version}`;
 
   @Post('/conversations')
   @OpenAPI({

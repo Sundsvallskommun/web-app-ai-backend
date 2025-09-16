@@ -4,7 +4,7 @@ import {
   ResourcePermission,
   PaginatedPermissionsCollectionPublic as PaginatedPermissionsCollectionPublicInterface,
   EmbeddingModelPublic as EmbeddingModelPublicInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { DatesAndId, PaginatedPermissionsDefaults } from './common';
@@ -30,7 +30,10 @@ export class CollectionPublic extends DatesAndId implements CollectionPublicInte
   metadata: CollectionMetadataInterface;
 }
 
-export class PaginatedPermissionsCollectionPublic extends PaginatedPermissionsDefaults implements PaginatedPermissionsCollectionPublicInterface {
+export class PaginatedPermissionsCollectionPublic
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsCollectionPublicInterface
+{
   @ValidateNested({ each: true })
   @Type(() => CollectionPublic)
   items: CollectionPublicInterface[];

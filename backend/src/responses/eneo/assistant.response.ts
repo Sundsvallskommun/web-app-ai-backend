@@ -16,7 +16,7 @@ import {
   WebsitePublic as WebsitePublicInterface,
   CompletionModelSparse as CompletionModelSparseInterface,
   DefaultAssistant as DefaultAssistantInterface,
-} from '@/data-contracts/intric/data-contracts';
+} from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { IsNullable } from '@/utils/custom-validation-classes';
 import { Type } from 'class-transformer';
 import { IsBoolean, IsEnum, IsInt, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';

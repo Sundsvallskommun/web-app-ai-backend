@@ -1,4 +1,4 @@
-import { AppSparse as AppSparseInterface, ResourcePermission } from '@/data-contracts/intric/data-contracts';
+import { AppSparse as AppSparseInterface, ResourcePermission } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { DatesAndId } from './common';
 import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 import { IsNullable } from '@/utils/custom-validation-classes';
