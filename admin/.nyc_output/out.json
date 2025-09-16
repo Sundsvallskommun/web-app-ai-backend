@@ -1,1 +1,461 @@
-{}
+{
+  "C:/Develop/web-app-ai-backend/admin/src/swagger-typescript-api.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/swagger-typescript-api.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/config/defaults.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/config/defaults.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/config/resources.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/config/resources.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/contexts/app.context.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/contexts/app.context.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/index.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/index.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/login.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/login.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/logout.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/logout.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/settings.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/settings.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/start.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/start.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/_app.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/_app.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/services/api-service.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/services/api-service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/styles/app-base.scss": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/styles/app-base.scss",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/styles/app-components.scss": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/styles/app-components.scss",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/styles/app-utilities.scss": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/styles/app-utilities.scss",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/styles/tailwind.scss": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/styles/tailwind.scss",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/api-url.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/api-url.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/app-url.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/app-url.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/fieldpath-without-index.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/fieldpath-without-index.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/formatted-field.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/formatted-field.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/is-optional.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/is-optional.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/routeguard.hook.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/routeguard.hook.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/stringToResourceName.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/stringToResourceName.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/use-crud-helpers.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/use-crud-helpers.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/use-localstorage.hook.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/use-localstorage.hook.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/utils/use-resource.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/utils/use-resource.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-array.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-array.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-input.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-input.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-object.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource-object.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/edit-resource/edit-resource.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/editor-toolbar/editor-toolbar.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/editor-toolbar/editor-toolbar.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/list-resources/list-resources.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/list-resources/list-resources.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/list-toolbar/list-toolbar.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/list-toolbar/list-toolbar.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/loader/loader-fullscreen.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/loader/loader-fullscreen.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/login-guard/login-guard.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/login-guard/login-guard.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/menu/menu.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/menu/menu.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/resource-card/resource-card.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/resource-card/resource-card.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/components/user-menu/user-menu.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/components/user-menu/user-menu.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/layouts/default-layout/default-layout.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/layouts/default-layout/default-layout.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/layouts/edit-layout/edit-layout.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/layouts/edit-layout/edit-layout.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/layouts/empty-layout/empty-layout.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/layouts/empty-layout/empty-layout.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/layouts/header/header.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/layouts/header/header.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/layouts/main/main.component.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/layouts/main/main.component.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/assistants/index.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/assistants/index.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/assistants/[id].tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/assistants/[id].tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/[resource]/index.tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/[resource]/index.tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/[resource]/[id].tsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/[resource]/[id].tsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/services/user-service/defaults.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/services/user-service/defaults.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/services/user-service/user-service.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/services/user-service/user-service.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/services/__tests__/api-service.test.jsx": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/services/__tests__/api-service.test.jsx",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/styles/layouts/default-layout.scss": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/styles/layouts/default-layout.scss",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  },
+  "C:/Develop/web-app-ai-backend/admin/src/pages/api/health/up.ts": {
+    "path": "C:/Develop/web-app-ai-backend/admin/src/pages/api/health/up.ts",
+    "statementMap": {},
+    "fnMap": {},
+    "branchMap": {},
+    "s": {},
+    "f": {},
+    "b": {}
+  }
+}
