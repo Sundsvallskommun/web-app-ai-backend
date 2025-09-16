@@ -65,7 +65,7 @@ describe('Hosts', () => {
     cy.get('[data-cy="resource-table"]').eq(0).find('tbody').children().should('have.length', 3);
   });
 
-  it('edits an assistant', () => {
+  it('edits a host', () => {
     cy.intercept('GET', '**/admin/hosts/1', host1);
     cy.intercept('PATCH', '**/admin/hosts/1', host1Updated);
     cy.get('[data-cy="mainmenu-resource-hosts"]>span>a').click();
