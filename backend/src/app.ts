@@ -282,7 +282,7 @@ class App {
             if (err) {
               return next(err);
             }
-            res.redirect(successRedirect as string);
+            res.redirect(successRedirect);
           });
         });
       },

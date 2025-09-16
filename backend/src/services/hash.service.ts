@@ -1,7 +1,7 @@
 import { ENEO_SALT } from '@/config';
 import { logger } from '@/utils/logger';
 import 'crypto';
-import { createHash, createHmac } from 'crypto';
+import { createHash } from 'crypto';
 
 export const verifyHash = (user: string, assistant_id: string, app: string, hash: string) => {
   if (typeof user !== 'string') {
@@ -23,8 +23,7 @@ export const verifyHash = (user: string, assistant_id: string, app: string, hash
   const salt = ENEO_SALT;
   const input = `${user}${assistant_id}${app}${salt}`;
   console.log('Using input:');
-  console.log(input);
-  // const _hash = createHmac('sha256', salt).update(input).digest('base64url');
+  console.log(input.replace(/[\r\n]/g, ''));
   const _hash = createHash('sha256').update(input).digest('base64');
   console.log('calculated hash:', _hash);
   return typeof hash !== 'undefined' && typeof _hash !== 'undefined' && _hash === hash;

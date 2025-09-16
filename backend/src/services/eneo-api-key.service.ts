@@ -13,7 +13,7 @@ export const getApiKey = async (req: Request) => {
     console.log('Application id missing');
     return false;
   }
-  console.log('inbound app:', app);
+  console.log('inbound app:', app.replace(/[\r\n]/g, ''));
 
   try {
     const assistant = await prisma.assistant.findUnique({ where: { app } });
