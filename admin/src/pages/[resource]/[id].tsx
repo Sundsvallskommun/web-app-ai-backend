@@ -3,6 +3,8 @@ import { EditorToolbar } from '@components/editor-toolbar/editor-toolbar';
 import LoaderFullScreen from '@components/loader/loader-fullscreen';
 import { defaultInformationFields } from '@config/defaults';
 import resources from '@config/resources';
+import { ResourceName } from '@interfaces/resource-name';
+import { ID } from '@interfaces/resource-services';
 import EditLayout from '@layouts/edit-layout/edit-layout.component';
 import { getFormattedFields } from '@utils/formatted-field';
 import { useRouteGuard } from '@utils/routeguard.hook';
@@ -22,18 +24,32 @@ export const EditAssistant: React.FC = () => {
   const router = useRouter();
 
   const { resource: _resource, id: _id } = useParams();
-  const resource = stringToResourceName(typeof _resource === 'object' ? _resource[0] : _resource);
+  const resource = stringToResourceName(
+    typeof _resource === 'object' ? _resource[0] : (_resource ?? '')
+  ) as ResourceName;
   if (!resource) {
     router.push('/');
+    return;
   }
 
   const { create, update, getOne, defaultValues } = resources[resource];
+
+  useEffect(() => {
+    console.log('resource');
+  }, [resource]);
+
+  if (!create || !update) {
+    return <p>Bajskorv</p>;
+  }
+
   const { refresh } = useResource(resource);
 
   const { handleGetOne, handleCreate, handleUpdate } = useCrudHelper(resource);
 
   type UpdateType = Parameters<typeof update>[1];
   type CreateType = Parameters<typeof create>[0];
+  type UpdateReturn = ReturnType<typeof update>;
+  type CreateReturn = ReturnType<typeof create>;
   type DataType = CreateType | UpdateType;
 
   const form = useForm<DataType>({
@@ -90,7 +106,8 @@ export const EditAssistant: React.FC = () => {
   }, [formdata?.id, isNew, isDirty]);
 
   const onSubmit = (data: DataType) => {
-    const createFunc: (data: DataType) => ReturnType<typeof create> = create;
+    const createFunc: (data: CreateType) => CreateReturn = create;
+    const updateFunc: (id: ID, data: UpdateType) => UpdateReturn = update;
     switch (isNew) {
       case true:
         handleCreate(() => createFunc(data as CreateType)).then((res) => {
@@ -103,7 +120,7 @@ export const EditAssistant: React.FC = () => {
         break;
       case false:
         if (id) {
-          handleUpdate(() => update(id, data as UpdateType)).then((res) => {
+          handleUpdate(() => updateFunc(id, data as UpdateType)).then((res) => {
             reset(res);
             refresh();
           });
@@ -143,7 +160,7 @@ export const EditAssistant: React.FC = () => {
       </EditLayout>;
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'crud', 'layout', ...Object.keys(resources)])),
   },

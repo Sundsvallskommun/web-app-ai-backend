@@ -1,5 +1,5 @@
 import { Menu } from '@components/menu/menu';
-import { UserMenu } from '@components/user-menu/user.menu.component';
+import { UserMenu } from '@components/user-menu/user-menu.component';
 import { Logo } from '@sk-web-gui/react';
 import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
@@ -21,7 +21,7 @@ export default function DefaultLayout({ title, postTitle, headerSubtitle, childr
 
   const setFocusToMain = () => {
     const contentElement = document.getElementById('content');
-    contentElement.focus();
+    contentElement?.focus();
   };
 
   return (

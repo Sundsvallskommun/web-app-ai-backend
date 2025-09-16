@@ -23,7 +23,7 @@ export const UserMenu: React.FC = () => {
 
   return (
     <PopupMenu>
-      <PopupMenu.Button variant="tertiary" showBackground={false} className="justify-start">
+      <PopupMenu.Button data-cy="user-menu-button" variant="tertiary" showBackground={false} className="justify-start">
         <Avatar
           initials={`${user.name
             .split(' ')
@@ -54,29 +54,34 @@ export const UserMenu: React.FC = () => {
                 </PopupMenu.Button>
                 <PopupMenu.Panel>
                   <PopupMenu.Items>
-                    {Object.keys(colorSchemeIcons).map((scheme: ColorSchemeMode) => (
-                      <PopupMenu.Item key={`cs-${scheme}`}>
-                        <button
-                          onClick={() => setColorScheme(scheme)}
-                          role="menuitemradio"
-                          aria-checked={scheme === colorScheme}
-                          className="!justify-between min-w-[20rem]"
-                        >
-                          <span className="flex gap-12">
-                            {colorSchemeIcons[scheme]}
-                            {capitalize(t(`layout:color_schemes.${scheme}`))}
-                          </span>
-                          {scheme === colorScheme && <Icon.Padded size={18} rounded icon={<Check />} />}
-                        </button>
-                      </PopupMenu.Item>
-                    ))}
+                    {Object.keys(colorSchemeIcons).map((key) => {
+                      const scheme = key as ColorSchemeMode;
+                      return (
+                        <PopupMenu.Item key={`cs-${scheme}`}>
+                          <button
+                            onClick={() => setColorScheme(scheme)}
+                            role="menuitemradio"
+                            aria-checked={scheme === colorScheme}
+                            className="!justify-between min-w-[20rem]"
+                          >
+                            <span className="flex gap-12">
+                              {colorSchemeIcons[scheme]}
+                              {capitalize(t(`layout:color_schemes.${scheme}`))}
+                            </span>
+                            {scheme === colorScheme && <Icon.Padded size={18} rounded icon={<Check />} />}
+                          </button>
+                        </PopupMenu.Item>
+                      );
+                    })}
                   </PopupMenu.Items>
                 </PopupMenu.Panel>
               </PopupMenu>
             </PopupMenu.Item>
           </PopupMenu.Group>
           <PopupMenu.Item>
-            <NextLink href="/logout">{capitalize(t('common:logout'))}</NextLink>
+            <NextLink data-cy="logout-button" href="/logout">
+              {capitalize(t('common:logout'))}
+            </NextLink>
           </PopupMenu.Item>
         </PopupMenu.Items>
       </PopupMenu.Panel>

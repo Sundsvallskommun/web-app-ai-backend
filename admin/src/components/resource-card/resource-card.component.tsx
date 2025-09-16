@@ -22,13 +22,15 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
 
   return (
     <Link href={`/${resource}`}>
-      <Card layout="horizontal" useHoverEffect color="vattjom" invert>
+      <Card layout="horizontal" useHoverEffect color="vattjom" invert data-cy={`resource-card-${resource}`}>
         <Card.Body className="py-16">
           <Card.Header>
-            <h2 className="text-h4-sm md:text-h4-md xl:text-h4-lg">{capitalize(t(`${resource}:name_many`))}</h2>
+            <h2 data-cy="resource-card-title" className="text-h4-sm md:text-h4-md xl:text-h4-lg">
+              {capitalize(t(`${resource}:name_many`))}
+            </h2>
           </Card.Header>
           <Card.Text className="flex gap-12 py-8">
-            <span className="text-dark-secondary text-small h-24">
+            <span className="text-dark-secondary text-small h-24" data-cy="resource-card-subtitle">
               {loading ?
                 <Spinner size={1.5} className="leading-small" />
               : <>

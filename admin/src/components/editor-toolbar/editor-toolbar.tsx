@@ -2,6 +2,7 @@ import resources from '@config/resources';
 import { ResourceName } from '@interfaces/resource-name';
 import { Button, Icon, useConfirm } from '@sk-web-gui/react';
 import { useCrudHelper } from '@utils/use-crud-helpers';
+import { useResource } from '@utils/use-resource';
 import { Save, Trash } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useFormContext } from 'react-hook-form';
@@ -15,12 +16,16 @@ interface ToolbarProps {
 }
 
 export const EditorToolbar: React.FC<ToolbarProps> = ({ resource, isDirty, id }) => {
+  if (!resource) {
+    return;
+  }
   const router = useRouter();
   const parentPath = resource ? `/${resource}` : router.pathname.split('/[')[0].replace('/new', '');
   const { remove } = resources[resource];
   const { handleRemove } = useCrudHelper(resource);
   const confirm = useConfirm();
   const { reset } = useFormContext();
+  const { refresh } = useResource(resource);
 
   const onRemove = () => {
     if (remove && id) {
@@ -37,6 +42,7 @@ export const EditorToolbar: React.FC<ToolbarProps> = ({ resource, isDirty, id })
             handleRemove(() => remove(id)).then((res) => {
               if (res) {
                 reset();
+                refresh();
                 router.push(parentPath);
               }
             });
@@ -58,6 +64,7 @@ export const EditorToolbar: React.FC<ToolbarProps> = ({ resource, isDirty, id })
         leftIcon={<Save />}
         disabled={!isDirty}
         iconButton
+        data-cy="edit-toolbar-save"
         aria-label={capitalize(t('common:save'))}
       ></Button>
 
@@ -67,6 +74,7 @@ export const EditorToolbar: React.FC<ToolbarProps> = ({ resource, isDirty, id })
           color="error"
           showBackground={false}
           iconButton
+          data-cy="edit-toolbar-delete"
           aria-label={capitalize(t('common:remove', { resource: t(`${resource}:name_one`) }))}
           size="sm"
           onClick={() => onRemove()}

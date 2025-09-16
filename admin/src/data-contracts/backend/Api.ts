@@ -16,16 +16,17 @@ import {
   Applications,
   AskResponse,
   AssistantPublic,
-  AssistantSetting,
   AssistantSettingApiResponse,
   AssistantSettingsApiResponse,
   CollectionPublic,
   ConversationRequestDto,
+  CreateAssistantSetting,
   CreateSpaceAssistantDto,
   CursorPaginatedResponseSessionMetadataPublic,
   FilePublic,
   HealthCheckStatus,
   HostApiResponse,
+  HostDto,
   HostsApiResponse,
   InfoBlobPublic,
   JobPublic,
@@ -42,7 +43,6 @@ import {
   UpdateAssistantDto,
   UpdateAssistantSetting,
   UpdateGroupDto,
-  UpdateHost,
   UpdateInfoBlobDto,
   UpdateInfoBlobsDto,
   UserApiResponse,
@@ -87,7 +87,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @summary Create new assistant setting
    * @request POST:/api/admin/assistants
    */
-  adminAsisstantControllerCreate = (data?: AssistantSetting, params: RequestParams = {}) =>
+  adminAsisstantControllerCreate = (data?: CreateAssistantSetting, params: RequestParams = {}) =>
     this.request<AssistantSettingApiResponse, any>({
       path: `/api/admin/assistants`,
       method: 'POST',
@@ -174,7 +174,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerGetAssistants
-   * @summary Get assitants from Intric
+   * @summary Get assitants from Eneo
    * @request GET:/api/assistants
    */
   assistantControllerGetAssistants = (params: RequestParams = {}) =>
@@ -188,7 +188,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerBatchGetAssistantsById
-   * @summary Batch get assitants from Intric
+   * @summary Batch get assitants from Eneo
    * @request GET:/api/assistants/batch
    */
   assistantControllerBatchGetAssistantsById = (
@@ -208,7 +208,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerGetAssistantById
-   * @summary Get assitant from Intric
+   * @summary Get assitant from Eneo
    * @request GET:/api/assistants/{id}
    */
   assistantControllerGetAssistantById = (id: string, params: RequestParams = {}) =>
@@ -222,7 +222,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerUpdateAssistant
-   * @summary Update Intric assistant
+   * @summary Update Eneo assistant
    * @request POST:/api/assistants/{id}
    */
   assistantControllerUpdateAssistant = (id: string, data?: UpdateAssistantDto, params: RequestParams = {}) =>
@@ -238,7 +238,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerDeleteAssistant
-   * @summary Delete Intric assistant
+   * @summary Delete Eneo assistant
    * @request DELETE:/api/assistants/{id}
    */
   assistantControllerDeleteAssistant = (id: string, params: RequestParams = {}) =>
@@ -252,7 +252,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerGetAssistantSessions
-   * @summary Get sessions from Intric assistant
+   * @summary Get sessions from Eneo assistant
    * @request GET:/api/assistants/{id}/sessions
    */
   assistantControllerGetAssistantSessions = (id: string, params: RequestParams = {}) =>
@@ -266,7 +266,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags Assistant
    * @name AssistantControllerGetAssistantSession
-   * @summary Get session from Intric assistant
+   * @summary Get session from Eneo assistant
    * @request GET:/api/assistants/{id}/sessions/{session_id}
    */
   assistantControllerGetAssistantSession = (id: string, sessionId: string, params: RequestParams = {}) =>
@@ -565,7 +565,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @summary Creates a new host
    * @request POST:/api/admin/hosts
    */
-  adminHostsControllerCreate = (data?: UpdateHost, params: RequestParams = {}) =>
+  adminHostsControllerCreate = (data?: HostDto, params: RequestParams = {}) =>
     this.request<HostApiResponse, any>({
       path: `/api/admin/hosts`,
       method: 'POST',
@@ -595,7 +595,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @summary Updates a host
    * @request PATCH:/api/admin/hosts/{id}
    */
-  adminHostsControllerUpdate = (id: number, data?: UpdateHost, params: RequestParams = {}) =>
+  adminHostsControllerUpdate = (id: number, data?: HostDto, params: RequestParams = {}) =>
     this.request<HostApiResponse, any>({
       path: `/api/admin/hosts/${id}`,
       method: 'PATCH',
@@ -722,7 +722,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    *
    * @tags User
    * @name UserControllerGetMe
-   * @summary Get my user from Intric
+   * @summary Get my user from Eneo
    * @request GET:/api/users/me
    */
   userControllerGetMe = (params: RequestParams = {}) =>

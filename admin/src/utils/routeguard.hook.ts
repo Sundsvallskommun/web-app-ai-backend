@@ -23,8 +23,8 @@ export function useRouteGuard(
   const [active, setActive] = useState<boolean>(false);
   const title = options?.warningTitle || t('common:unsaved_changes');
   const text = options?.warningText || t('common:do_you_want_to_leave');
-  const confirmLabel = options?.confirmLabel || null;
-  const dismissLabel = options?.dismissLabel || null;
+  const confirmLabel = options?.confirmLabel;
+  const dismissLabel = options?.dismissLabel;
   const { showConfirmation } = useConfirm();
 
   useEffect(() => {
@@ -43,18 +43,25 @@ export function useRouteGuard(
     const handleWindowClose = (e: BeforeUnloadEvent) => {
       if (!active) return;
       e.preventDefault();
-      return (e.returnValue = `${title} ${text}`);
+      return `${title} ${text}`;
     };
 
     const handleBrowseAway = (url: string) => {
       if (!active) return;
+
       confirmRouterChange(url);
-      router.events.emit('routeChangeError');
+      router.events.emit('routeChangeError', 'testar');
       throw 'routing cancelled. Confirm to continue.';
     };
 
+    const handleError = (error: any) => {
+      console.log('ERror', error);
+    };
+
     window.addEventListener('beforeunload', handleWindowClose);
+    router.events.on('routeChangeError', handleError);
     router.events.on('routeChangeStart', handleBrowseAway);
+
     return () => {
       window.removeEventListener('beforeunload', handleWindowClose);
       router.events.off('routeChangeStart', handleBrowseAway);

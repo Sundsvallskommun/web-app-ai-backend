@@ -35,7 +35,7 @@ export const ListResources: React.FC<ListResourcesProps> = ({ resource, headers:
     }
   }, [storeHeaders, data]);
 
-  const headers = useMemo(
+  const headers: Array<string | AutoTableHeader> = useMemo(
     () =>
       _headers ||
       storeHeaders?.reduce((headers, key) => {
@@ -70,7 +70,7 @@ export const ListResources: React.FC<ListResourcesProps> = ({ resource, headers:
                     t(`${defaultInformationFields.includes(key) ? 'common:' : `${resource}:properties.`}${key}`)
                   ),
                   property: key,
-                  renderColumn: (value) => (
+                  renderColumn: (value: any) => (
                     <span>{value && <Icon.Padded rounded color="success" icon={<Check />} />}</span>
                   ),
                   isColumnSortable: false,
@@ -80,7 +80,9 @@ export const ListResources: React.FC<ListResourcesProps> = ({ resource, headers:
               return headers;
           }
         }
-      }, []),
+        return headers;
+      }, [] as AutoTableHeader[]) ||
+      [],
     [storeHeaders, _headers, data]
   );
 
@@ -92,7 +94,7 @@ export const ListResources: React.FC<ListResourcesProps> = ({ resource, headers:
     sticky: true,
     renderColumn: (value) => (
       <div className="text-right w-full">
-        <NextLink href={`/${resource}/${value}`} aria-label="Redigera">
+        <NextLink href={`/${resource}/${value}`} aria-label="Redigera" data-cy="edit-resource">
           <Icon.Padded icon={<Pencil />} variant="tertiary" className="link-btn" />
         </NextLink>
       </div>
@@ -109,14 +111,15 @@ export const ListResources: React.FC<ListResourcesProps> = ({ resource, headers:
         }
     ) || [];
 
-  const formattedData = useMemo(() => data.map((row) => getFormattedFields(row)), [data]);
+  const formattedData = useMemo(() => data?.map((row) => getFormattedFields(row)), [data]);
   const autoHeaders = [...translatedHeaders, ...(update ? [editHeader] : [])];
   return (
     <div>
-      {formattedData.length > 0 ?
+      {formattedData && formattedData.length > 0 ?
         <AutoTable
           pageSize={15}
           autodata={formattedData}
+          data-cy="resource-table"
           autoheaders={autoHeaders.filter(
             (header, index) => autoHeaders.map((head) => head.label).indexOf(header.label) === index
           )}

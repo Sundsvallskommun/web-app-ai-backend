@@ -1,19 +1,21 @@
 import resources from '@config/resources';
-import { MenuVertical } from '@sk-web-gui/react';
+import { ResourceName } from '@interfaces/resource-name';
+import { MenuIndex, MenuVertical } from '@sk-web-gui/react';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capitalize } from 'underscore.string';
 
 export const Menu = () => {
-  const [current, setCurrent] = useState<string>('');
+  const [current, setCurrent] = useState<MenuIndex>('');
   const { t } = useTranslation();
 
   useEffect(() => {
     const path = window.location.pathname;
     const resource = Object.keys(resources).find((resource) => {
       return path.startsWith(`${process.env.NEXT_PUBLIC_BASE_PATH}/${resource}`);
-    });
+    }) as ResourceName;
+
     if (resource) {
       setCurrent(`${resource}${path.endsWith('/new') ? '-new' : ''}`);
     } else {
@@ -22,7 +24,7 @@ export const Menu = () => {
   }, [window]);
 
   useEffect(() => {
-    if (current.includes('-parent')) {
+    if (typeof current === 'string' && current.includes('-parent')) {
       setCurrent(current.replace('-parent', ''));
     }
   }, [current]);
@@ -33,9 +35,13 @@ export const Menu = () => {
         <MenuVertical.Label>{capitalize(t('common:resources'))}</MenuVertical.Label>
         <MenuVertical>
           {...Object.keys(resources).map((resourcename, index) => {
-            const resource = resources[resourcename];
+            const resource = resources[resourcename as ResourceName];
             return (
-              <MenuVertical.Item key={`mainmenu-${index}`} menuIndex={`${resource.name}-parent`}>
+              <MenuVertical.Item
+                key={`mainmenu-${index}`}
+                menuIndex={`${resource.name}-parent`}
+                data-cy={`mainmenu-resource-${resource.name}`}
+              >
                 <MenuVertical>
                   <MenuVertical.SubmenuButton>
                     <NextLink href={`/${resource.name}`}>{capitalize(t(`${resource.name}:name_many`))}</NextLink>

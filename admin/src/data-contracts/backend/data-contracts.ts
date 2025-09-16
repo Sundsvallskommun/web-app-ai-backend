@@ -15,15 +15,10 @@ export interface ApiKeyApiResponse {
 }
 
 export interface AssistantSetting {
+  id: number;
   app: string;
   assistantId: string;
   apiKey: string;
-}
-
-export interface UpdateAssistantSetting {
-  app: string;
-  assistantId: string;
-  apiKey?: string;
 }
 
 export interface AssistantSettingsApiResponse {
@@ -34,6 +29,18 @@ export interface AssistantSettingsApiResponse {
 export interface AssistantSettingApiResponse {
   data: AssistantSetting;
   message: string;
+}
+
+export interface CreateAssistantSetting {
+  app: string;
+  assistantId: string;
+  apiKey: string;
+}
+
+export interface UpdateAssistantSetting {
+  app: string;
+  assistantId: string;
+  apiKey?: string;
 }
 
 export interface User {
@@ -305,12 +312,12 @@ export interface PaginatedPermissionsCollectionPublic {
   permissions?: PaginatedPermissionsCollectionPublicPermissionsEnum[];
 }
 
-export interface IntricWebsitesPresentationWebsiteModelsCrawlRunPublic {
+export interface EneoWebsitesPresentationWebsiteModelsCrawlRunPublic {
   pages_crawled: number | null;
   files_downloaded: number | null;
   pages_failed: number | null;
   files_failed: number | null;
-  status: IntricWebsitesPresentationWebsiteModelsCrawlRunPublicStatusEnum;
+  status: EneoWebsitesPresentationWebsiteModelsCrawlRunPublicStatusEnum;
   result_location: string | null;
   finished_at: string | null;
   created_at?: string | null;
@@ -330,7 +337,7 @@ export interface WebsitePublic {
   download_files: boolean;
   crawl_type: WebsitePublicCrawlTypeEnum;
   update_interval: WebsitePublicUpdateIntervalEnum;
-  latest_crawl: IntricWebsitesPresentationWebsiteModelsCrawlRunPublic | null;
+  latest_crawl: EneoWebsitesPresentationWebsiteModelsCrawlRunPublic | null;
   embedding_model: EmbeddingModelPublic;
   metadata: WebsiteMetadata;
   created_at?: string | null;
@@ -626,10 +633,6 @@ export interface Host {
   host: string;
 }
 
-export interface UpdateHost {
-  host: string;
-}
-
 export interface HostsApiResponse {
   data: Host[];
   message: string;
@@ -638,6 +641,10 @@ export interface HostsApiResponse {
 export interface HostApiResponse {
   data: Host;
   message: string;
+}
+
+export interface HostDto {
+  host: string;
 }
 
 export interface AdditionalField {
@@ -1022,7 +1029,7 @@ export enum PaginatedPermissionsCollectionPublicPermissionsEnum {
   InsightToggle = 'insight_toggle',
 }
 
-export enum IntricWebsitesPresentationWebsiteModelsCrawlRunPublicStatusEnum {
+export enum EneoWebsitesPresentationWebsiteModelsCrawlRunPublicStatusEnum {
   InProgress = 'in progress',
   Queued = 'queued',
   Complete = 'complete',

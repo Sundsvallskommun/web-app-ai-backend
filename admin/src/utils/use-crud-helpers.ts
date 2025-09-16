@@ -3,7 +3,7 @@ import { useSnackbar } from '@sk-web-gui/react';
 import { useTranslation } from 'react-i18next';
 import { capitalize } from 'underscore.string';
 
-export const useCrudHelper = (resource) => {
+export const useCrudHelper = (resource: string) => {
   const message = useSnackbar();
   const { t } = useTranslation();
 
@@ -17,11 +17,13 @@ export const useCrudHelper = (resource) => {
     }
   };
 
-  const handleGetMany = async (getMany: () => ResourceResponse<any[]>): Promise<any[]> => {
+  const handleGetMany = async (getMany: () => ResourceResponse<any[]>): Promise<any[] | undefined> => {
     const name = t(`${resource}:name_many`);
     try {
       const result = await getMany();
-      return Promise.resolve(result.data.data);
+      if (result?.data?.data) {
+        return Promise.resolve(result.data.data);
+      }
     } catch {
       message({ message: capitalize(t('crud:get_one.error', { resource: name })), status: 'error' });
     }

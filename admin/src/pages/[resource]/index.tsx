@@ -14,20 +14,21 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { capitalize } from 'underscore.string';
 
-export const Exempelsida: React.FC = () => {
+export const Resource: React.FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
   const { resource: _resource } = useParams();
-  const resource = stringToResourceName(typeof _resource === 'object' ? _resource[0] : _resource);
-
-  const { data, refresh, loaded, loading } = useResource(resource);
-
+  const resource = stringToResourceName(typeof _resource === 'object' ? _resource[0] : (_resource ?? ''));
   useEffect(() => {
     if (!resource) {
       router.push('/');
     }
   }, [resource]);
+  if (!resource) {
+    return;
+  }
+  const { data, refresh, loaded, loading } = useResource(resource);
 
   const getProperties = () => {
     return data?.[0] ?
@@ -56,10 +57,10 @@ export const Exempelsida: React.FC = () => {
   );
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'layout', 'crud', ...Object.keys(resources)])),
   },
 });
 
-export default Exempelsida;
+export default Resource;

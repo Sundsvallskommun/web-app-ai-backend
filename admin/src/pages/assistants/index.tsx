@@ -5,7 +5,6 @@ import DefaultLayout from '@layouts/default-layout/default-layout.component';
 import { Header } from '@layouts/header/header.component';
 import Main from '@layouts/main/main.component';
 import { Spinner } from '@sk-web-gui/react';
-import { stringToResourceName } from '@utils/stringToResourceName';
 import { useResource } from '@utils/use-resource';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -56,7 +55,7 @@ export const Exempelsida: React.FC = () => {
   );
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'layout', 'crud', ...Object.keys(resources)])),
   },

@@ -33,7 +33,7 @@ export const UserSettings: React.FC = () => {
   } = form;
   const apiKey = watch('apiKey');
 
-  const hasApiKey = apiKey && !isDirty;
+  const hasApiKey = !!apiKey && !isDirty;
 
   const newApiKey = () => {
     setValue('apiKey', '');
@@ -71,7 +71,7 @@ export const UserSettings: React.FC = () => {
   );
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'layout', 'crud', 'usersettings', ...Object.keys(resources)])),
   },

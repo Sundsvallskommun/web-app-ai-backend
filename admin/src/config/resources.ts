@@ -1,5 +1,11 @@
 import { Api } from '@data-contracts/backend/Api';
-import { AssistantSetting, Host } from '@data-contracts/backend/data-contracts';
+import {
+  AssistantSetting,
+  CreateAssistantSetting,
+  Host,
+  HostDto,
+  UpdateAssistantSetting,
+} from '@data-contracts/backend/data-contracts';
 import { Resource } from '@interfaces/resource';
 
 export const apiService = new Api({
@@ -7,7 +13,7 @@ export const apiService = new Api({
   withCredentials: true,
 });
 
-const assistants: Resource<AssistantSetting> = {
+const assistants: Resource<AssistantSetting, CreateAssistantSetting, UpdateAssistantSetting> = {
   name: 'assistants',
   getOne: apiService.adminAsisstantControllerGetOne,
   getMany: apiService.adminAsisstantControllerGetMany,
@@ -22,7 +28,7 @@ const assistants: Resource<AssistantSetting> = {
   requiredFields: ['app', 'apiKey', 'assistantId'],
 };
 
-const hosts: Resource<Host> = {
+const hosts: Resource<Host, HostDto, HostDto> = {
   name: 'hosts',
   getOne: apiService.adminHostsControllerGetOne,
   getMany: apiService.adminHostsControllerGetMany,

@@ -3,7 +3,11 @@ import { EditorToolbar } from '@components/editor-toolbar/editor-toolbar';
 import LoaderFullScreen from '@components/loader/loader-fullscreen';
 import { defaultInformationFields } from '@config/defaults';
 import resources, { apiService } from '@config/resources';
-import { AssistantSetting } from '@data-contracts/backend/data-contracts';
+import {
+  AssistantSetting,
+  CreateAssistantSetting,
+  UpdateAssistantSetting,
+} from '@data-contracts/backend/data-contracts';
 import EditLayout from '@layouts/edit-layout/edit-layout.component';
 import { useUserStore } from '@services/user-service/user-service';
 import { Button, FormControl, FormLabel, Icon, Input, useSnackbar } from '@sk-web-gui/react';
@@ -31,9 +35,13 @@ export const EditAssistant: React.FC = () => {
   const { create, update, getOne, defaultValues } = resources[resource];
   const { refresh } = useResource(resource);
 
+  if (!create || !update) {
+    return;
+  }
+
   const { handleGetOne, handleCreate, handleUpdate } = useCrudHelper(resource);
 
-  type DataType = Partial<AssistantSetting>;
+  type DataType = CreateAssistantSetting | UpdateAssistantSetting;
 
   const form = useForm<DataType>({
     defaultValues: defaultValues,
@@ -136,7 +144,7 @@ export const EditAssistant: React.FC = () => {
   const onSubmit = (data: DataType) => {
     switch (isNew) {
       case true:
-        handleCreate(() => create(data)).then((res) => {
+        handleCreate(() => create(data as CreateAssistantSetting)).then((res) => {
           if (res) {
             reset(res);
             setHasApiKey(true);
@@ -188,20 +196,22 @@ export const EditAssistant: React.FC = () => {
                 property={'app'}
                 index={0}
                 required
+                data-cy="edit-assistant-appname"
                 label={capitalize(t(`assistants:properties.app`))}
               />
               <EditResourceInput
                 property={'assistantId'}
                 index={1}
                 required
+                data-cy="edit-assistant-assistantid"
                 label={capitalize(t(`assistants:properties.assistantId`))}
               />
               <FormControl className="min-w-[32rem]" required>
                 <FormLabel>{capitalize(t('assistants:properties.apiKey'))}</FormLabel>
                 <div className="flex gap-12 items-center">
-                  <Input {...register('apiKey')} disabled={hasApiKey} />
+                  <Input data-cy="edit-assistant-apikey" {...register('apiKey')} disabled={hasApiKey} />
                   {hasApiKey && (
-                    <Button size="sm" onClick={() => newApiKey()}>
+                    <Button data-cy="change-apikey-button" size="sm" onClick={() => newApiKey()}>
                       {capitalize(t('assistants:new-apiKey'))}
                     </Button>
                   )}
@@ -225,7 +235,7 @@ export const EditAssistant: React.FC = () => {
       </EditLayout>;
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'crud', 'layout', ...Object.keys(resources)])),
   },

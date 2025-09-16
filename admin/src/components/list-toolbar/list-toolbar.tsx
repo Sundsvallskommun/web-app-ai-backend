@@ -67,17 +67,19 @@ export const ListToolbar: React.FC<ListToolbarProps> = ({ onRefresh, resource, p
         <span className="relative">
           <PopupMenu position="under" align="end">
             <PopupMenu.Button
+              aria-label={t('common:table_settings')}
               variant="tertiary"
               showBackground={false}
+              data-cy="table-settings-button"
               size="sm"
               iconButton
               leftIcon={<Settings />}
             ></PopupMenu.Button>
             <PopupMenu.Panel>
-              <PopupMenu.Items>
+              <PopupMenu.Items data-cy="table-settings-panel">
                 {properties.map((prop, index) => (
                   <PopupMenu.Item key={`tab-prop-${index}`}>
-                    <Checkbox name="tableheaders" labelPosition="left" value={prop} {...register('headers')}>
+                    <Checkbox labelPosition="left" value={prop} {...register('headers')}>
                       {capitalize(
                         t(`${defaultInformationFields.includes(prop) ? 'common:' : `${resource}:properties.`}${prop}`)
                       )}

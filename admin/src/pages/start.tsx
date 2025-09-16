@@ -18,8 +18,8 @@ export const Start = () => {
           <h1 className="mb-0">{capitalize(`${t('common:welcome')}`)}</h1>
         </Header>
         <ul className="flex flex-wrap gap-32">
-          {Object.keys(resources).map((resourceName: ResourceName, index) => (
-            <ResourceCard key={`${resourceName}-${index}`} resource={resourceName} />
+          {Object.keys(resources).map((resourceName, index) => (
+            <ResourceCard key={`${resourceName}-${index}`} resource={resourceName as ResourceName} />
           ))}
         </ul>
       </Main>
@@ -27,7 +27,7 @@ export const Start = () => {
   );
 };
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'layout', 'crud', ...Object.keys(resources)])),
   },

@@ -12,4 +12,4 @@ export const defaultInformationFields = ['id'];
 /**
  * These fields will be automatically formatted as date
  */
-export const dateFields = [];
+export const dateFields: string[] = [];

@@ -21,11 +21,6 @@ export default function Start() {
   const autoLogin = false;
 
   const initalFocus = useRef(null);
-  const setInitalFocus = () => {
-    setTimeout(() => {
-      initalFocus.current && initalFocus.current.focus();
-    });
-  };
 
   const onLogin = () => {
     const path = router.query.path || new URLSearchParams(window.location.search).get('path') || '';
@@ -41,7 +36,6 @@ export default function Start() {
   };
 
   useEffect(() => {
-    setInitalFocus();
     if (!router.isReady) return;
     setTimeout(() => setMounted(true), 500); // to not flash the login-screen on autologin
     if (isLoggedOut) {
@@ -91,7 +85,7 @@ export default function Start() {
   );
 }
 
-export const getServerSideProps = async ({ locale }) => ({
+export const getServerSideProps = async ({ locale }: { locale: any }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common', 'login', 'crud'])),
   },

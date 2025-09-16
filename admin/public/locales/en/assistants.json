@@ -14,7 +14,7 @@
     "apiKey": {
       "assistantId": "Fill in an assistant id first",
       "apiKey": "Fill in a personal api key first",
-      "forbidden": "Check your permissions in Intric",
+      "forbidden": "Check your permissions in Eneo",
       "unauthorized": "Bad credentials. Check your api key",
       "servererror": "Something went wrong. Try again later"
     }

@@ -40,6 +40,7 @@ export const EditResource: React.FC<EditResourceProps> = ({ resource }) => {
                   property={key}
                   index={index}
                   required={isRequired}
+                  data-cy={`edit-${resource}-${key}`}
                   label={capitalize(t(`${resource}:properties.${key}`))}
                 />
               </Fragment>
