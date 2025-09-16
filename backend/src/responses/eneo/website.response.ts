@@ -1,6 +1,6 @@
 import {
   CrawlType,
-  EneoWebsitesPresentationWebsiteModelsCrawlRunPublic as EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface,
+  IntricWebsitesPresentationWebsiteModelsCrawlRunPublic as EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface,
   PaginatedPermissionsWebsitePublic as PaginatedPermissionsWebsitePublicInterface,
   ResourcePermission,
   Status,
