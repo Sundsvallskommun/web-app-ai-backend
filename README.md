@@ -10,7 +10,7 @@ Dessa APIer används i projektet, applikationsanvändaren i WSO2 måste prenumer
 | API             | Version |
 | --------------- | ------: |
 | SimulatorServer |     2.0 |
-| Eneo-Sundsvall  |      v1 |
+| Eneo-Sundsvall  |     1.0 |
 
 ## Utveckling
 

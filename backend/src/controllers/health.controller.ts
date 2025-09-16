@@ -1,3 +1,4 @@
+import { APIS } from '@/config';
 import { HealthCheckStatus } from '@/responses/health.controller';
 import ApiService from '@/services/api.service';
 import { logger } from '@/utils/logger';
@@ -8,12 +9,13 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class HealthController {
   private apiService = new ApiService();
+  private simulatorApi = APIS.find(api => api.name === 'simulatorserver');
 
   @Get('/health/up')
   @OpenAPI({ summary: 'Return health check' })
   @ResponseSchema(HealthCheckStatus)
   async up(@Res() response: Response<Record<string, string>>): Promise<Response<Record<string, string>>> {
-    const url = `simulatorserver/2.0/simulations/response?status=200%20OK`;
+    const url = `${this.simulatorApi.name}/${this.simulatorApi.version}/simulations/response?status=200%20OK`;
     const data = {
       status: 'OK',
     };
