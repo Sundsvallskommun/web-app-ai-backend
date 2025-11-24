@@ -52,6 +52,9 @@ class SpaceSparse extends DatesAndId implements SpaceSparseInterface {
   description: string;
   @IsBoolean()
   personal: boolean;
+  @IsBoolean()
+  @IsOptional()
+  organization: boolean;
 }
 
 class PaginatedPermissionsAssistantSparse

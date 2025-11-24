@@ -28,6 +28,8 @@ export class CollectionPublic extends DatesAndId implements CollectionPublicInte
   @ValidateNested()
   @Type(() => CollectionMetadata)
   metadata: CollectionMetadataInterface;
+  @IsString()
+  space_id: string;
 }
 
 export class PaginatedPermissionsCollectionPublic
