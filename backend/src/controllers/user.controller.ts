@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import { UserPublic as UserPublicInterface } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
@@ -15,7 +15,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 export class UserController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
 
   @Get('/users/me')
   @OpenAPI({

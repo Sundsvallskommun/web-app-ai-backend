@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import {
   AskResponse as AskResponseInterface,
   ConversationRequest,
@@ -41,7 +41,7 @@ import { Stream } from 'stream';
 export class ConversationController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
 
   @Post('/conversations')
   @OpenAPI({

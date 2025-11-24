@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import {
   AssistantPublic as AssistantPublicInterface,
   CursorPaginatedResponseSessionMetadataPublic as CursorPaginatedResponseSessionMetadataPublicInterface,
@@ -36,7 +36,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 export class AssistantController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
 
   @Get('/assistants')
   @OpenAPI({
@@ -200,6 +200,7 @@ export class AssistantController {
     @Res() response: Response<SessionPublicInterface>,
   ): Promise<Response<SessionPublicInterface>> {
     const url = `${this.basePath}/assistants/${id}/sessions/${session_id}/`;
+
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });
