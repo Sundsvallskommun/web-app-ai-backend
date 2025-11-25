@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import {
   AskAssistant,
   AskResponse as AskResponseInterface,
@@ -22,7 +22,7 @@ import { Stream } from 'stream';
 export class QueryController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
 
   @Post('/assistants/:assistant_id/sessions')
   @OpenAPI({
