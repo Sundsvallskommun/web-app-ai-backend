@@ -72,6 +72,10 @@ export class WebsitePublic extends DatesAndId implements WebsitePublicInterface 
   @ValidateNested()
   @Type(() => WebsiteMetadata)
   metadata: WebsiteMetadataInterface;
+  @IsBoolean()
+  requires_http_auth: boolean;
+  @IsBoolean()
+  is_auto_disabled: boolean;
 }
 
 export class PaginatedPermissionsWebsitePublic

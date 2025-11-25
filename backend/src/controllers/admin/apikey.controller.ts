@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import { ApiKey } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { HttpException } from '@/exceptions/HttpException';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -18,7 +18,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 export class AdminApiKeyController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}/api/v1`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}/api/v1`;
 
   @Get('/admin/apikey/:id')
   @OpenAPI({ summary: 'Get apikey for assistant' })

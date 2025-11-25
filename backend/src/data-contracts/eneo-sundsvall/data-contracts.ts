@@ -232,6 +232,137 @@ export interface AppSparse {
   user_id: string;
 }
 
+/**
+ * AppTemplateAdminCreate
+ * Admin template creation request.
+ */
+export interface AppTemplateAdminCreate {
+  /** Name */
+  name: string;
+  /** Description */
+  description?: string | null;
+  /** Category */
+  category: string;
+  /** Prompt */
+  prompt?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  wizard?: AppTemplateWizard | null;
+  /** Input Type */
+  input_type: string;
+  /** Input Description */
+  input_description?: string | null;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AppTemplateAdminListPublic
+ * Admin list response.
+ */
+export interface AppTemplateAdminListPublic {
+  /** Items */
+  items: AppTemplateAdminPublic[];
+  /** Count */
+  count: number;
+}
+
+/**
+ * AppTemplateAdminPublic
+ * Admin view of template with tenant fields.
+ */
+export interface AppTemplateAdminPublic {
+  /**
+   * Id
+   * @format uuid
+   */
+  id: string;
+  /** Name */
+  name: string;
+  /** Description */
+  description: string;
+  /** Category */
+  category: string;
+  /** Prompt Text */
+  prompt_text?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  /** Completion Model Id */
+  completion_model_id?: string | null;
+  /** Completion Model Name */
+  completion_model_name?: string | null;
+  wizard?: AppTemplateWizard | null;
+  /** Input Type */
+  input_type: string;
+  /** Input Description */
+  input_description?: string | null;
+  /** Organization */
+  organization: string;
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Deleted At */
+  deleted_at?: string | null;
+  /** Deleted By User Id */
+  deleted_by_user_id?: string | null;
+  /** Restored At */
+  restored_at?: string | null;
+  /** Restored By User Id */
+  restored_by_user_id?: string | null;
+  /** Original Snapshot */
+  original_snapshot?: Record<string, any> | null;
+  /**
+   * Created At
+   * @format date-time
+   */
+  created_at: string;
+  /**
+   * Updated At
+   * @format date-time
+   */
+  updated_at: string;
+  /**
+   * Usage Count
+   * @default 0
+   */
+  usage_count?: number;
+  /**
+   * Is Default
+   * @default false
+   */
+  is_default?: boolean;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AppTemplateAdminUpdate
+ * Admin template update request (PATCH semantics).
+ */
+export interface AppTemplateAdminUpdate {
+  /** Name */
+  name?: string | null;
+  /** Description */
+  description?: string | null;
+  /** Category */
+  category?: string | null;
+  /** Prompt */
+  prompt?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  /** Completion Model Id */
+  completion_model_id?: string | null;
+  wizard?: AppTemplateWizard | null;
+  /** Input Type */
+  input_type?: string | null;
+  /** Input Description */
+  input_description?: string | null;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
 /** AppTemplateListPublic */
 export interface AppTemplateListPublic {
   /** Items */
@@ -277,6 +408,22 @@ export interface AppTemplatePublic {
   type: 'app';
   wizard: AppTemplateWizard;
   organization: AppTemplateOrganization;
+  /**
+   * Is Default
+   * @default false
+   */
+  is_default?: boolean;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AppTemplateToggleDefaultRequest
+ * Request to toggle template as default/featured.
+ */
+export interface AppTemplateToggleDefaultRequest {
+  /** Is Default */
+  is_default: boolean;
 }
 
 /** AppTemplateWizard */
@@ -335,7 +482,7 @@ export interface AskAssistant {
   session_id?: string | null;
   /**
    * Files
-   * @maxItems 1
+   * @maxItems 5
    * @default []
    */
   files?: ModelId[];
@@ -452,10 +599,7 @@ export interface AssistantInTemplatePublic {
   /** Name */
   name: string;
   completion_model: CompletionModelPublicAssistantTemplate | null;
-  /**
-   * Completion Model Kwargs
-   * @default {}
-   */
+  /** Completion Model Kwargs */
   completion_model_kwargs?: Record<string, any>;
   prompt: PromptPublicAssistantTemplate | null;
 }
@@ -519,6 +663,7 @@ export interface AssistantPublic {
   user: UserSparse;
   tools: UseTools;
   type: AssistantType;
+  model_info?: ModelInfo | null;
   /**
    * Description
    * A description of the assitant that will be used as default description in GroupChatAssistantPublic
@@ -555,7 +700,6 @@ export interface AssistantSparse {
   id: string;
   /** Name */
   name: string;
-  /** @default {} */
   completion_model_kwargs?: ModelKwargs;
   /**
    * Logging Enabled
@@ -585,6 +729,133 @@ export interface AssistantSparse {
    */
   metadata_json?: Record<string, any> | null;
   type: AssistantType;
+}
+
+/**
+ * AssistantTemplateAdminCreate
+ * Admin template creation request.
+ */
+export interface AssistantTemplateAdminCreate {
+  /**
+   * Name
+   * @minLength 1
+   * @maxLength 255
+   */
+  name: string;
+  /** Description */
+  description?: string | null;
+  /**
+   * Category
+   * @minLength 1
+   * @maxLength 100
+   */
+  category: string;
+  /** Prompt */
+  prompt?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  wizard?: AssistantTemplateWizard | null;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AssistantTemplateAdminListPublic
+ * Admin list response.
+ */
+export interface AssistantTemplateAdminListPublic {
+  /** Items */
+  items: AssistantTemplateAdminPublic[];
+  /** Count */
+  count: number;
+}
+
+/**
+ * AssistantTemplateAdminPublic
+ * Admin view of template with tenant fields.
+ */
+export interface AssistantTemplateAdminPublic {
+  /**
+   * Id
+   * @format uuid
+   */
+  id: string;
+  /** Name */
+  name: string;
+  /** Description */
+  description: string;
+  /** Category */
+  category: string;
+  /** Prompt Text */
+  prompt_text?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  /** Completion Model Id */
+  completion_model_id?: string | null;
+  /** Completion Model Name */
+  completion_model_name?: string | null;
+  wizard?: AssistantTemplateWizard | null;
+  /** Organization */
+  organization: string;
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Deleted At */
+  deleted_at?: string | null;
+  /** Deleted By User Id */
+  deleted_by_user_id?: string | null;
+  /** Restored At */
+  restored_at?: string | null;
+  /** Restored By User Id */
+  restored_by_user_id?: string | null;
+  /** Original Snapshot */
+  original_snapshot?: Record<string, any> | null;
+  /**
+   * Created At
+   * @format date-time
+   */
+  created_at: string;
+  /**
+   * Updated At
+   * @format date-time
+   */
+  updated_at: string;
+  /**
+   * Usage Count
+   * @default 0
+   */
+  usage_count?: number;
+  /**
+   * Is Default
+   * @default false
+   */
+  is_default?: boolean;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AssistantTemplateAdminUpdate
+ * Admin template update request (PATCH semantics).
+ */
+export interface AssistantTemplateAdminUpdate {
+  /** Name */
+  name?: string | null;
+  /** Description */
+  description?: string | null;
+  /** Category */
+  category?: string | null;
+  /** Prompt */
+  prompt?: string | null;
+  /** Completion Model Kwargs */
+  completion_model_kwargs?: Record<string, any> | null;
+  /** Completion Model Id */
+  completion_model_id?: string | null;
+  wizard?: AssistantTemplateWizard | null;
+  /** Icon Name */
+  icon_name?: string | null;
 }
 
 /** AssistantTemplateListPublic */
@@ -632,6 +903,22 @@ export interface AssistantTemplatePublic {
   type: 'assistant';
   wizard: AssistantTemplateWizard;
   organization: AssistantTemplateOrganization;
+  /**
+   * Is Default
+   * @default false
+   */
+  is_default?: boolean;
+  /** Icon Name */
+  icon_name?: string | null;
+}
+
+/**
+ * AssistantTemplateToggleDefaultRequest
+ * Request to toggle template as default/featured.
+ */
+export interface AssistantTemplateToggleDefaultRequest {
+  /** Is Default */
+  is_default: boolean;
 }
 
 /** AssistantTemplateWizard */
@@ -708,6 +995,50 @@ export interface BodyUploadFileApiV1GroupsIdInfoBlobsUploadPost {
   file: File;
 }
 
+/**
+ * BulkCrawlRequest
+ * Request model for triggering crawls on multiple websites.
+ */
+export interface BulkCrawlRequest {
+  /** Website Ids */
+  website_ids: string[];
+}
+
+/**
+ * BulkCrawlResponse
+ * Response model for bulk crawl operations.
+ */
+export interface BulkCrawlResponse {
+  /** Total */
+  total: number;
+  /** Queued */
+  queued: number;
+  /** Failed */
+  failed: number;
+  /** Crawl Runs */
+  crawl_runs: IntricWebsitesPresentationWebsiteModelsCrawlRunPublic[];
+  /** Errors */
+  errors: Record<string, string>[];
+}
+
+/**
+ * CallbackRequest
+ * OIDC callback with authorization code or error from IdP.
+ * @example {"code":"authorization_code_from_idp","state":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."}
+ */
+export interface CallbackRequest {
+  /** Code */
+  code?: string | null;
+  /** State */
+  state: string;
+  /** Code Verifier */
+  code_verifier?: string | null;
+  /** Error */
+  error?: string | null;
+  /** Error Description */
+  error_description?: string | null;
+}
+
 /** CollectionMetadata */
 export interface CollectionMetadata {
   /** Num Info Blobs */
@@ -736,6 +1067,11 @@ export interface CollectionPublic {
   name: string;
   embedding_model: EmbeddingModelPublic;
   metadata: CollectionMetadata;
+  /**
+   * Space Id
+   * @format uuid
+   */
+  space_id: string;
 }
 
 /** CollectionUpdate */
@@ -795,6 +1131,40 @@ export interface CompletionModel {
    * @default false
    */
   is_org_default?: boolean;
+}
+
+/** CompletionModelCreate */
+export interface CompletionModelCreate {
+  /** Name */
+  name: string;
+  /** Nickname */
+  nickname: string;
+  family: ModelFamily;
+  /** Token Limit */
+  token_limit: number;
+  /** Is Deprecated */
+  is_deprecated: boolean;
+  /** Nr Billion Parameters */
+  nr_billion_parameters?: number | null;
+  /** Hf Link */
+  hf_link?: string | null;
+  stability: ModelStability;
+  hosting: ModelHostingLocation;
+  /** Open Source */
+  open_source?: boolean | null;
+  /** Description */
+  description?: string | null;
+  /** Deployment Name */
+  deployment_name?: string | null;
+  org?: ModelOrg | null;
+  /** Vision */
+  vision: boolean;
+  /** Reasoning */
+  reasoning: boolean;
+  /** Base Url */
+  base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
 }
 
 /** CompletionModelPublic */
@@ -858,6 +1228,8 @@ export interface CompletionModelPublic {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   security_classification?: SecurityClassificationPublic | null;
 }
 
@@ -940,6 +1312,8 @@ export interface CompletionModelSecurityStatus {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   security_classification?: SecurityClassificationPublic | null;
   /** Meets Security Classification */
   meets_security_classification?: boolean | null;
@@ -1038,7 +1412,7 @@ export interface ConversationRequest {
   group_chat_id?: string | null;
   /**
    * Files
-   * @maxItems 1
+   * @maxItems 5
    * @default []
    */
   files?: ModelId[];
@@ -1158,6 +1532,50 @@ export interface CreateSpaceServiceResponse {
   user: UserSparse;
 }
 
+/**
+ * CredentialInfo
+ * Information about a configured credential.
+ *
+ * Example:
+ *     {
+ *         "provider": "openai",
+ *         "masked_key": "...xyz9",
+ *         "configured_at": "2025-10-07T12:34:56.789Z",
+ *         "encryption_status": "encrypted",
+ *         "config": {
+ *             "endpoint": "https://my-resource.openai.azure.com",
+ *             "api_version": "2024-02-15-preview"
+ *         }
+ *     }
+ */
+export interface CredentialInfo {
+  /**
+   * Provider
+   * LLM provider name
+   */
+  provider: string;
+  /**
+   * Masked Key
+   * Last 4 characters of API key for identification
+   */
+  masked_key: string;
+  /**
+   * Configured At
+   * Timestamp when credential was last updated
+   */
+  configured_at?: string | null;
+  /**
+   * Encryption Status
+   * Encryption status of stored credential. 'encrypted' = secure at rest (Fernet encryption), 'plaintext' = needs migration for security compliance
+   */
+  encryption_status: CredentialInfoEncryptionStatusEnum;
+  /**
+   * Config
+   * Provider-specific configuration (e.g., Azure endpoint, api_version)
+   */
+  config?: Record<string, any>;
+}
+
 /** CursorPaginatedResponse[SessionMetadataPublic] */
 export interface CursorPaginatedResponseSessionMetadataPublic {
   /**
@@ -1252,6 +1670,7 @@ export interface DefaultAssistant {
   user: UserSparse;
   tools: UseTools;
   type: AssistantType;
+  model_info?: ModelInfo | null;
   /**
    * Description
    * A description of the assitant that will be used as default description in GroupChatAssistantPublic
@@ -1275,10 +1694,73 @@ export interface DefaultAssistant {
   metadata_json?: Record<string, any> | null;
 }
 
+/**
+ * DeleteCredentialResponse
+ * Response model for deleting tenant API credentials.
+ *
+ * Example:
+ *     {
+ *         "tenant_id": "123e4567-e89b-12d3-a456-426614174000",
+ *         "provider": "anthropic",
+ *         "message": "API credential for anthropic deleted successfully"
+ *     }
+ */
+export interface DeleteCredentialResponse {
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Provider */
+  provider: string;
+  /** Message */
+  message: string;
+}
+
+/**
+ * DeleteFederationResponse
+ * Response model for deleting federation config.
+ */
+export interface DeleteFederationResponse {
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Message */
+  message: string;
+}
+
 /** DeleteResponse */
 export interface DeleteResponse {
   /** Success */
   success: boolean;
+}
+
+/** EmbeddingModelCreate */
+export interface EmbeddingModelCreate {
+  /** Name */
+  name: string;
+  family: EmbeddingModelFamily;
+  /** Is Deprecated */
+  is_deprecated: boolean;
+  /** Open Source */
+  open_source: boolean;
+  /** Dimensions */
+  dimensions?: number | null;
+  /** Max Input */
+  max_input?: number | null;
+  /** Max Batch Size */
+  max_batch_size?: number | null;
+  /** Hf Link */
+  hf_link?: string | null;
+  stability: ModelStability;
+  hosting: ModelHostingLocation;
+  /** Description */
+  description?: string | null;
+  org?: ModelOrg | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
 }
 
 /** EmbeddingModelFamily */
@@ -1310,6 +1792,8 @@ export interface EmbeddingModelLegacy {
   dimensions?: number | null;
   /** Max Input */
   max_input?: number | null;
+  /** Max Batch Size */
+  max_batch_size?: number | null;
   /** Hf Link */
   hf_link?: string | null;
   stability: ModelStability;
@@ -1365,6 +1849,8 @@ export interface EmbeddingModelPublic {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -1395,6 +1881,8 @@ export interface EmbeddingModelPublicLegacy {
   dimensions?: number | null;
   /** Max Input */
   max_input?: number | null;
+  /** Max Batch Size */
+  max_batch_size?: number | null;
   /** Hf Link */
   hf_link?: string | null;
   stability: ModelStability;
@@ -1419,6 +1907,8 @@ export interface EmbeddingModelPublicLegacy {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
 }
 
 /** EmbeddingModelSecurityStatus */
@@ -1460,6 +1950,8 @@ export interface EmbeddingModelSecurityStatus {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -1468,6 +1960,41 @@ export interface EmbeddingModelSecurityStatus {
   security_classification?: SecurityClassificationPublic | null;
   /** Meets Security Classification */
   meets_security_classification?: boolean | null;
+}
+
+/** EmbeddingModelSparse */
+export interface EmbeddingModelSparse {
+  /** Created At */
+  created_at?: string | null;
+  /** Updated At */
+  updated_at?: string | null;
+  /**
+   * Id
+   * @format uuid
+   */
+  id: string;
+  /** Name */
+  name: string;
+  family: EmbeddingModelFamily;
+  /** Is Deprecated */
+  is_deprecated: boolean;
+  /** Open Source */
+  open_source: boolean;
+  /** Dimensions */
+  dimensions?: number | null;
+  /** Max Input */
+  max_input?: number | null;
+  /** Max Batch Size */
+  max_batch_size?: number | null;
+  /** Hf Link */
+  hf_link?: string | null;
+  stability: ModelStability;
+  hosting: ModelHostingLocation;
+  /** Description */
+  description?: string | null;
+  org?: ModelOrg | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
 }
 
 /** EmbeddingModelUpdate */
@@ -1521,6 +2048,31 @@ export enum ErrorCodes {
   Value9023 = 9023,
   Value9024 = 9024,
   Value9025 = 9025,
+  Value9026 = 9026,
+}
+
+/**
+ * FederationInfo
+ * Information about configured federation.
+ */
+export interface FederationInfo {
+  /** Provider */
+  provider: string;
+  /** Client Id */
+  client_id: string;
+  /** Masked Secret */
+  masked_secret: string;
+  /** Issuer */
+  issuer?: string | null;
+  /** Allowed Domains */
+  allowed_domains: string[];
+  /**
+   * Configured At
+   * @format date-time
+   */
+  configured_at: string;
+  /** Encryption Status */
+  encryption_status: FederationInfoEncryptionStatusEnum;
 }
 
 /** FilePublic */
@@ -1542,6 +2094,8 @@ export interface FilePublic {
   size: number;
   /** Transcription */
   transcription?: string | null;
+  /** Token Count */
+  token_count?: number | null;
 }
 
 /** FileRestrictions */
@@ -1807,6 +2361,11 @@ export interface GroupPublicWithMetadata {
    */
   id: string;
   embedding_model: EmbeddingModelPublic;
+  /**
+   * Space Id
+   * @format uuid
+   */
+  space_id: string;
   metadata: GroupMetadata;
 }
 
@@ -1919,6 +2478,20 @@ export interface InfoBlobUpdatePublic {
 export interface InfoBlobUpsertRequest {
   /** Info Blobs */
   info_blobs: InfoBlobAddPublic[];
+}
+
+/**
+ * InitiateAuthResponse
+ * Response with IdP authorization URL.
+ * @example {"authorization_url":"https://idp.example.com/authorize?client_id=abc123&...","state":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...","tenant_slug":"example-tenant"}
+ */
+export interface InitiateAuthResponse {
+  /** Authorization Url */
+  authorization_url: string;
+  /** State */
+  state: string;
+  /** Tenant Slug */
+  tenant_slug: string;
 }
 
 /** InputField */
@@ -2120,6 +2693,39 @@ export interface Limits {
   attachments: AttachmentLimits;
 }
 
+/**
+ * ListCredentialsResponse
+ * Response model for listing tenant credentials.
+ *
+ * Example:
+ *     {
+ *         "credentials": [
+ *             {
+ *                 "provider": "openai",
+ *                 "masked_key": "...xyz9",
+ *                 "configured_at": "2025-10-07T12:34:56.789Z",
+ *                 "encryption_status": "encrypted",
+ *                 "config": {}
+ *             },
+ *             {
+ *                 "provider": "azure",
+ *                 "masked_key": "...abc3",
+ *                 "configured_at": "2025-10-07T12:45:00.123Z",
+ *                 "encryption_status": "plaintext",
+ *                 "config": {
+ *                     "endpoint": "https://my-resource.openai.azure.com",
+ *                     "api_version": "2024-02-15-preview",
+ *                     "deployment_name": "gpt-4"
+ *                 }
+ *             }
+ *         ]
+ *     }
+ */
+export interface ListCredentialsResponse {
+  /** Credentials */
+  credentials: CredentialInfo[];
+}
+
 /** LoggingDetailsPublic */
 export interface LoggingDetailsPublic {
   /** Context */
@@ -2189,6 +2795,43 @@ export interface MetadataStatistics {
   questions: QuestionMetadata[];
 }
 
+/**
+ * MigrationResult
+ * Result of a model migration operation.
+ */
+export interface MigrationResult {
+  /** Success */
+  success: boolean;
+  /** Migrated Count */
+  migrated_count: number;
+  /** Failed Count */
+  failed_count: number;
+  /** Details */
+  details: Record<string, number>;
+  /** Duration */
+  duration: number;
+  /**
+   * Migration Id
+   * @format uuid
+   */
+  migration_id: string;
+  /**
+   * Warnings
+   * @default []
+   */
+  warnings?: string[];
+  /**
+   * Auto Recalculated
+   * @default false
+   */
+  auto_recalculated?: boolean;
+  /**
+   * Requires Manual Recalculation
+   * @default false
+   */
+  requires_manual_recalculation?: boolean;
+}
+
 /** ModelFamily */
 export enum ModelFamily {
   Openai = 'openai',
@@ -2216,6 +2859,19 @@ export interface ModelId {
   id: string;
 }
 
+/**
+ * ModelInfo
+ * Information about the model used by the assistant.
+ */
+export interface ModelInfo {
+  /** Name */
+  name: string;
+  /** Token Limit */
+  token_limit: number;
+  /** Prompt Tokens */
+  prompt_tokens?: number | null;
+}
+
 /** ModelKwargs */
 export interface ModelKwargs {
   /** Temperature */
@@ -2236,6 +2892,70 @@ export interface ModelKwargs {
   top_k?: number | null;
 }
 
+/**
+ * ModelMigrationHistory
+ * Historical record of a model migration.
+ */
+export interface ModelMigrationHistory {
+  /**
+   * Id
+   * @format uuid
+   */
+  id: string;
+  /**
+   * From Model Id
+   * @format uuid
+   */
+  from_model_id: string;
+  /** From Model Name */
+  from_model_name: string;
+  /**
+   * To Model Id
+   * @format uuid
+   */
+  to_model_id: string;
+  /** To Model Name */
+  to_model_name: string;
+  /** Migrated Count */
+  migrated_count: number;
+  /** Status */
+  status: string;
+  /**
+   * Initiated By Id
+   * @format uuid
+   */
+  initiated_by_id: string;
+  /** Initiated By Name */
+  initiated_by_name: string;
+  /** Started At */
+  started_at?: string | null;
+  /** Completed At */
+  completed_at?: string | null;
+  /** Duration */
+  duration?: number | null;
+  /** Error Message */
+  error_message?: string | null;
+}
+
+/**
+ * ModelMigrationRequest
+ * Request to migrate usage from one model to another.
+ */
+export interface ModelMigrationRequest {
+  /**
+   * To Model Id
+   * @format uuid
+   */
+  to_model_id: string;
+  /** Entity Types */
+  entity_types?: string[] | null;
+  /**
+   * Confirm Migration
+   * @default false
+   */
+  confirm_migration?: boolean;
+}
+
 /** ModelOrg */
 export enum ModelOrg {
   OpenAI = 'OpenAI',
@@ -2246,6 +2966,7 @@ export enum ModelOrg {
   KBLab = 'KBLab',
   Google = 'Google',
   Berget = 'Berget',
+  GDM = 'GDM',
 }
 
 /** ModelStability */
@@ -2296,6 +3017,97 @@ export interface ModelUsage {
 }
 
 /**
+ * ModelUsageDetail
+ * Detailed information about a specific entity using a completion model.
+ */
+export interface ModelUsageDetail {
+  /**
+   * Entity Id
+   * @format uuid
+   */
+  entity_id: string;
+  /** Entity Name */
+  entity_name: string;
+  /** Entity Type */
+  entity_type: string;
+  /** Space Id */
+  space_id?: string | null;
+  /** Space Name */
+  space_name?: string | null;
+  /** Owner Id */
+  owner_id?: string | null;
+  /** Owner Name */
+  owner_name?: string | null;
+  /**
+   * Created At
+   * @format date-time
+   */
+  created_at: string;
+  /** Last Used */
+  last_used?: string | null;
+  /** Usage Count */
+  usage_count?: number | null;
+}
+
+/**
+ * ModelUsageStatistics
+ * Pre-aggregated usage statistics for a completion model.
+ */
+export interface ModelUsageStatistics {
+  /**
+   * Model Id
+   * @format uuid
+   */
+  model_id: string;
+  /** Total Usage */
+  total_usage: number;
+  /** Assistants Count */
+  assistants_count: number;
+  /** Apps Count */
+  apps_count: number;
+  /** Services Count */
+  services_count: number;
+  /** Questions Count */
+  questions_count: number;
+  /** Assistant Templates Count */
+  assistant_templates_count: number;
+  /** App Templates Count */
+  app_templates_count: number;
+  /** Spaces Count */
+  spaces_count: number;
+  /**
+   * Last Updated
+   * @format date-time
+   */
+  last_updated: string;
+}
+
+/**
+ * ModelUsageSummary
+ * Summary of usage for a single model.
+ */
+export interface ModelUsageSummary {
+  /**
+   * Model Id
+   * @format uuid
+   */
+  model_id: string;
+  /** Model Name */
+  model_name: string;
+  /** Model Nickname */
+  model_nickname: string;
+  /** Is Enabled */
+  is_enabled: boolean;
+  /** Total Usage */
+  total_usage: number;
+  /**
+   * Last Updated
+   * @format date-time
+   */
+  last_updated: string;
+}
+
+/**
  * ModelsPresentation
  * Presentation model for all types of AI models.
  */
@@ -2339,6 +3151,42 @@ export enum Modules {
   SWEModels = 'SWE Models',
 }
 
+/** OIDCDebugToggleRequest */
+export interface OIDCDebugToggleRequest {
+  /**
+   * Enabled
+   * Enable or disable OIDC debug logging
+   */
+  enabled: boolean;
+  /**
+   * Duration Minutes
+   * Duration in minutes before the toggle auto-expires (max 120)
+   * @default 30
+   */
+  duration_minutes?: number | null;
+  /**
+   * Reason
+   * Optional note for audit trail
+   */
+  reason?: string | null;
+}
+
+/** OIDCDebugToggleResponse */
+export interface OIDCDebugToggleResponse {
+  /** Enabled */
+  enabled: boolean;
+  /** Enabled At */
+  enabled_at: string | null;
+  /** Enabled By */
+  enabled_by: string | null;
+  /** Expires At */
+  expires_at: string | null;
+  /** Reason */
+  reason: string | null;
+  /** Backend */
+  backend: string;
+}
+
 /** OpenIdConnectLogin */
 export interface OpenIdConnectLogin {
   /** Code */
@@ -2347,11 +3195,8 @@ export interface OpenIdConnectLogin {
   code_verifier: string;
   /** Redirect Uri */
   redirect_uri: string;
-  /**
-   * Client Id
-   * @default "intric"
-   */
-  client_id?: string;
+  /** Client Id */
+  client_id: string;
   /**
    * Grant Type
    * @default "authorization_code"
@@ -2363,7 +3208,7 @@ export interface OpenIdConnectLogin {
    */
   scope?: string;
   /** Nonce */
-  nonce?: string;
+  nonce?: string | null;
 }
 
 /** PaginatedPermissions[AppSparse] */
@@ -2516,6 +3361,23 @@ export interface PaginatedPermissionsWebsitePublic {
    * Number of items returned in the response
    */
   count: number;
+}
+
+/**
+ * PaginatedResponse
+ * Generic paginated response with cursor-based pagination.
+ */
+export interface PaginatedResponse {
+  /** Items */
+  items: ModelUsageDetail[];
+  /** Total */
+  total: number;
+  /** Has More */
+  has_more: boolean;
+  /** Next Cursor */
+  next_cursor?: string | null;
+  /** Prev Cursor */
+  prev_cursor?: string | null;
 }
 
 /** PaginatedResponse[AllowedOriginInDB] */
@@ -2840,13 +3702,13 @@ export interface PaginatedResponseSpaceSparse {
   count: number;
 }
 
-/** PaginatedResponse[TenantInDB] */
-export interface PaginatedResponseTenantInDB {
+/** PaginatedResponse[TenantWithMaskedCredentials] */
+export interface PaginatedResponseTenantWithMaskedCredentials {
   /**
    * Items
    * List of items returned in the response
    */
-  items: TenantInDB[];
+  items: TenantWithMaskedCredentials[];
   /**
    * Count
    * Number of items returned in the response
@@ -2861,20 +3723,6 @@ export interface PaginatedResponseTranscriptionModelPublic {
    * List of items returned in the response
    */
   items: TranscriptionModelPublic[];
-  /**
-   * Count
-   * Number of items returned in the response
-   */
-  count: number;
-}
-
-/** PaginatedResponse[UserAdminView] */
-export interface PaginatedResponseUserAdminView {
-  /**
-   * Items
-   * List of items returned in the response
-   */
-  items: UserAdminView[];
   /**
    * Count
    * Number of items returned in the response
@@ -2936,6 +3784,62 @@ export interface PaginatedResponseStr {
    * Number of items returned in the response
    */
   count: number;
+}
+
+/** PaginatedUsersResponse[UserAdminView] */
+export interface PaginatedUsersResponseUserAdminView {
+  /**
+   * Items
+   * List of users for the current page
+   */
+  items: UserAdminView[];
+  /** Pagination metadata for navigation */
+  metadata: PaginationMetadata;
+}
+
+/**
+ * PaginationMetadata
+ * Pagination metadata for frontend navigation.
+ *
+ * Provides all information needed to build pagination UI (page numbers, next/previous buttons).
+ * Includes counts by state for tab display.
+ */
+export interface PaginationMetadata {
+  /**
+   * Page
+   * Current page number (1-based)
+   */
+  page: number;
+  /**
+   * Page Size
+   * Number of items per page
+   */
+  page_size: number;
+  /**
+   * Total Count
+   * Total number of items across all pages
+   */
+  total_count: number;
+  /**
+   * Total Pages
+   * Total number of pages (calculated from total_count and page_size)
+   */
+  total_pages: number;
+  /**
+   * Has Next
+   * Whether there is a next page available
+   */
+  has_next: boolean;
+  /**
+   * Has Previous
+   * Whether there is a previous page available
+   */
+  has_previous: boolean;
+  /**
+   * Counts
+   * Optional counts by state (active, inactive) for tab display
+   */
+  counts?: Record<string, number> | null;
 }
 
 /** PartialAssistantUpdatePublic */
@@ -3004,6 +3908,70 @@ export interface PartialAssistantUpdatePublic {
    * Metadata for the assistant
    */
   metadata_json?: Record<string, any> | null;
+}
+
+/** PartialCompletionModelUpdate */
+export interface PartialCompletionModelUpdate {
+  /** Name */
+  name?: string | null;
+  /** Nickname */
+  nickname?: string | null;
+  family?: ModelFamily | null;
+  /** Token Limit */
+  token_limit?: number | null;
+  /** Is Deprecated */
+  is_deprecated?: boolean | null;
+  /** Nr Billion Parameters */
+  nr_billion_parameters?: number | null;
+  /** Hf Link */
+  hf_link?: string | null;
+  stability?: ModelStability | null;
+  hosting?: ModelHostingLocation | null;
+  /** Open Source */
+  open_source?: boolean | null;
+  /** Description */
+  description?: string | null;
+  /** Deployment Name */
+  deployment_name?: string | null;
+  org?: ModelOrg | null;
+  /** Vision */
+  vision?: boolean | null;
+  /** Reasoning */
+  reasoning?: boolean | null;
+  /** Base Url */
+  base_url?: string | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
+  /** Id */
+  id?: string | null;
+}
+
+/** PartialEmbeddingModelUpdate */
+export interface PartialEmbeddingModelUpdate {
+  /** Name */
+  name?: string | null;
+  family?: EmbeddingModelFamily | null;
+  /** Is Deprecated */
+  is_deprecated?: boolean | null;
+  /** Open Source */
+  open_source?: boolean | null;
+  /** Dimensions */
+  dimensions?: number | null;
+  /** Max Input */
+  max_input?: number | null;
+  /** Max Batch Size */
+  max_batch_size?: number | null;
+  /** Hf Link */
+  hf_link?: string | null;
+  stability?: ModelStability | null;
+  hosting?: ModelHostingLocation | null;
+  /** Description */
+  description?: string | null;
+  org?: ModelOrg | null;
+  /** Litellm Model Name */
+  litellm_model_name?: string | null;
+  /** Id */
+  id?: string | null;
 }
 
 /** PartialPropUserUpdate */
@@ -3306,7 +4274,7 @@ export interface RunService {
   input: string;
   /**
    * Files
-   * @maxItems 1
+   * @maxItems 5
    * @default []
    */
   files?: ModelId[];
@@ -3480,7 +4448,6 @@ export interface ServiceCreatePublic {
   name: string;
   /** Prompt */
   prompt: string;
-  /** @default {} */
   completion_model_kwargs?: ModelKwargs | null;
   /**
    * Groups
@@ -3569,7 +4536,6 @@ export interface ServiceSparse {
   name: string;
   /** Prompt */
   prompt: string;
-  /** @default {} */
   completion_model_kwargs?: ModelKwargs | null;
   /**
    * Permissions
@@ -3642,6 +4608,165 @@ export interface SessionPublic {
   feedback?: SessionFeedback | null;
 }
 
+/**
+ * SetCredentialRequest
+ * Request model for setting tenant API credentials.
+ *
+ * Provider-specific field requirements:
+ * - OpenAI, Anthropic, Mistral, Berget, GDM, OVHCloud: api_key only
+ * - vLLM: api_key + endpoint (required)
+ * - Azure: api_key + endpoint + api_version (required)
+ *
+ * Example for OpenAI:
+ *     {
+ *         "api_key": "sk-proj-abc123..."
+ *     }
+ *
+ * Example for Azure:
+ *     {
+ *         "api_key": "abc123...",
+ *         "endpoint": "https://my-resource.openai.azure.com",
+ *         "api_version": "2024-02-15-preview"
+ *     }
+ *
+ * Example for vLLM:
+ *     {
+ *         "api_key": "vllm-secret-key",
+ *         "endpoint": "http://tenant-vllm:8000"
+ *     }
+ */
+export interface SetCredentialRequest {
+  /**
+   * Api Key
+   * API key for the provider
+   * @minLength 8
+   */
+  api_key: string;
+  /**
+   * Endpoint
+   * Azure OpenAI endpoint (required for Azure provider)
+   */
+  endpoint?: string | null;
+  /**
+   * Api Version
+   * Azure OpenAI API version (required for Azure provider)
+   */
+  api_version?: string | null;
+  /**
+   * Deployment Name
+   * Azure OpenAI deployment name (required for Azure provider)
+   */
+  deployment_name?: string | null;
+}
+
+/**
+ * SetCredentialResponse
+ * Response model for setting tenant API credentials.
+ *
+ * Returns the tenant ID, provider, masked API key (last 4 chars for verification),
+ * and confirmation message. Sensitive data (api_key, endpoint, api_version) are
+ * not returned for security.
+ *
+ * Example:
+ *     {
+ *         "tenant_id": "123e4567-e89b-12d3-a456-426614174000",
+ *         "provider": "openai",
+ *         "masked_key": "...xyz9",
+ *         "message": "API credential for openai set successfully",
+ *         "set_at": "2025-10-22T10:00:00+00:00"
+ *     }
+ */
+export interface SetCredentialResponse {
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Provider */
+  provider: string;
+  /** Masked Key */
+  masked_key: string;
+  /** Message */
+  message: string;
+  /**
+   * Set At
+   * @format date-time
+   */
+  set_at: string;
+}
+
+/**
+ * SetFederationRequest
+ * Request model for setting tenant federation config.
+ * @example {"allowed_domains":["sundsvall.se","ange.se"],"canonical_public_origin":"https://sundsvall.eneo.se","client_id":"abc123-def456-ghi789","client_secret":"your-secret-value","discovery_endpoint":"https://login.microsoftonline.com/{tenant-id}/v2.0/.well-known/openid-configuration","provider":"entra_id","slug":"sundsvall"}
+ */
+export interface SetFederationRequest {
+  /**
+   * Provider
+   * Identity provider label (e.g., 'mobilityguard', 'entra_id', 'okta', 'auth0')
+   */
+  provider: string;
+  /**
+   * Discovery Endpoint
+   * OIDC discovery endpoint URL
+   */
+  discovery_endpoint: string;
+  /**
+   * Client Id
+   * OAuth client ID
+   */
+  client_id: string;
+  /**
+   * Client Secret
+   * OAuth client secret
+   * @minLength 8
+   */
+  client_secret: string;
+  /**
+   * Allowed Domains
+   * Email domain whitelist for user authentication (e.g., ['sundsvall.se', 'ange.se']). Only users with emails from these domains can log into this tenant. Leave empty to allow all domains (not recommended for production)
+   */
+  allowed_domains?: string[];
+  /**
+   * Canonical Public Origin
+   * Tenant's public URL (e.g., https://sundsvall.eneo.se). Used to construct redirect_uri for IdP. Must match the redirect_uri registered in your IdP application. Required for multi-tenant federation
+   */
+  canonical_public_origin?: string | null;
+  /**
+   * Redirect Path
+   * Optional custom callback path (defaults to '/auth/callback'). Most deployments can omit this field and use the default
+   */
+  redirect_path?: string | null;
+  /**
+   * Slug
+   * URL-safe tenant identifier for federation routing (e.g., 'sundsvall'). Required for tenant to appear in login selector. Auto-generated from tenant name if omitted. Must be lowercase alphanumeric + hyphens, max 63 chars.
+   */
+  slug?: string | null;
+}
+
+/**
+ * SetFederationResponse
+ * Response model for setting federation config.
+ */
+export interface SetFederationResponse {
+  /**
+   * Tenant Id
+   * @format uuid
+   */
+  tenant_id: string;
+  /** Provider */
+  provider: string;
+  /** Masked Secret */
+  masked_secret: string;
+  /** Message */
+  message: string;
+  /**
+   * Slug
+   * Effective slug (custom or auto-generated) for this tenant
+   */
+  slug?: string | null;
+}
+
 /** SettingsPublic */
 export interface SettingsPublic {
   /**
@@ -3649,6 +4774,16 @@ export interface SettingsPublic {
    * @default {}
    */
   chatbot_widget?: Record<string, any>;
+  /**
+   * Using Templates
+   * @default false
+   */
+  using_templates?: boolean;
+  /**
+   * Tenant Credentials Enabled
+   * @default false
+   */
+  tenant_credentials_enabled?: boolean;
 }
 
 /** SignedURLRequest */
@@ -3668,6 +4803,25 @@ export interface SignedURLResponse {
   url: string;
   /** Expires At */
   expires_at: number;
+}
+
+/**
+ * SortField
+ * Allowed fields for sorting user lists
+ */
+export enum SortField {
+  Email = 'email',
+  Username = 'username',
+  CreatedAt = 'created_at',
+}
+
+/**
+ * SortOrder
+ * Sort direction for user lists
+ */
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc',
 }
 
 /** SpaceDashboard */
@@ -3692,6 +4846,8 @@ export interface SpaceDashboard {
   description: string | null;
   /** Personal */
   personal: boolean;
+  /** Organization */
+  organization: boolean;
   applications: Applications;
 }
 
@@ -3738,6 +4894,8 @@ export interface SpacePublic {
   description: string | null;
   /** Personal */
   personal: boolean;
+  /** Organization */
+  organization: boolean;
   applications: Applications;
   /** Embedding Models */
   embedding_models: EmbeddingModelPublic[];
@@ -3789,6 +4947,17 @@ export interface SpaceSparse {
   description: string | null;
   /** Personal */
   personal: boolean;
+  /** Organization */
+  organization: boolean;
+}
+
+/**
+ * StateFilter
+ * Filter for user state in admin users list
+ */
+export enum StateFilter {
+  Active = 'active',
+  Inactive = 'inactive',
 }
 
 /** Status */
@@ -3878,6 +5047,7 @@ export enum Task {
   RunApp = 'run_app',
   PullConfluenceContent = 'pull_confluence_content',
   PullSharepointContent = 'pull_sharepoint_content',
+  UpdateModelUsageStats = 'update_model_usage_stats',
 }
 
 /** TemplateCreate */
@@ -3897,6 +5067,12 @@ export interface TemplateListPublic {
   items: (AppTemplatePublic | AssistantTemplatePublic)[];
   /** Count */
   count: number;
+}
+
+/** TemplateSettingUpdate */
+export interface TemplateSettingUpdate {
+  /** Enabled */
+  enabled: boolean;
 }
 
 /** TemplateWizard */
@@ -3959,6 +5135,8 @@ export interface TenantInDB {
   name: string;
   /** Display Name */
   display_name?: string | null;
+  /** Slug */
+  slug?: string | null;
   /** Quota Limit */
   quota_limit: number;
   /** Domain */
@@ -3982,6 +5160,24 @@ export interface TenantInDB {
    * @default []
    */
   modules?: ModuleInDB[];
+  /** Api Credentials */
+  api_credentials?: Record<string, any>;
+  /** Federation Config */
+  federation_config?: Record<string, any>;
+}
+
+/**
+ * TenantInfo
+ * Public tenant information for selector grid.
+ * @example {"display_name":"Stockholm","name":"Stockholm Municipality","slug":"stockholm"}
+ */
+export interface TenantInfo {
+  /** Slug */
+  slug: string;
+  /** Name */
+  name: string;
+  /** Display Name */
+  display_name: string;
 }
 
 /** TenantIntegration */
@@ -4014,6 +5210,16 @@ export interface TenantIntegrationList {
   items: TenantIntegration[];
   /** Count */
   count: number;
+}
+
+/**
+ * TenantListResponse
+ * List of tenants for selector.
+ * @example {"tenants":[{"display_name":"Stockholm","name":"Stockholm Municipality","slug":"stockholm"},{"display_name":"Gothenburg","name":"Gothenburg Municipality","slug":"goteborg"}]}
+ */
+export interface TenantListResponse {
+  /** Tenants */
+  tenants: TenantInfo[];
 }
 
 /** TenantPublic */
@@ -4069,6 +5275,134 @@ export interface TenantUpdatePublic {
   state?: TenantState | null;
   /** Security Enabled */
   security_enabled?: boolean | null;
+}
+
+/**
+ * TenantWithMaskedCredentials
+ * TenantInDB with masked API credentials for safe API responses.
+ *
+ * This model is used when returning tenant data through API endpoints
+ * to prevent exposing full API keys. The api_credentials field is
+ * automatically masked to show only the last 4 characters of each key.
+ *
+ * Example:
+ *     Full credential: {"openai": {"api_key": "sk-proj-abc123xyz"}}
+ *     Masked: {"openai": "...xyz"}
+ */
+export interface TenantWithMaskedCredentials {
+  /** Created At */
+  created_at?: string | null;
+  /** Updated At */
+  updated_at?: string | null;
+  /**
+   * Id
+   * @format uuid
+   */
+  id: string;
+  /** Privacy Policy */
+  privacy_policy?: string | null;
+  /** Name */
+  name: string;
+  /** Display Name */
+  display_name?: string | null;
+  /** Slug */
+  slug?: string | null;
+  /** Quota Limit */
+  quota_limit: number;
+  /** Domain */
+  domain?: string | null;
+  /** Zitadel Org Id */
+  zitadel_org_id?: string | null;
+  /**
+   * Provisioning
+   * @default false
+   */
+  provisioning?: boolean;
+  /** @default "active" */
+  state?: TenantState;
+  /**
+   * Security Enabled
+   * @default false
+   */
+  security_enabled?: boolean;
+  /**
+   * Modules
+   * @default []
+   */
+  modules?: ModuleInDB[];
+  /** Api Credentials */
+  api_credentials?: Record<string, any>;
+  /** Federation Config */
+  federation_config?: Record<string, any>;
+}
+
+/**
+ * TokenEstimateBreakdown
+ * Breakdown of token usage by source.
+ */
+export interface TokenEstimateBreakdown {
+  /**
+   * Prompt
+   * Tokens used by assistant prompt
+   */
+  prompt: number;
+  /**
+   * Text
+   * Tokens used by user input text
+   */
+  text: number;
+  /**
+   * Files
+   * Total tokens used by all files
+   */
+  files: number;
+  /**
+   * File Details
+   * Per-file token counts
+   */
+  file_details?: Record<string, number>;
+}
+
+/**
+ * TokenEstimateRequest
+ * Request payload for estimating tokens.
+ */
+export interface TokenEstimateRequest {
+  /**
+   * Text
+   * User input text to evaluate
+   * @default ""
+   */
+  text?: string;
+  /**
+   * File Ids
+   * List of file IDs to include in the estimate
+   */
+  file_ids?: string[];
+}
+
+/**
+ * TokenEstimateResponse
+ * Response model for token usage estimation.
+ */
+export interface TokenEstimateResponse {
+  /**
+   * Tokens
+   * Total token count
+   */
+  tokens: number;
+  /**
+   * Percentage
+   * Percentage of context window used
+   */
+  percentage: number;
+  /**
+   * Limit
+   * Model's context window limit
+   */
+  limit: number;
+  /** Token usage breakdown by source */
+  breakdown: TokenEstimateBreakdown;
 }
 
 /** TokenUsageSummary */
@@ -4146,6 +5480,8 @@ export interface TranscriptionModelPublic {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -4192,6 +5528,8 @@ export interface TranscriptionModelSecurityStatus {
    * @default true
    */
   is_locked?: boolean;
+  /** Lock Reason */
+  lock_reason?: string | null;
   /**
    * Is Org Enabled
    * @default false
@@ -4243,9 +5581,16 @@ export interface TransferRequest {
   target_space_id: string;
 }
 
-/** UpdateInterval */
+/**
+ * UpdateInterval
+ * Defines how frequently a website should be crawled.
+ *
+ * Why: Provides flexible scheduling options for automated crawling.
+ */
 export enum UpdateInterval {
   Never = 'never',
+  Daily = 'daily',
+  EveryOtherDay = 'every_other_day',
   Weekly = 'weekly',
 }
 
@@ -5052,9 +6397,24 @@ export interface WebsiteCreate {
   download_files?: boolean;
   /** @default "crawl" */
   crawl_type?: CrawlType;
-  /** @default "never" */
+  /**
+   * Defines how frequently a website should be crawled.
+   *
+   * Why: Provides flexible scheduling options for automated crawling.
+   * @default "never"
+   */
   update_interval?: UpdateInterval;
   embedding_model?: ModelId | null;
+  /**
+   * Http Auth Username
+   * Username for HTTP Basic Authentication (optional)
+   */
+  http_auth_username?: string | null;
+  /**
+   * Http Auth Password
+   * Password for HTTP Basic Authentication (optional). Must be provided together with username.
+   */
+  http_auth_password?: string | null;
 }
 
 /** WebsiteCreateRequestDeprecated */
@@ -5077,7 +6437,12 @@ export interface WebsiteCreateRequestDeprecated {
   download_files?: boolean;
   /** @default "crawl" */
   crawl_type?: CrawlType;
-  /** @default "never" */
+  /**
+   * Defines how frequently a website should be crawled.
+   *
+   * Why: Provides flexible scheduling options for automated crawling.
+   * @default "never"
+   */
   update_interval?: UpdateInterval;
   embedding_model: ModelId;
 }
@@ -5116,10 +6481,36 @@ export interface WebsitePublic {
   /** Download Files */
   download_files: boolean;
   crawl_type: CrawlType;
+  /**
+   * Defines how frequently a website should be crawled.
+   *
+   * Why: Provides flexible scheduling options for automated crawling.
+   */
   update_interval: UpdateInterval;
   latest_crawl: IntricWebsitesPresentationWebsiteModelsCrawlRunPublic | null;
   embedding_model: EmbeddingModelPublic;
   metadata: WebsiteMetadata;
+  /**
+   * Requires Http Auth
+   * Whether this website requires HTTP Basic Authentication. Credentials are never exposed via API.
+   */
+  requires_http_auth: boolean;
+  /**
+   * Consecutive Failures
+   * Number of consecutive crawl failures. Resets to 0 on successful crawl.
+   * @default 0
+   */
+  consecutive_failures?: number;
+  /**
+   * Next Retry At
+   * When to retry after failures (null = no backoff). Uses exponential backoff: 1h → 2h → 4h → 8h → 16h → 24h max.
+   */
+  next_retry_at?: string | null;
+  /**
+   * Is Auto Disabled
+   * True if website was auto-disabled after 10 consecutive failures. User must manually change update_interval to re-enable.
+   */
+  is_auto_disabled: boolean;
 }
 
 /** WebsiteUpdate */
@@ -5146,9 +6537,24 @@ export interface WebsiteUpdate {
   crawl_type?: CrawlType;
   /**
    * Update Interval
+   * Defines how frequently a website should be crawled.
+   *
+   * Why: Provides flexible scheduling options for automated crawling.
    * @default "NOT_PROVIDED"
    */
   update_interval?: UpdateInterval;
+  /**
+   * Http Auth Username
+   * Username for HTTP Basic Authentication. Set to null to remove auth. Must be provided with password.
+   * @default "NOT_PROVIDED"
+   */
+  http_auth_username?: string | null;
+  /**
+   * Http Auth Password
+   * Password for HTTP Basic Authentication. Set to null to remove auth. Must be provided with username.
+   * @default "NOT_PROVIDED"
+   */
+  http_auth_password?: string | null;
 }
 
 /** WizardType */
@@ -5220,6 +6626,21 @@ export enum CreateSpaceServiceResponseOutputFormatEnum {
   Boolean = 'boolean',
 }
 
+/**
+ * Encryption Status
+ * Encryption status of stored credential. 'encrypted' = secure at rest (Fernet encryption), 'plaintext' = needs migration for security compliance
+ */
+export enum CredentialInfoEncryptionStatusEnum {
+  Encrypted = 'encrypted',
+  Plaintext = 'plaintext',
+}
+
+/** Encryption Status */
+export enum FederationInfoEncryptionStatusEnum {
+  Encrypted = 'encrypted',
+  Plaintext = 'plaintext',
+}
+
 /** Integration Type */
 export enum IntegrationKnowledgePublicIntegrationTypeEnum {
   Confluence = 'confluence',
@@ -5254,4 +6675,52 @@ export enum ServiceSparseOutputFormatEnum {
 export enum SessionFeedbackValueEnum {
   Value1 = -1,
   Value11 = 1,
+}
+
+/** Provider */
+export enum SetTenantCredentialApiV1SysadminTenantsTenantIdCredentialsProviderPutParamsProviderEnum {
+  Openai = 'openai',
+  Anthropic = 'anthropic',
+  Azure = 'azure',
+  Berget = 'berget',
+  Gdm = 'gdm',
+  Mistral = 'mistral',
+  Ovhcloud = 'ovhcloud',
+  Vllm = 'vllm',
+}
+
+/** Provider */
+export enum SetTenantCredentialApiV1SysadminTenantsTenantIdCredentialsProviderPutParamsEnum {
+  Openai = 'openai',
+  Anthropic = 'anthropic',
+  Azure = 'azure',
+  Berget = 'berget',
+  Gdm = 'gdm',
+  Mistral = 'mistral',
+  Ovhcloud = 'ovhcloud',
+  Vllm = 'vllm',
+}
+
+/** Provider */
+export enum DeleteTenantCredentialApiV1SysadminTenantsTenantIdCredentialsProviderDeleteParamsProviderEnum {
+  Openai = 'openai',
+  Anthropic = 'anthropic',
+  Azure = 'azure',
+  Berget = 'berget',
+  Gdm = 'gdm',
+  Mistral = 'mistral',
+  Ovhcloud = 'ovhcloud',
+  Vllm = 'vllm',
+}
+
+/** Provider */
+export enum DeleteTenantCredentialApiV1SysadminTenantsTenantIdCredentialsProviderDeleteParamsEnum {
+  Openai = 'openai',
+  Anthropic = 'anthropic',
+  Azure = 'azure',
+  Berget = 'berget',
+  Gdm = 'gdm',
+  Mistral = 'mistral',
+  Ovhcloud = 'ovhcloud',
+  Vllm = 'vllm',
 }

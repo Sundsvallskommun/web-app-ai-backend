@@ -1,4 +1,4 @@
-import { APIS } from '@/config';
+import { APIS, ENEO_BASEPATH } from '@/config';
 import {
   Applications as ApplicationsInterface,
   AssistantPublic as AssistantPublicInterface,
@@ -30,7 +30,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 export class SpaceController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${this.api.name}/${this.api.version}`;
+  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
 
   @Get('/spaces')
   @OpenAPI({
