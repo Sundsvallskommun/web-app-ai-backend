@@ -128,6 +128,8 @@ export class AssistantPublic extends AssistantCommon implements AssistantPublicI
   @ValidateNested({ each: true })
   @Type(() => IntegrationKnowledgePublic)
   integration_knowledge_list!: IntegrationKnowledgePublicInterface[];
+  @IsObject({ each: true })
+  mcp_servers!: Record<string, any>[];
   @ValidateNested()
   @Type(() => CompletionModelSparse)
   completion_model!: CompletionModelSparseInterface;

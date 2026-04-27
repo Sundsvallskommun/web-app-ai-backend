@@ -19,10 +19,12 @@ import {
   TranscriptionModelPublic as TranscriptionModelPublicInterface,
   SpaceRoleValue,
   PaginatedPermissionsSpaceMember as PaginatedPermissionsSpaceMemberInterface,
+  PaginatedPermissionsSpaceGroupMember as PaginatedPermissionsSpaceGroupMemberInterface,
   DefaultAssistant as DefaultAssistantInterface,
   SpaceRole as SpaceRoleInterface,
+  SpaceGroupMember as SpaceGroupMemberInterface,
 } from '@/data-contracts/eneo-sundsvall/data-contracts';
-import { IsBoolean, IsEnum, IsIn, IsInt, IsOptional, IsString, Validate, ValidateNested } from 'class-validator';
+import { IsBoolean, IsEnum, IsIn, IsInt, IsObject, IsOptional, IsString, Validate, ValidateNested } from 'class-validator';
 import {
   DatesAndId,
   PaginatedDefaults,
@@ -128,6 +130,25 @@ class PaginatedPermissionsSpaceMember
   items!: SpaceMemberInterface[];
 }
 
+class SpaceGroupMember extends DatesAndId implements SpaceGroupMemberInterface {
+  @IsString()
+  name!: string;
+  @IsEnum(SpaceRoleValue)
+  role!: SpaceRoleValue;
+  @IsInt()
+  @IsOptional()
+  user_count?: number;
+}
+
+class PaginatedPermissionsSpaceGroupMember
+  extends PaginatedPermissionsDefaults
+  implements PaginatedPermissionsSpaceGroupMemberInterface
+{
+  @ValidateNested({ each: true })
+  @Type(() => SpaceGroupMember)
+  items!: SpaceGroupMemberInterface[];
+}
+
 class SpaceRole implements SpaceRoleInterface {
   @IsEnum(SpaceRoleValue)
   value!: SpaceRoleValue;
@@ -148,12 +169,17 @@ export class SpacePublic extends SpaceSparse implements SpacePublicInterface {
   @ValidateNested({ each: true })
   @Type(() => TranscriptionModelPublic)
   transcription_models!: TranscriptionModelPublicInterface[];
+  @IsObject({ each: true })
+  mcp_servers!: Record<string, any>[];
   @ValidateNested()
   @Type(() => Knowledge)
   knowledge!: KnowledgeInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsSpaceMember)
   members!: PaginatedPermissionsSpaceMemberInterface;
+  @ValidateNested()
+  @Type(() => PaginatedPermissionsSpaceGroupMember)
+  group_members!: PaginatedPermissionsSpaceGroupMemberInterface;
   @ValidateNested()
   @Type(() => DefaultAssistant)
   default_assistant!: DefaultAssistantInterface;

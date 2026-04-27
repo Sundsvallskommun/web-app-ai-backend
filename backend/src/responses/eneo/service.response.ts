@@ -25,8 +25,7 @@ export class ServiceSparse extends DatesAndId implements ServiceSparseInterface 
   @ValidateNested()
   @Type(() => ModelKwargs)
   @IsOptional()
-  @IsNullable()
-  completion_model_kwargs?: ModelKwargsInterface | null;
+  completion_model_kwargs?: ModelKwargsInterface;
   @IsEnum(ResourcePermission, { each: true })
   @IsOptional()
   permissions?: ResourcePermission[];

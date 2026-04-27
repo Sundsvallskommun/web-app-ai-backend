@@ -134,7 +134,7 @@ const samlStrategy = new Strategy(
       done({ message: 'UNKOWN_ERROR', name: 'UNKOWN_ERROR' });
     }
   } as any,
-  async function _(profile: Profile, done: VerifiedCallback) {
+  async function _(_profile: Profile, done: VerifiedCallback) {
     return done(null, {});
   } as any,
 );
