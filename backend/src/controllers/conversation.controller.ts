@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   AskResponse as AskResponseInterface,
   ConversationRequest,
@@ -40,8 +40,7 @@ import { Stream } from 'stream';
 @UseBefore(hashMiddleware)
 export class ConversationController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private apiBase = getApiBase('eneo-sundsvall');
 
   @Post('/conversations')
   @OpenAPI({
@@ -53,13 +52,13 @@ export class ConversationController {
   async conversation(
     @Req() req: Request,
     @Body() body: ConversationRequestDto,
+    @QueryParam('version') version: string,
     @Res() response: Response<AskResponseInterface | Stream>,
   ): Promise<Response<AskResponseInterface> | Stream> {
     if (!body.assistant_id && !body.group_chat_id && !body.session_id) {
       throw new HttpError(400, 'No assistant id, group chat id, or session id provided');
     }
-
-    const url = `${this.basePath}/conversations/`;
+    const url = `${this.apiBase}/conversations/`;
     const apiKey = await getApiKey(req);
     const responseType = body?.stream ? 'stream' : 'json';
     const data: ConversationRequest = body;
@@ -67,12 +66,14 @@ export class ConversationController {
       if (responseType === 'json') {
         const res = await this.apiService.post<AskResponseInterface, ConversationRequest>(url, data, {
           headers: { 'api-key': apiKey },
+          params: { version },
           responseType,
         });
         return response.send(res.data);
       } else {
         const res = await this.apiService.post<Stream, ConversationRequest>(url, data, {
           headers: { 'api-key': apiKey },
+          params: { version },
           responseType,
         });
         const datastream = res.data;
@@ -85,7 +86,7 @@ export class ConversationController {
         });
         return res.data;
       }
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error sending question to conversation.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Error sending question to conversation.');
     }
@@ -114,7 +115,7 @@ export class ConversationController {
       throw new HttpError(400, 'Both assistant id and group chat id provided');
     }
 
-    const url = `${this.basePath}/conversations/`;
+    const url = `${this.apiBase}/conversations/`;
     const apiKey = await getApiKey(req);
 
     try {
@@ -129,7 +130,7 @@ export class ConversationController {
         },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting conversations.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get conversations');
     }
@@ -146,13 +147,13 @@ export class ConversationController {
     @Param('session_id') session_id: string,
     @Res() response: Response<SessionPublicInterface>,
   ): Promise<Response<SessionPublicInterface>> {
-    const url = `${this.basePath}/conversations/${session_id}/`;
+    const url = `${this.apiBase}/conversations/${session_id}/`;
     const apiKey = await getApiKey(req);
 
     try {
       const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting conversation.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get conversation');
     }
@@ -168,12 +169,12 @@ export class ConversationController {
     @Param('session_id') session_id: string,
     @Res() response: Response,
   ): Promise<Response> {
-    const url = `${this.basePath}/conversations/${session_id}/`;
+    const url = `${this.apiBase}/conversations/${session_id}/`;
     const apiKey = await getApiKey(req);
     try {
       await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
       return response.status(204).send();
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting conversation.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not delete conversation');
     }
@@ -194,14 +195,14 @@ export class ConversationController {
     if (!body || !body?.value) {
       throw new HttpError(400, 'Empty body');
     }
-    const url = `${this.basePath}/conversations/${session_id}/feedback/`;
+    const url = `${this.apiBase}/conversations/${session_id}/feedback/`;
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.post<SessionPublicInterface, SessionFeedbackInterface>(url, body, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error leaving feedback', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not leave feedback');
     }
@@ -217,14 +218,14 @@ export class ConversationController {
     @Param('session_id') session_id: string,
     @Res() response: Response<SessionPublicInterface>,
   ): Promise<Response<SessionPublicInterface>> {
-    const url = `${this.basePath}/conversations/${session_id}/title/`;
+    const url = `${this.apiBase}/conversations/${session_id}/title/`;
     const apiKey = await getApiKey(req);
     try {
       const res = await this.apiService.post<SessionPublicInterface, undefined>(url, undefined, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error setting conversation title.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not set conversation title');
     }
