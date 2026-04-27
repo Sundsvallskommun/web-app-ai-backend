@@ -45,16 +45,16 @@ class SpaceSparse extends DatesAndId implements SpaceSparseInterface {
   @IsOptional()
   permissions?: ResourcePermission[];
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
   @IsOptional()
   @IsNullable()
-  description: string;
+  description!: string;
   @IsBoolean()
-  personal: boolean;
+  personal!: boolean;
   @IsBoolean()
   @IsOptional()
-  organization: boolean;
+  organization!: boolean;
 }
 
 class PaginatedPermissionsAssistantSparse
@@ -63,7 +63,7 @@ class PaginatedPermissionsAssistantSparse
 {
   @ValidateNested({ each: true })
   @Type(() => AssistantSparse)
-  items: AssistantSparseInterface[];
+  items!: AssistantSparseInterface[];
 }
 
 class PaginatedPermissionsGroupChatSparse
@@ -72,7 +72,7 @@ class PaginatedPermissionsGroupChatSparse
 {
   @ValidateNested({ each: true })
   @Type(() => GroupChatSparse)
-  items: GroupChatSparseInterface[];
+  items!: GroupChatSparseInterface[];
 }
 
 class PaginatedPermissionsServiceSparse
@@ -81,7 +81,7 @@ class PaginatedPermissionsServiceSparse
 {
   @ValidateNested({ each: true })
   @Type(() => ServiceSparse)
-  items: ServiceSparseInterface[];
+  items!: ServiceSparseInterface[];
 }
 
 class PaginatedPermissionsAppSparse
@@ -90,33 +90,33 @@ class PaginatedPermissionsAppSparse
 {
   @ValidateNested({ each: true })
   @Type(() => AppSparse)
-  items: AppSparseInterface[];
+  items!: AppSparseInterface[];
 }
 
 export class Applications implements ApplicationsInterface {
   @ValidateNested()
   @Type(() => PaginatedPermissionsAssistantSparse)
-  assistants: PaginatedPermissionsAssistantSparseInterface;
+  assistants!: PaginatedPermissionsAssistantSparseInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsGroupChatSparse)
-  group_chats: PaginatedPermissionsGroupChatSparseInterface;
+  group_chats!: PaginatedPermissionsGroupChatSparseInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsServiceSparse)
-  services: PaginatedPermissionsServiceSparseInterface;
+  services!: PaginatedPermissionsServiceSparseInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsAppSparse)
-  apps: PaginatedPermissionsAppSparseInterface;
+  apps!: PaginatedPermissionsAppSparseInterface;
 }
 
 class SpaceMember extends DatesAndId implements SpaceMemberInterface {
   @IsString()
-  email: string;
+  email!: string;
   @IsString()
   @IsOptional()
   @IsNullable()
   username?: string | null;
   @IsEnum(SpaceRoleValue)
-  role: SpaceRoleValue;
+  role!: SpaceRoleValue;
 }
 
 class PaginatedPermissionsSpaceMember
@@ -125,55 +125,55 @@ class PaginatedPermissionsSpaceMember
 {
   @ValidateNested({ each: true })
   @Type(() => SpaceMember)
-  items: SpaceMemberInterface[];
+  items!: SpaceMemberInterface[];
 }
 
 class SpaceRole implements SpaceRoleInterface {
   @IsEnum(SpaceRoleValue)
-  value: SpaceRoleValue;
+  value!: SpaceRoleValue;
   @IsString()
-  label: string;
+  label!: string;
 }
 
 export class SpacePublic extends SpaceSparse implements SpacePublicInterface {
   @ValidateNested()
   @Type(() => Applications)
-  applications: ApplicationsInterface;
+  applications!: ApplicationsInterface;
   @ValidateNested({ each: true })
   @Type(() => EmbeddingModelPublic)
-  embedding_models: EmbeddingModelPublicInterface[];
+  embedding_models!: EmbeddingModelPublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => CompletionModelPublic)
-  completion_models: CompletionModelPublicInterface[];
+  completion_models!: CompletionModelPublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => TranscriptionModelPublic)
-  transcription_models: TranscriptionModelPublicInterface[];
+  transcription_models!: TranscriptionModelPublicInterface[];
   @ValidateNested()
   @Type(() => Knowledge)
-  knowledge: KnowledgeInterface;
+  knowledge!: KnowledgeInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsSpaceMember)
-  members: PaginatedPermissionsSpaceMemberInterface;
+  members!: PaginatedPermissionsSpaceMemberInterface;
   @ValidateNested()
   @Type(() => DefaultAssistant)
-  default_assistant: DefaultAssistantInterface;
+  default_assistant!: DefaultAssistantInterface;
   @ValidateNested({ each: true })
   @Type(() => SpaceRole)
-  available_roles: SpaceRoleInterface[];
+  available_roles!: SpaceRoleInterface[];
   @ValidateNested()
   @Type(() => SecurityClassificationPublic)
   @IsNullable()
-  security_classification: SecurityClassificationPublicInterface | null;
+  security_classification!: SecurityClassificationPublicInterface | null;
 }
 
 export class PaginatedResponseSpaceSparse extends PaginatedDefaults implements PaginatedResponseSpaceSparseInterface {
   @ValidateNested({ each: true })
   @Type(() => SpaceSparse)
-  items: SpaceSparseInterface[];
+  items!: SpaceSparseInterface[];
 }
 
 export class PaginatedResponseSpacePublic extends PaginatedDefaults implements PaginatedResponseSpacePublicInterface {
   @ValidateNested({ each: true })
   @Type(() => SpacePublic)
-  items: SpacePublicInterface[];
+  items!: SpacePublicInterface[];
 }

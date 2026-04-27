@@ -3,5 +3,5 @@ import { IsString } from 'class-validator';
 
 export class HostDto implements Pick<Host, 'host'> {
   @IsString()
-  host: string;
+  host!: string;
 }

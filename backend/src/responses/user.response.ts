@@ -5,9 +5,9 @@ import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator
 
 export class User implements UserData {
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  username: string;
+  username!: string;
   @IsBoolean()
   @IsOptional()
   isAdmin?: boolean;
@@ -19,7 +19,7 @@ export class User implements UserData {
 export class UserApiResponse implements ApiResponse<UserData> {
   @ValidateNested()
   @Type(() => User)
-  data: User;
+  data!: User;
   @IsString()
-  message: string;
+  message!: string;
 }

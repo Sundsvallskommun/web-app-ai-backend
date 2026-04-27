@@ -13,21 +13,21 @@ import { Type } from 'class-transformer';
 
 class RolePublic extends DatesAndId implements RolePublicInterface {
   @IsString()
-  name: string;
+  name!: string;
   @IsEnum(Permission, { each: true })
-  permissions: Permission[];
+  permissions!: Permission[];
 }
 
 class PredefinedRolePublic extends RolePublic implements PredefinedRolePublicInterface {}
 
 class UserGroupRead extends DatesAndId implements UserGroupReadInterface {
   @IsString()
-  name: string;
+  name!: string;
 }
 
 export class UserSparse extends DatesAndId implements UserSparseInterface {
   @IsString()
-  email: string;
+  email!: string;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -48,11 +48,11 @@ export class UserPublic extends UserSparse implements UserPublicInterface {
   quota_limit?: number | null;
   @ValidateNested({ each: true })
   @Type(() => RolePublic)
-  roles: RolePublicInterface[];
+  roles!: RolePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => PredefinedRolePublic)
-  predefined_roles: PredefinedRolePublicInterface[];
+  predefined_roles!: PredefinedRolePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => UserGroupRead)
-  user_groups: UserGroupReadInterface[];
+  user_groups!: UserGroupReadInterface[];
 }

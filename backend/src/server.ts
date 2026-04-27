@@ -1,4 +1,4 @@
-import App from '@/app';
+import App from './app';
 import { IndexController } from '@controllers/index.controller';
 import validateEnv from '@utils/validateEnv';
 import { AdminApiKeyController } from './controllers/admin/apikey.controller';

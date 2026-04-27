@@ -19,7 +19,7 @@ export class ConversationRequestDto implements ConversationRequest {
   @IsOptional()
   session_id?: string;
   @IsString()
-  question: string;
+  question!: string;
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ModelId)

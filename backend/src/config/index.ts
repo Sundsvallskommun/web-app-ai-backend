@@ -8,12 +8,13 @@ config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
 export const CREDENTIALS = process.env.CREDENTIALS === 'true';
 export const SWAGGER_ENABLED = process.env.SWAGGER_ENABLED === 'true';
 export const SESSION_MEMORY = process.env.SESSION_MEMORY === 'true';
-
+export const AZURE_REGION = process.env.AZURE_REGION ?? '';
+export const SAML_PUBLIC_KEY = process.env.SAML_PUBLIC_KEY ?? '';
+export const LOG_FORMAT = process.env.LOG_FORMAT ?? 'dev';
 export const {
   NODE_ENV,
   PORT,
   API_BASE_URL,
-  AZURE_REGION,
   AZURE_SUBSCRIPTION_KEY,
   AZURE_TRANSLATOR_KEY,
   ENEO_SALT,
@@ -23,7 +24,6 @@ export const {
   RATE_LIMIT_MAX,
   SPIKE_LIMIT_WINDOW,
   SPIKE_LIMIT_MAX,
-  LOG_FORMAT,
   LOG_DIR,
   ORIGIN,
   SECRET_KEY,
@@ -37,6 +37,5 @@ export const {
   SAML_ISSUER,
   SAML_IDP_PUBLIC_CERT,
   SAML_PRIVATE_KEY,
-  SAML_PUBLIC_KEY,
   SAML_SUCCESS_REDIRECT,
 } = process.env;

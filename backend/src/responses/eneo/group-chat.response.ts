@@ -10,21 +10,21 @@ export class GroupChatSparse implements GroupChatSparseInterface {
   @IsOptional()
   permissions?: ResourcePermission[];
   @IsString()
-  created_at: string;
+  created_at!: string;
   @IsString()
-  updated_at: string;
+  updated_at!: string;
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  id: string;
+  id!: string;
   @IsString()
-  user_id: string;
+  user_id!: string;
   @IsBoolean()
-  published: boolean;
+  published!: boolean;
   @IsString()
-  type: 'group-chat';
+  type!: 'group-chat';
   @IsObject()
   @IsOptional()
   @IsNullable()
-  metadata_json: object | null;
+  metadata_json!: object | null;
 }

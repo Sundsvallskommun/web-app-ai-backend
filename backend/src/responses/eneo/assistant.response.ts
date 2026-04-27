@@ -40,48 +40,48 @@ class PromptPublic extends DatesAndId implements PromptPublicInterface {
   is_selected?: boolean | null;
   @ValidateNested()
   @Type(() => UserSparse)
-  user: UserSparseInterface;
+  user!: UserSparseInterface;
   @IsString()
-  text: string;
+  text!: string;
 }
 
 class IntegrationKnowledgeMetaData implements IntegrationKnowledgeMetaDataInterface {
   @IsNumber()
-  size: number;
+  size!: number;
 }
 
 class IntegrationKnowledgePublic extends DatesAndId implements IntegrationKnowledgePublicInterface {
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  url: string;
+  url!: string;
   @IsString()
-  tenant_id: string;
+  tenant_id!: string;
   @IsString()
-  space_id: string;
+  space_id!: string;
   @IsString()
-  user_integration_id: string;
+  user_integration_id!: string;
   @ValidateNested()
   @Type(() => EmbeddingModelPublicLegacy)
-  embedding_model: EmbeddingModelPublicLegacyInterface;
+  embedding_model!: EmbeddingModelPublicLegacyInterface;
   @IsEnum(ResourcePermission, { each: true })
   permissions?: ResourcePermission[];
   @ValidateNested()
   @Type(() => IntegrationKnowledgeMetaData)
-  metadata: IntegrationKnowledgeMetaDataInterface;
+  metadata!: IntegrationKnowledgeMetaDataInterface;
   @IsEnum(IntegrationKnowledgePublicIntegrationTypeEnum)
-  integration_type: IntegrationKnowledgePublicIntegrationTypeEnum;
-  task: any;
+  integration_type!: IntegrationKnowledgePublicIntegrationTypeEnum;
+  task!: any;
 }
 
 class AssistantCommon extends DatesAndId {
   @IsString()
-  name: string;
+  name!: string;
   @ValidateNested()
   @Type(() => ModelKwargs)
-  completion_model_kwargs: ModelKwargsInterface;
+  completion_model_kwargs!: ModelKwargsInterface;
   @IsBoolean()
-  logging_enabled: boolean;
+  logging_enabled!: boolean;
   @IsEnum(ResourcePermission, { each: true })
   @IsOptional()
   permissions?: ResourcePermission[];
@@ -97,12 +97,12 @@ class AssistantCommon extends DatesAndId {
   @IsNullable()
   metadata_json?: object | null;
   @IsEnum(AssistantType)
-  type: AssistantType;
+  type!: AssistantType;
 }
 
 export class AssistantSparse extends AssistantCommon implements AssistantSparseInterface {
   @IsString()
-  user_id: string;
+  user_id!: string;
 }
 
 export class AssistantPublic extends AssistantCommon implements AssistantPublicInterface {
@@ -112,33 +112,33 @@ export class AssistantPublic extends AssistantCommon implements AssistantPublicI
   @IsNullable()
   prompt?: PromptPublicInterface | null;
   @IsString()
-  space_id: string;
+  space_id!: string;
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  attachments: FilePublicInterface[];
+  attachments!: FilePublicInterface[];
   @ValidateNested()
   @Type(() => FileRestrictions)
-  allowed_attachments: FileRestrictionsInterface;
+  allowed_attachments!: FileRestrictionsInterface;
   @ValidateNested({ each: true })
   @Type(() => CollectionPublic)
-  groups: CollectionPublicInterface[];
+  groups!: CollectionPublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => WebsitePublic)
-  websites: WebsitePublicInterface[];
+  websites!: WebsitePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => IntegrationKnowledgePublic)
-  integration_knowledge_list: IntegrationKnowledgePublicInterface[];
+  integration_knowledge_list!: IntegrationKnowledgePublicInterface[];
   @ValidateNested()
   @Type(() => CompletionModelSparse)
-  completion_model: CompletionModelSparseInterface;
+  completion_model!: CompletionModelSparseInterface;
   @ValidateNested()
   @Type(() => UserSparse)
-  user: UserSparseInterface;
+  user!: UserSparseInterface;
   @ValidateNested()
   @Type(() => UseTools)
-  tools: UseToolsInterface;
+  tools!: UseToolsInterface;
   @IsBoolean()
-  insight_enabled: boolean;
+  insight_enabled!: boolean;
   @IsNumber()
   @IsOptional()
   @IsNullable()
@@ -150,7 +150,7 @@ export class DefaultAssistant extends AssistantPublic implements DefaultAssistan
 export class PaginatedResponseAssistantPublic implements PaginatedResponseAssistantPublicInterface {
   @ValidateNested({ each: true })
   @Type(() => AssistantPublic)
-  items: AssistantPublicInterface[];
+  items!: AssistantPublicInterface[];
   @IsInt()
-  count: number;
+  count!: number;
 }

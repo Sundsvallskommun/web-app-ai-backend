@@ -4,7 +4,7 @@ import { IsString } from 'class-validator';
 
 export class ApiKeyApiResponse  implements ApiResponse<string> {
     @IsString()
-    data: string;
+    data!: string;
     @IsString()
-    message: string;
+    message!: string;
 }

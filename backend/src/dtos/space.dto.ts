@@ -10,22 +10,22 @@ import { IsEnum, IsObject, IsOptional, IsString, ValidateNested } from 'class-va
 
 class AdditionalField implements AdditionalFieldInterface {
   @IsEnum(WizardType)
-  type: WizardType;
+  type!: WizardType;
   @IsObject({ each: true })
-  value: Record<string, string>[];
+  value!: Record<string, string>[];
 }
 class TemplateCreate implements TemplateCreateInterface {
   @IsString()
-  id: string;
+  id!: string;
   @ValidateNested({ each: true })
   @Type(() => AdditionalField)
   @IsNullable()
-  additional_fields: AdditionalFieldInterface[];
+  additional_fields!: AdditionalFieldInterface[];
 }
 
 export class CreateSpaceAssistantDto implements CreateSpaceAssistantRequest {
   @IsString()
-  name: string;
+  name!: string;
   @ValidateNested()
   @Type(() => TemplateCreate)
   @IsOptional()

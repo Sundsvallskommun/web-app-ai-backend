@@ -8,21 +8,21 @@ export class Host implements HostType {
   @IsOptional()
   id?: number;
   @IsString()
-  host: string;
+  host!: string;
 }
 
 export class HostsApiResponse implements ApiResponse<HostType[]> {
   @ValidateNested({ each: true })
   @Type(() => Host)
-  data: Host[];
+  data!: Host[];
   @IsString()
-  message: string;
+  message!: string;
 }
 
 export class HostApiResponse implements ApiResponse<Host> {
   @ValidateNested()
   @Type(() => Host)
-  data: Host;
+  data!: Host;
   @IsString()
-  message: string;
+  message!: string;
 }

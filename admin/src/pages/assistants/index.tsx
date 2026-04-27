@@ -5,6 +5,7 @@ import DefaultLayout from '@layouts/default-layout/default-layout.component';
 import { Header } from '@layouts/header/header.component';
 import Main from '@layouts/main/main.component';
 import { Spinner } from '@sk-web-gui/react';
+import { appURL } from '@utils/app-url';
 import { useResource } from '@utils/use-resource';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -24,7 +25,7 @@ export const Exempelsida: React.FC = () => {
 
   useEffect(() => {
     if (!resource) {
-      router.push('/');
+      router.push(appURL('/', true));
     }
   }, [resource]);
 

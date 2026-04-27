@@ -6,6 +6,7 @@ import resources from '@config/resources';
 import { ResourceName } from '@interfaces/resource-name';
 import { ID } from '@interfaces/resource-services';
 import EditLayout from '@layouts/edit-layout/edit-layout.component';
+import { appURL } from '@utils/app-url';
 import { getFormattedFields } from '@utils/formatted-field';
 import { useRouteGuard } from '@utils/routeguard.hook';
 import { stringToResourceName } from '@utils/stringToResourceName';
@@ -28,7 +29,7 @@ export const EditAssistant: React.FC = () => {
     typeof _resource === 'object' ? _resource[0] : (_resource ?? '')
   ) as ResourceName;
   if (!resource) {
-    router.push('/');
+    router.push(appURL('/', true));
     return;
   }
 
@@ -149,7 +150,7 @@ export const EditAssistant: React.FC = () => {
             capitalize(t('common:create_new', { resource: t(`${resource}:name`, { count: 1 }) }))
           : capitalize(t('common:edit', { resource: t(`${resource}:name_one`) }))
         }
-        backLink={`/${resource}`}
+        backLink={appURL(`/${resource}`, true)}
       >
         <FormProvider {...form}>
           <form className="flex flex-row gap-32 justify-between grow flex-wrap" onSubmit={handleSubmit(onSubmit)}>

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { existsSync, mkdirSync } from 'fs';
+// @ts-ignore - class-transformer/cjs/storage doesn't have proper types
 import { defaultMetadataStorage } from 'class-transformer/cjs/storage';
 import { validationMetadatasToSchemas } from 'class-validator-jsonschema';
 import compression from 'compression';
@@ -50,7 +51,7 @@ import cors from 'cors';
 import prisma from './utils/prisma';
 import { isValidOrigin } from './utils/isValidOrigin';
 
-const corsWhitelistFromEnv = ORIGIN.split(',');
+const corsWhitelistFromEnv = ORIGIN?.split(',') ?? [];
 const defaultRedirect = SAML_SUCCESS_REDIRECT ?? '/';
 const SessionStoreCreate = SESSION_MEMORY ? createMemoryStore(session) : createFileStore(session);
 const sessionTTL = 4 * 24 * 60 * 60;
@@ -60,10 +61,10 @@ const sessionStore = new SessionStoreCreate(
 );
 
 passport.serializeUser(function (user, done) {
-  done(null, user);
+  done(null, user as User);
 });
 passport.deserializeUser(function (user, done) {
-  done(null, user);
+  done(null, user as User);
 });
 
 const samlStrategy = new Strategy(
@@ -128,13 +129,14 @@ const samlStrategy = new Strategy(
     } catch (err) {
       if (err instanceof HttpException && err?.status === 404) {
         // Handle missing person form Citizen
+        done(err);
       }
-      done(err);
+      done({ message: 'UNKOWN_ERROR', name: 'UNKOWN_ERROR' });
     }
-  },
-  async function (profile: Profile, done: VerifiedCallback) {
+  } as any,
+  async function _(profile: Profile, done: VerifiedCallback) {
     return done(null, {});
-  },
+  } as any,
 );
 
 class App {
@@ -282,7 +284,7 @@ class App {
             if (err) {
               return next(err);
             }
-            res.redirect(successRedirect);
+            res.redirect(successRedirect ?? '/');
           });
         });
       },

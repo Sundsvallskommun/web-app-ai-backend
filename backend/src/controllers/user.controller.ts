@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import { UserPublic as UserPublicInterface } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
@@ -14,8 +14,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class UserController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/users/me')
   @OpenAPI({
@@ -32,7 +31,7 @@ export class UserController {
     try {
       const res = await this.apiService.get<UserPublicInterface>(url, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting user.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get user');
     }

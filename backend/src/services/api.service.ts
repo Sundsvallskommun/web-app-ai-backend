@@ -4,7 +4,7 @@ import { apiURL } from '@/utils/util';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import ApiTokenService from './api-token.service';
 
-class ApiResponse<T> {
+interface ApiResponse<T> {
   data: T;
   message: string;
 }
@@ -24,7 +24,7 @@ class ApiService {
       ...config,
       headers: { ...defaultHeaders, ...config.headers },
       params: { ...defaultParams, ...config.params },
-      url: apiURL(config.url),
+      url: apiURL(config.url ?? ''),
     };
 
     try {
