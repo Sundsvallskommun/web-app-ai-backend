@@ -1,7 +1,7 @@
 import { ENEO_SALT } from '@/config';
 import { logger } from '@/utils/logger';
-import 'crypto';
-import { createHash } from 'crypto';
+import 'node:crypto';
+import { createHash } from 'node:crypto';
 
 export const verifyHash = (user: string, assistant_id: string, app: string, hash: string) => {
   if (typeof user !== 'string') {
