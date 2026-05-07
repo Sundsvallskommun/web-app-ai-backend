@@ -64,14 +64,14 @@ export class ConversationController {
     const data: ConversationRequest = body;
     try {
       if (responseType === 'json') {
-        const res = await this.apiService.post<AskResponseInterface, ConversationRequest>(url, data, {
+        const res = await this.apiService.post<AskResponseInterface, ConversationRequest>(url, data, req, {
           headers: { 'api-key': apiKey },
           params: { version },
           responseType,
         });
         return response.send(res.data);
       } else {
-        const res = await this.apiService.post<Stream, ConversationRequest>(url, data, {
+        const res = await this.apiService.post<Stream, ConversationRequest>(url, data, req, {
           headers: { 'api-key': apiKey },
           params: { version },
           responseType,
@@ -119,7 +119,7 @@ export class ConversationController {
     const apiKey = await getApiKey(req);
 
     try {
-      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, {
+      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, req, {
         headers: { 'api-key': apiKey },
         params: {
           assistant_id,
@@ -151,7 +151,7 @@ export class ConversationController {
     const apiKey = await getApiKey(req);
 
     try {
-      const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SessionPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting conversation.', e);
@@ -172,7 +172,7 @@ export class ConversationController {
     const url = `${this.apiBase}/conversations/${session_id}/`;
     const apiKey = await getApiKey(req);
     try {
-      await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
+      await this.apiService.delete(url, req, { headers: { 'api-key': apiKey } });
       return response.status(204).send();
     } catch (e: any) {
       logger.error('Error deleting conversation.', e);
@@ -198,7 +198,7 @@ export class ConversationController {
     const url = `${this.apiBase}/conversations/${session_id}/feedback/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<SessionPublicInterface, SessionFeedbackInterface>(url, body, {
+      const res = await this.apiService.post<SessionPublicInterface, SessionFeedbackInterface>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -221,7 +221,7 @@ export class ConversationController {
     const url = `${this.apiBase}/conversations/${session_id}/title/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<SessionPublicInterface, undefined>(url, undefined, {
+      const res = await this.apiService.post<SessionPublicInterface, undefined>(url, undefined, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);

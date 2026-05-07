@@ -45,7 +45,7 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -69,7 +69,7 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/${id}`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<FilePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<FilePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting file', e);
@@ -94,7 +94,7 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.post<FilePublicInterface, any>(url, data, {
+      const res = await this.apiService.post<FilePublicInterface, any>(url, data, req, {
         headers: { 'api-key': apiKey, Accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data' },
       });
       return response.send(res.data);
@@ -113,7 +113,7 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/${id}/`;
       const apiKey = await getApiKey(req);
-      await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
+      await this.apiService.delete(url, req, { headers: { 'api-key': apiKey } });
       return response.send();
     } catch (e: any) {
       logger.error('Error deleting file', e);

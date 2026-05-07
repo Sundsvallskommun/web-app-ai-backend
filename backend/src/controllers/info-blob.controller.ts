@@ -37,7 +37,7 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -60,7 +60,7 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<InfoBlobPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<InfoBlobPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting info blob', e);
@@ -83,7 +83,7 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<InfoBlobPublicInterface, InfoBlobUpdatePublic>(url, body, {
+      const res = await this.apiService.post<InfoBlobPublicInterface, InfoBlobUpdatePublic>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -106,7 +106,7 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.delete<InfoBlobPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.delete<InfoBlobPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error deleting info blob', e);

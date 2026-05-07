@@ -29,7 +29,7 @@ export class UserController {
     const url = `${this.basePath}/users/me/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<UserPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<UserPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting user.', e);

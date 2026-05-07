@@ -51,7 +51,7 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, req, {
         headers: { 'api-key': apiKey },
         responseType,
         params: { version },
@@ -100,7 +100,7 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, req, {
         headers: { 'api-key': apiKey },
         responseType,
         params: { version },
@@ -140,7 +140,7 @@ export class QueryController {
     const url = `${this.basePath}/assistants/${assistant_id}/sessions/${session_id}/feedback/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, {
+      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);

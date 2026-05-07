@@ -41,7 +41,7 @@ export class AdminApiKeyController {
 
       const url = `${this.basePath}/assistants/${id}/api-keys/`;
 
-      const res = await this.apiService.get<ApiKey>(url, { headers: { 'api-key': assistant.apiKey } });
+      const res = await this.apiService.get<ApiKey>(url, req, { headers: { 'api-key': assistant.apiKey } });
       return response.send({ data: res.data.key, message: 'success' });
     } catch (e: any) {
       logger.error('Error getting api key for assistant', e);
