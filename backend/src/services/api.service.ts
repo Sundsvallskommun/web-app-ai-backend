@@ -12,6 +12,51 @@ interface ApiResponse<T> {
 
 class ApiService {
   private apiTokenService = new ApiTokenService();
+
+  private resolveOrigin(req: Request): string | undefined {
+    const originHeader = req.get('origin') ?? req.headers.origin;
+    if (typeof originHeader === 'string' && originHeader.trim() !== '') {
+      return originHeader;
+    }
+
+    const referer = req.get('referer');
+    if (referer) {
+      try {
+        return new URL(referer).origin;
+      } catch {
+        // Ignore invalid referer and continue with fallback logic.
+      }
+    }
+
+    const forwardedProto = req.get('x-forwarded-proto')?.split(',')[0]?.trim();
+    const forwardedHost = req.get('x-forwarded-host')?.split(',')[0]?.trim();
+    const host = forwardedHost ?? req.get('host');
+
+    if (!host) {
+      return undefined;
+    }
+
+    const protocol = forwardedProto ?? req.protocol;
+    return `${protocol}://${host}`;
+  }
+
+  private withOriginHeader(req: Request, config: AxiosRequestConfig = {}): AxiosRequestConfig {
+    const origin = this.resolveOrigin(req);
+    if (!origin) {
+      return config;
+    }
+
+    const existingHeaders = config.headers as Record<string, unknown> | undefined;
+    if (existingHeaders?.origin || existingHeaders?.Origin) {
+      return config;
+    }
+
+    return {
+      ...config,
+      headers: { ...(config.headers as Record<string, unknown> | undefined), origin },
+    } as AxiosRequestConfig;
+  }
+
   private async request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
     const token = await this.apiTokenService.getToken();
 
@@ -43,7 +88,7 @@ class ApiService {
 
   public async get<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('GET to url', url);
-    return this.request<T>({ url, headers: { origin: req.headers.origin }, ...config, method: 'GET' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, method: 'GET' });
   }
 
   public async post<T, D = any>(
@@ -53,7 +98,7 @@ class ApiService {
     config: AxiosRequestConfig = {},
   ): Promise<ApiResponse<T>> {
     devconsole.log('POST to url', url);
-    return this.request<T>({ url, headers: { origin: req.headers.origin }, data, ...config, method: 'POST' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, data, method: 'POST' });
   }
 
   public async patch<T, D = any>(
@@ -63,12 +108,12 @@ class ApiService {
     config: AxiosRequestConfig = {},
   ): Promise<ApiResponse<T>> {
     devconsole.log('PATCH to url', url);
-    return this.request<T>({ url, headers: { origin: req.headers.origin }, data, ...config, method: 'PATCH' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, data, method: 'PATCH' });
   }
 
   public async delete<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('DELETE to url', url);
-    return this.request<T>({ url, headers: { origin: req.headers.origin }, ...config, method: 'DELETE' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, method: 'DELETE' });
   }
 }
 
