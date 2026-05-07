@@ -1,12 +1,7 @@
 import {
-  ModelFamily,
-  ModelHostingLocation,
-  ModelOrg,
-  ModelStability,
   EmbeddingModelPublic as EmbeddingModelPublicInterface,
   TranscriptionModelPublic as TranscriptionModelPublicInterface,
   EmbeddingModelPublicLegacy as EmbeddingModelPublicLegacyInterface,
-  EmbeddingModelFamily,
   CompletionModelSparse as CompletionModelSparseInterface,
   CompletionModel as CompletionModelInterface,
   CompletionModelPublic as CompletionModelPublicInterface,
@@ -18,13 +13,15 @@ import { DatesAndId, SecurityClassificationPublic, SecurityClassificationPublicI
 
 export class EmbeddingModelPublic extends DatesAndId implements EmbeddingModelPublicInterface {
   @IsString()
-  name: string;
-  @IsEnum(ModelFamily)
-  family: ModelFamily;
+  name!: string;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  family?: string | null;
   @IsBoolean()
-  is_deprecated: boolean;
+  is_deprecated!: boolean;
   @IsBoolean()
-  open_source: boolean;
+  open_source!: boolean;
   @IsNumber()
   @IsOptional()
   @IsNullable()
@@ -37,18 +34,22 @@ export class EmbeddingModelPublic extends DatesAndId implements EmbeddingModelPu
   @IsOptional()
   @IsNullable()
   hf_link?: string | null;
-  @IsEnum(ModelStability)
-  stability: ModelStability;
-  @IsEnum(ModelHostingLocation)
-  hosting: ModelHostingLocation;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  stability?: string | null;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  hosting?: string | null;
   @IsString()
   @IsOptional()
   @IsNullable()
   description?: string | null;
-  @IsEnum(ModelOrg)
+  @IsString()
   @IsOptional()
   @IsNullable()
-  org?: ModelOrg;
+  org?: string | null;
   @IsBoolean()
   can_access?: boolean;
   @IsBoolean()
@@ -64,19 +65,25 @@ export class EmbeddingModelPublic extends DatesAndId implements EmbeddingModelPu
 
 export class TranscriptionModelPublic implements TranscriptionModelPublicInterface {
   @IsString()
-  id: string;
+  id!: string;
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  nickname: string;
-  @IsEnum(ModelFamily)
-  family: ModelFamily;
+  nickname!: string;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  family?: string | null;
   @IsBoolean()
-  is_deprecated: boolean;
-  @IsEnum(ModelStability)
-  stability: ModelStability;
-  @IsEnum(ModelHostingLocation)
-  hosting: ModelHostingLocation;
+  is_deprecated!: boolean;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  stability?: string | null;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  hosting?: string | null;
   @IsBoolean()
   @IsOptional()
   @IsNullable()
@@ -89,10 +96,10 @@ export class TranscriptionModelPublic implements TranscriptionModelPublicInterfa
   @IsOptional()
   @IsNullable()
   hf_link?: string | null;
-  @IsEnum(ModelOrg)
+  @IsString()
   @IsOptional()
   @IsNullable()
-  org?: ModelOrg | null;
+  org?: string | null;
   @IsBoolean()
   @IsOptional()
   can_access?: boolean;
@@ -114,13 +121,15 @@ export class TranscriptionModelPublic implements TranscriptionModelPublicInterfa
 
 export class EmbeddingModelPublicLegacy extends DatesAndId implements EmbeddingModelPublicLegacyInterface {
   @IsString()
-  name: string;
-  @IsEnum(EmbeddingModelFamily)
-  family: EmbeddingModelFamily;
+  name!: string;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  family?: string | null;
   @IsBoolean()
-  is_deprecated: boolean;
+  is_deprecated!: boolean;
   @IsBoolean()
-  open_source: boolean;
+  open_source!: boolean;
   @IsNumber()
   @IsOptional()
   @IsNullable()
@@ -133,18 +142,22 @@ export class EmbeddingModelPublicLegacy extends DatesAndId implements EmbeddingM
   @IsOptional()
   @IsNullable()
   hf_link?: string | null;
-  @IsEnum(ModelStability)
-  stability: ModelStability;
-  @IsEnum(ModelHostingLocation)
-  hosting: ModelHostingLocation;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  stability?: string | null;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  hosting?: string | null;
   @IsString()
   @IsOptional()
   @IsNullable()
   description?: string | null;
-  @IsEnum(ModelOrg)
+  @IsString()
   @IsOptional()
   @IsNullable()
-  org?: ModelOrg | null;
+  org?: string | null;
   @IsBoolean()
   @IsOptional()
   is_org_enabled?: boolean;
@@ -158,15 +171,21 @@ export class EmbeddingModelPublicLegacy extends DatesAndId implements EmbeddingM
 
 export class CompletionModelSparse extends DatesAndId implements CompletionModelSparseInterface {
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  nickname: string;
-  @IsEnum(ModelFamily)
-  family: ModelFamily;
+  nickname!: string;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  family?: string | null;
   @IsNumber()
-  token_limit: number;
+  max_input_tokens!: number;
+  @IsNumber()
+  max_output_tokens!: number;
+  @IsNumber()
+  token_limit!: number;
   @IsBoolean()
-  is_deprecated: boolean;
+  is_deprecated!: boolean;
   @IsNumber()
   @IsOptional()
   @IsNullable()
@@ -175,10 +194,14 @@ export class CompletionModelSparse extends DatesAndId implements CompletionModel
   @IsOptional()
   @IsNullable()
   hf_link?: string | null;
-  @IsEnum(ModelStability)
-  stability: ModelStability;
-  @IsEnum(ModelHostingLocation)
-  hosting: ModelHostingLocation;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  stability?: string | null;
+  @IsString()
+  @IsOptional()
+  @IsNullable()
+  hosting?: string | null;
   @IsBoolean()
   @IsOptional()
   @IsNullable()
@@ -191,14 +214,14 @@ export class CompletionModelSparse extends DatesAndId implements CompletionModel
   @IsOptional()
   @IsNullable()
   deployment_name?: string | null;
-  @IsEnum(ModelOrg)
+  @IsString()
   @IsOptional()
   @IsNullable()
-  org?: ModelOrg | null;
+  org?: string | null;
   @IsBoolean()
-  vision: boolean;
+  vision!: boolean;
   @IsBoolean()
-  reasoning: boolean;
+  reasoning!: boolean;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -206,7 +229,7 @@ export class CompletionModelSparse extends DatesAndId implements CompletionModel
 }
 
 export class CompletionModel extends CompletionModelSparse implements CompletionModelInterface {
-  @IsString()
+  @IsBoolean()
   @IsOptional()
   is_org_enabled?: boolean;
   @IsBoolean()

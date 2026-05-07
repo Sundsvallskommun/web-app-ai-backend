@@ -19,17 +19,16 @@ export class ServiceSparse extends DatesAndId implements ServiceSparseInterface 
   @IsNullable()
   json_schema?: object | null;
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  prompt: string;
+  prompt!: string;
   @ValidateNested()
   @Type(() => ModelKwargs)
   @IsOptional()
-  @IsNullable()
-  completion_model_kwargs?: ModelKwargsInterface | null;
+  completion_model_kwargs?: ModelKwargsInterface;
   @IsEnum(ResourcePermission, { each: true })
   @IsOptional()
   permissions?: ResourcePermission[];
   @IsString()
-  user_id: string;
+  user_id!: string;
 }

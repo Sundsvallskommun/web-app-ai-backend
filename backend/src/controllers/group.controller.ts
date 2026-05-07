@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   CollectionPublic as CollectionPublicInterface,
   CollectionUpdate,
@@ -44,8 +44,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class GroupController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/groups/:id')
   @OpenAPI({
@@ -63,7 +62,7 @@ export class GroupController {
     try {
       const res = await this.apiService.get<CollectionPublicInterface>(url, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -89,7 +88,7 @@ export class GroupController {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -106,7 +105,7 @@ export class GroupController {
     try {
       await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
       return res.send();
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -130,7 +129,7 @@ export class GroupController {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting group info blobs:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -160,7 +159,7 @@ export class GroupController {
         },
       );
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error adding group info blobs:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -192,7 +191,7 @@ export class GroupController {
       });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error uploading files:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }

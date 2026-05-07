@@ -1,3 +1,4 @@
+import { CreateAssistantSetting, UpdateAssistantSetting } from '@/dtos/assistant-setting.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import ApiResponse from '@/interfaces/api-service.interface';
 import adminMiddleware from '@/middlewares/admin.middleware';
@@ -8,12 +9,7 @@ import { Response } from 'express';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseBefore } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import authMiddleWare from '../../middlewares/auth.middleware';
-import {
-  AssistantSetting,
-  AssistantSettingApiResponse,
-  AssistantSettingsApiResponse,
-} from '../../responses/assistant-setting.response';
-import { CreateAssistantSetting, UpdateAssistantSetting } from '@/dtos/assistant-setting.dto';
+import { AssistantSettingApiResponse, AssistantSettingsApiResponse } from '../../responses/assistant-setting.response';
 
 @UseBefore(authMiddleWare)
 @UseBefore(adminMiddleware)
@@ -31,7 +27,7 @@ export class AdminAsisstantController {
         data: assistants.map(assistant => ({ ...assistant, apiKey: maskApiKey(assistant?.apiKey) })),
         message: 'success',
       });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting assistant settings', e);
       throw new HttpException(e?.httpCode ?? 404, e?.message ?? 'No assistant settings found');
     }
@@ -48,8 +44,12 @@ export class AdminAsisstantController {
   ): Promise<Response<AssistantSettingApiResponse>> {
     try {
       const assistant = await prisma.assistant.findFirst({ where: { id } });
-      return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
-    } catch (e) {
+      if (assistant) {
+        return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
+      } else {
+        throw new HttpException(404, 'No assistant setting found');
+      }
+    } catch (e: any) {
       logger.error('Error getting assistant setting', e);
       throw new HttpException(e?.httpCode ?? 404, e?.message ?? 'No assistant setting found');
     }
@@ -67,7 +67,7 @@ export class AdminAsisstantController {
     try {
       const assistant = await prisma.assistant.create({ data: body });
       return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error creating assistant setting', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not create assistant setting');
     }
@@ -86,7 +86,7 @@ export class AdminAsisstantController {
     try {
       const assistant = await prisma.assistant.update({ where: { id }, data: body });
       return res.send({ data: { ...assistant, apiKey: maskApiKey(assistant?.apiKey) }, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating assistant setting', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not update assistant setting');
     }
@@ -105,7 +105,7 @@ export class AdminAsisstantController {
         where: { id },
       });
       return response.send({ message: 'deleted', data: true });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting assistant setting', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not delete assistant setting');
     }

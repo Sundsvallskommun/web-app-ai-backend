@@ -5,6 +5,7 @@ import DefaultLayout from '@layouts/default-layout/default-layout.component';
 import { Header } from '@layouts/header/header.component';
 import Main from '@layouts/main/main.component';
 import { Spinner } from '@sk-web-gui/react';
+import { appURL } from '@utils/app-url';
 import { stringToResourceName } from '@utils/stringToResourceName';
 import { useResource } from '@utils/use-resource';
 import { useTranslation } from 'next-i18next';
@@ -22,7 +23,7 @@ export const Resource: React.FC = () => {
   const resource = stringToResourceName(typeof _resource === 'object' ? _resource[0] : (_resource ?? ''));
   useEffect(() => {
     if (!resource) {
-      router.push('/');
+      router.push(appURL('/', true));
     }
   }, [resource]);
   if (!resource) {

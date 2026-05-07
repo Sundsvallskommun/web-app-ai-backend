@@ -25,7 +25,7 @@ import { CompletionModel } from './models.response';
 
 class SessionMetadataPublic extends DatesAndId implements SessionMetadataPublicInterface {
   @IsString()
-  name: string;
+  name!: string;
 }
 
 export class CursorPaginatedResponseSessionMetadataPublic
@@ -33,7 +33,7 @@ export class CursorPaginatedResponseSessionMetadataPublic
 {
   @ValidateNested({ each: true })
   @Type(() => SessionMetadataPublic)
-  items: SessionMetadataPublicInterface[];
+  items!: SessionMetadataPublicInterface[];
   @IsNumber()
   @IsOptional()
   @IsNullable()
@@ -47,9 +47,9 @@ export class CursorPaginatedResponseSessionMetadataPublic
   @IsNullable()
   previous_cursor?: string | null;
   @IsNumber()
-  total_count: number;
+  total_count!: number;
   @IsNumber()
-  count: number;
+  count!: number;
 }
 
 class Message implements MessageInterface {
@@ -66,9 +66,9 @@ class Message implements MessageInterface {
   @IsNullable()
   id?: string;
   @IsString()
-  question: string;
+  question!: string;
   @IsString()
-  answer: string;
+  answer!: string;
   @ValidateNested()
   @Type(() => CompletionModel)
   @IsNullable()
@@ -76,24 +76,24 @@ class Message implements MessageInterface {
   completion_model?: CompletionModelInterface | null;
   @ValidateNested({ each: true })
   @Type(() => InfoBlobPublicNoText)
-  references: InfoBlobPublicNoTextInterface[];
+  references!: InfoBlobPublicNoTextInterface[];
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  files: FilePublicInterface[];
+  files!: FilePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => UseTools)
-  tools: UseToolsInterface;
+  tools!: UseToolsInterface;
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  generated_files: FilePublicInterface[];
+  generated_files!: FilePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => WebSearchResultPublic)
-  web_search_references: WebSearchResultPublicInterface[];
+  web_search_references!: WebSearchResultPublicInterface[];
 }
 
 export class SessionFeedback implements SessionFeedbackInterface {
   @IsEnum(SessionFeedbackValueEnum)
-  value: SessionFeedbackValueEnum;
+  value!: SessionFeedbackValueEnum;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -102,10 +102,10 @@ export class SessionFeedback implements SessionFeedbackInterface {
 
 export class SessionPublic extends DatesAndId implements SessionPublicInterface {
   @IsString()
-  name: string;
+  name!: string;
   @ValidateNested({ each: true })
   @Type(() => Message)
-  messages: MessageInterface[];
+  messages!: MessageInterface[];
   @ValidateNested()
   @Type(() => SessionFeedback)
   @IsOptional()

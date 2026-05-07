@@ -18,34 +18,34 @@ import { PaginatedPermissionsDefaults } from './common';
 
 class IntegrationKnowledgeMetaData implements IntegrationKnowledgeMetaDataInterface {
   @IsNumber()
-  size: number;
+  size!: number;
 }
 
 export class IntegrationKnowledgePublic implements IntegrationKnowledgePublicInterface {
   @IsString()
-  id: string;
+  id!: string;
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  url: string;
+  url!: string;
   @IsString()
-  tenant_id: string;
+  tenant_id!: string;
   @IsString()
-  space_id: string;
+  space_id!: string;
   @IsString()
-  user_integration_id: string;
+  user_integration_id!: string;
   @ValidateNested()
   @Type(() => EmbeddingModelPublicLegacy)
-  embedding_model: EmbeddingModelPublicLegacyInterface;
+  embedding_model!: EmbeddingModelPublicLegacyInterface;
   @IsEnum(ResourcePermission, { each: true })
   @IsOptional()
   permissions?: ResourcePermission[];
   @ValidateNested()
   @Type(() => IntegrationKnowledgeMetaData)
-  metadata: IntegrationKnowledgeMetaDataInterface;
+  metadata!: IntegrationKnowledgeMetaDataInterface;
   @IsEnum(IntegrationKnowledgePublicIntegrationTypeEnum)
-  integration_type: IntegrationKnowledgePublicIntegrationTypeEnum;
-  task: any;
+  integration_type!: IntegrationKnowledgePublicIntegrationTypeEnum;
+  task!: any;
 }
 
 export class PaginatedPermissionsIntegrationKnowledgePublic
@@ -54,17 +54,17 @@ export class PaginatedPermissionsIntegrationKnowledgePublic
 {
   @ValidateNested({ each: true })
   @Type(() => IntegrationKnowledgePublic)
-  items: IntegrationKnowledgePublicInterface[];
+  items!: IntegrationKnowledgePublicInterface[];
 }
 
 export class Knowledge implements KnowledgeInterface {
   @ValidateNested()
   @Type(() => PaginatedPermissionsCollectionPublic)
-  groups: PaginatedPermissionsCollectionPublicInterface;
+  groups!: PaginatedPermissionsCollectionPublicInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsWebsitePublic)
-  websites: PaginatedPermissionsWebsitePublicInterface;
+  websites!: PaginatedPermissionsWebsitePublicInterface;
   @ValidateNested()
   @Type(() => PaginatedPermissionsIntegrationKnowledgePublic)
-  integration_knowledge_list: PaginatedPermissionsIntegrationKnowledgePublicInterface;
+  integration_knowledge_list!: PaginatedPermissionsIntegrationKnowledgePublicInterface;
 }

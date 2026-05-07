@@ -1,3 +1,4 @@
+import { HostDto } from '@/dtos/host.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import ApiResponse from '@/interfaces/api-service.interface';
 import adminMiddleware from '@/middlewares/admin.middleware';
@@ -8,7 +9,6 @@ import { Response } from 'express';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseBefore } from 'routing-controllers';
 import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 import authMiddleWare from '../../middlewares/auth.middleware';
-import { HostDto } from '@/dtos/host.dto';
 
 @UseBefore(authMiddleWare)
 @UseBefore(adminMiddleware)
@@ -23,7 +23,7 @@ export class AdminHostsController {
     try {
       const hosts = await prisma.host.findMany();
       return res.send({ data: hosts, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting hosts', e);
       throw new HttpException(e?.httpCode ?? 404, e?.message ?? 'No hosts found');
     }
@@ -37,8 +37,12 @@ export class AdminHostsController {
   async getOne(@Param('id') id: number, @Res() res: Response<HostApiResponse>): Promise<Response<HostApiResponse>> {
     try {
       const data = await prisma.host.findFirst({ where: { id } });
-      return res.send({ data, message: 'success' });
-    } catch (e) {
+      if (data) {
+        return res.send({ data, message: 'success' });
+      } else {
+        throw new HttpException(404, 'No host found');
+      }
+    } catch (e: any) {
       logger.error('Error getting host', e);
       throw new HttpException(e?.httpCode ?? 404, e?.message ?? 'No host found');
     }
@@ -53,7 +57,7 @@ export class AdminHostsController {
     try {
       const data = await prisma.host.create({ data: body });
       return res.send({ data, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error creating host', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not create host');
     }
@@ -72,7 +76,7 @@ export class AdminHostsController {
     try {
       const data = await prisma.host.update({ where: { id }, data: body });
       return res.send({ data, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating host', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not update host');
     }
@@ -92,7 +96,7 @@ export class AdminHostsController {
       });
 
       return response.send({ message: 'deleted', data: true });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting host', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not delete host');
     }

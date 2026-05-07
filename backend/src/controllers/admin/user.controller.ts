@@ -17,18 +17,23 @@ export class AdminUserController {
   @OpenAPI({ summary: 'Return current user' })
   @ResponseSchema(UserApiResponse)
   @UseBefore(authMiddleware)
-  async getUser(@Req() req: RequestWithUser, @Res() response: Response<UserApiResponse>): Promise<Response<UserApiResponse>> {
+  async getUser(
+    @Req() req: RequestWithUser,
+    @Res() response: Response<UserApiResponse>,
+  ): Promise<Response<UserApiResponse>> {
     const { name, username, isAdmin, userId } = req.user;
     if (!name) {
       throw new HttpException(400, 'Bad Request');
     }
     let userSettings: UserSettings;
     try {
-      userSettings = await prisma.userSettings.findFirst({ where: { userId } });
-      if (!userSettings) {
-        userSettings = await prisma.userSettings.create({ data: { userId } });
+      const user = await prisma.userSettings.findFirst({ where: { userId } });
+      if (user) {
+        userSettings = user;
+      } else {
+        userSettings = await prisma.userSettings.create({ data: { userId: userId ?? '' } });
       }
-    } catch (err) {
+    } catch (err: any) {
       throw new HttpException(500, err.message);
     }
 
@@ -46,7 +51,11 @@ export class AdminUserController {
   @OpenAPI({ summary: 'Update current user' })
   @ResponseSchema(UserApiResponse)
   @UseBefore(authMiddleware)
-  async updateUser(@Req() req: RequestWithUser, @Body() body: User, @Res() response: Response<UserApiResponse>): Promise<Response<UserApiResponse>> {
+  async updateUser(
+    @Req() req: RequestWithUser,
+    @Body() body: User,
+    @Res() response: Response<UserApiResponse>,
+  ): Promise<Response<UserApiResponse>> {
     const { name, username, isAdmin, userId } = req.user;
 
     if (!name || !body) {
@@ -63,7 +72,7 @@ export class AdminUserController {
         apiKey: maskApiKey(userSettings?.apiKey),
       };
       return response.send({ data: userData, message: 'success' });
-    } catch (err) {
+    } catch (err: any) {
       throw new HttpException(500, err.message);
     }
   }

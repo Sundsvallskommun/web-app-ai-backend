@@ -23,15 +23,15 @@ export class InfoBlobMetadata implements InfoBlobMetadataInterface {
   @IsNullable()
   title?: string;
   @IsString()
-  embedding_model_id: string;
+  embedding_model_id!: string;
   @IsNumber()
-  size: number;
+  size!: number;
 }
 
 export class InfoBlobPublicNoText extends DatesAndId implements InfoBlobPublicNoTextInterface {
   @ValidateNested()
   @Type(() => InfoBlobMetadata)
-  metadata: InfoBlobMetadataInterface;
+  metadata!: InfoBlobMetadataInterface;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -44,23 +44,23 @@ export class InfoBlobPublicNoText extends DatesAndId implements InfoBlobPublicNo
 
 export class InfoBlobPublic extends InfoBlobPublicNoText implements InfoBlobPublicInterface {
   @IsString()
-  text: string;
+  text!: string;
 }
 
 export class PaginatedResponseInfoBlobPublicNoText implements PaginatedResponseInfoBlobPublicNoTextInterface {
   @ValidateNested({ each: true })
   @Type(() => InfoBlobPublicNoText)
-  items: InfoBlobPublicNoTextInterface[];
+  items!: InfoBlobPublicNoTextInterface[];
   @IsInt()
-  count: number;
+  count!: number;
 }
 
 export class PaginatedResponseInfoBlobPublic implements PaginatedResponseInfoBlobPublicInterface {
   @ValidateNested({ each: true })
   @Type(() => InfoBlobPublic)
-  items: InfoBlobPublicInterface[];
+  items!: InfoBlobPublicInterface[];
   @IsInt()
-  count: number;
+  count!: number;
 }
 
 export class JobPublic extends DatesAndId implements JobPublicInterface {
@@ -69,9 +69,9 @@ export class JobPublic extends DatesAndId implements JobPublicInterface {
   @IsNullable()
   name?: string | null;
   @IsEnum(Status)
-  status: Status;
+  status!: Status;
   @IsEnum(Task)
-  task: Task;
+  task!: Task;
   @IsString()
   @IsOptional()
   @IsNullable()

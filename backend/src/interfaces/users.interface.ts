@@ -9,7 +9,7 @@ export interface User {
 export interface UserSettings {
   id: number;
   userId: string;
-  apiKey?: string;
+  apiKey?: string | null;
 }
 
 export interface UserData {

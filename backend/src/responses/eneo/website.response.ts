@@ -21,29 +21,29 @@ export class EneoWebsitesPresentationWebsiteModelsCrawlRunPublic
 {
   @IsNumber()
   @IsNullable()
-  pages_crawled: number | null;
+  pages_crawled!: number | null;
   @IsNumber()
   @IsNullable()
-  files_downloaded: number | null;
+  files_downloaded!: number | null;
   @IsNumber()
   @IsNullable()
-  pages_failed: number | null;
+  pages_failed!: number | null;
   @IsNumber()
   @IsNullable()
-  files_failed: number | null;
+  files_failed!: number | null;
   @IsEnum(Status)
-  status: Status;
+  status!: Status;
   @IsString()
   @IsNullable()
-  result_location: string | null;
+  result_location!: string | null;
   @IsString()
   @IsNullable()
-  finished_at: string | null;
+  finished_at!: string | null;
 }
 
 export class WebsiteMetadata implements WebsiteMetadataInterface {
   @IsNumber()
-  size: number;
+  size!: number;
 }
 
 export class WebsitePublic extends DatesAndId implements WebsitePublicInterface {
@@ -51,31 +51,31 @@ export class WebsitePublic extends DatesAndId implements WebsitePublicInterface 
   permissions?: ResourcePermission[];
   @IsString()
   @IsNullable()
-  name: string | null;
+  name!: string | null;
   @IsString()
-  url: string;
+  url!: string;
   @IsString()
-  space_id: string;
+  space_id!: string;
   @IsBoolean()
-  download_files: boolean;
+  download_files!: boolean;
   @IsEnum(CrawlType)
-  crawl_type: CrawlType;
+  crawl_type!: CrawlType;
   @IsEnum(UpdateInterval)
-  update_interval: UpdateInterval;
+  update_interval!: UpdateInterval;
   @ValidateNested()
   @Type(() => EneoWebsitesPresentationWebsiteModelsCrawlRunPublic)
   @IsNullable()
-  latest_crawl: EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface;
+  latest_crawl!: EneoWebsitesPresentationWebsiteModelsCrawlRunPublicInterface;
   @ValidateNested()
   @Type(() => EmbeddingModelPublic)
-  embedding_model: EmbeddingModelPublicInterface;
+  embedding_model!: EmbeddingModelPublicInterface;
   @ValidateNested()
   @Type(() => WebsiteMetadata)
-  metadata: WebsiteMetadataInterface;
+  metadata!: WebsiteMetadataInterface;
   @IsBoolean()
-  requires_http_auth: boolean;
+  requires_http_auth!: boolean;
   @IsBoolean()
-  is_auto_disabled: boolean;
+  is_auto_disabled!: boolean;
 }
 
 export class PaginatedPermissionsWebsitePublic
@@ -84,5 +84,5 @@ export class PaginatedPermissionsWebsitePublic
 {
   @ValidateNested({ each: true })
   @Type(() => WebsitePublic)
-  items: WebsitePublicInterface[];
+  items!: WebsitePublicInterface[];
 }

@@ -14,6 +14,18 @@ export interface ApiKeyApiResponse {
   message: string;
 }
 
+export interface CreateAssistantSetting {
+  app: string;
+  assistantId: string;
+  apiKey: string;
+}
+
+export interface UpdateAssistantSetting {
+  app: string;
+  assistantId: string;
+  apiKey?: string;
+}
+
 export interface AssistantSetting {
   id: number;
   app: string;
@@ -29,18 +41,6 @@ export interface AssistantSettingsApiResponse {
 export interface AssistantSettingApiResponse {
   data: AssistantSetting;
   message: string;
-}
-
-export interface CreateAssistantSetting {
-  app: string;
-  assistantId: string;
-  apiKey: string;
-}
-
-export interface UpdateAssistantSetting {
-  app: string;
-  assistantId: string;
-  apiKey?: string;
 }
 
 export interface User {
@@ -160,16 +160,16 @@ export interface PaginatedResponseFilePublic {
 
 export interface EmbeddingModelPublic {
   name: string;
-  family: EmbeddingModelPublicFamilyEnum;
+  family?: string | null;
   is_deprecated: boolean;
   open_source: boolean;
   dimensions?: number | null;
   max_input?: number | null;
   hf_link?: string | null;
-  stability: EmbeddingModelPublicStabilityEnum;
-  hosting: EmbeddingModelPublicHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   description?: string | null;
-  org?: EmbeddingModelPublicOrgEnum;
+  org?: string | null;
   can_access: boolean;
   is_locked: boolean;
   is_org_enabled: boolean;
@@ -183,14 +183,14 @@ export interface TranscriptionModelPublic {
   id: string;
   name: string;
   nickname: string;
-  family: TranscriptionModelPublicFamilyEnum;
+  family?: string | null;
   is_deprecated: boolean;
-  stability: TranscriptionModelPublicStabilityEnum;
-  hosting: TranscriptionModelPublicHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   open_source?: boolean | null;
   description?: string | null;
   hf_link?: string | null;
-  org?: TranscriptionModelPublicOrgEnum;
+  org?: string | null;
   can_access?: boolean;
   is_locked?: boolean;
   is_org_enabled?: boolean;
@@ -200,16 +200,16 @@ export interface TranscriptionModelPublic {
 
 export interface EmbeddingModelPublicLegacy {
   name: string;
-  family: EmbeddingModelPublicLegacyFamilyEnum;
+  family?: string | null;
   is_deprecated: boolean;
   open_source: boolean;
   dimensions?: number | null;
   max_input?: number | null;
   hf_link?: string | null;
-  stability: EmbeddingModelPublicLegacyStabilityEnum;
-  hosting: EmbeddingModelPublicLegacyHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   description?: string | null;
-  org?: EmbeddingModelPublicLegacyOrgEnum;
+  org?: string | null;
   is_org_enabled?: boolean;
   can_access?: boolean;
   is_locked?: boolean;
@@ -221,17 +221,19 @@ export interface EmbeddingModelPublicLegacy {
 export interface CompletionModelSparse {
   name: string;
   nickname: string;
-  family: CompletionModelSparseFamilyEnum;
+  family?: string | null;
+  max_input_tokens: number;
+  max_output_tokens: number;
   token_limit: number;
   is_deprecated: boolean;
   nr_billion_parameters?: number | null;
   hf_link?: string | null;
-  stability: CompletionModelSparseStabilityEnum;
-  hosting: CompletionModelSparseHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   open_source?: boolean | null;
   description?: string | null;
   deployment_name?: string | null;
-  org?: CompletionModelSparseOrgEnum;
+  org?: string | null;
   vision: boolean;
   reasoning: boolean;
   base_url?: string | null;
@@ -241,24 +243,26 @@ export interface CompletionModelSparse {
 }
 
 export interface CompletionModel {
-  is_org_enabled?: string;
+  is_org_enabled?: boolean;
   is_org_default?: boolean;
   created_at?: string | null;
   updated_at?: string | null;
   id: string;
   name: string;
   nickname: string;
-  family: CompletionModelFamilyEnum;
+  family?: string | null;
+  max_input_tokens: number;
+  max_output_tokens: number;
   token_limit: number;
   is_deprecated: boolean;
   nr_billion_parameters?: number | null;
   hf_link?: string | null;
-  stability: CompletionModelStabilityEnum;
-  hosting: CompletionModelHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   open_source?: boolean | null;
   description?: string | null;
   deployment_name?: string | null;
-  org?: CompletionModelOrgEnum;
+  org?: string | null;
   vision: boolean;
   reasoning: boolean;
   base_url?: string | null;
@@ -273,21 +277,23 @@ export interface CompletionModelPublic {
   id: string;
   name: string;
   nickname: string;
-  family: CompletionModelPublicFamilyEnum;
+  family?: string | null;
+  max_input_tokens: number;
+  max_output_tokens: number;
   token_limit: number;
   is_deprecated: boolean;
   nr_billion_parameters?: number | null;
   hf_link?: string | null;
-  stability: CompletionModelPublicStabilityEnum;
-  hosting: CompletionModelPublicHostingEnum;
+  stability?: string | null;
+  hosting?: string | null;
   open_source?: boolean | null;
   description?: string | null;
   deployment_name?: string | null;
-  org?: CompletionModelPublicOrgEnum;
+  org?: string | null;
   vision: boolean;
   reasoning: boolean;
   base_url?: string | null;
-  is_org_enabled?: string;
+  is_org_enabled?: boolean;
   is_org_default?: boolean;
 }
 
@@ -301,6 +307,7 @@ export interface CollectionPublic {
   name: string;
   embedding_model: EmbeddingModelPublic;
   metadata: CollectionMetadata;
+  space_id: string;
   created_at?: string | null;
   updated_at?: string | null;
   id: string;
@@ -340,6 +347,8 @@ export interface WebsitePublic {
   latest_crawl: EneoWebsitesPresentationWebsiteModelsCrawlRunPublic | null;
   embedding_model: EmbeddingModelPublic;
   metadata: WebsiteMetadata;
+  requires_http_auth: boolean;
+  is_auto_disabled: boolean;
   created_at?: string | null;
   updated_at?: string | null;
   id: string;
@@ -455,6 +464,7 @@ export interface AssistantPublic {
   groups: CollectionPublic[];
   websites: WebsitePublic[];
   integration_knowledge_list: IntegrationKnowledgePublic[];
+  mcp_servers: object[];
   completion_model: CompletionModelSparse;
   user: UserSparse;
   tools: UseTools;
@@ -628,6 +638,10 @@ export interface AskResponse {
   model?: CompletionModelPublic | null;
 }
 
+export interface HostDto {
+  host: string;
+}
+
 export interface Host {
   id?: number;
   host: string;
@@ -641,10 +655,6 @@ export interface HostsApiResponse {
 export interface HostApiResponse {
   data: Host;
   message: string;
-}
-
-export interface HostDto {
-  host: string;
 }
 
 export interface AdditionalField {
@@ -679,7 +689,7 @@ export interface ServiceSparse {
   json_schema?: object | null;
   name: string;
   prompt: string;
-  completion_model_kwargs?: ModelKwargs | null;
+  completion_model_kwargs?: ModelKwargs;
   permissions?: ServiceSparsePermissionsEnum[];
   user_id: string;
   created_at?: string | null;
@@ -715,6 +725,7 @@ export interface SpaceSparse {
   name: string;
   description?: string | null;
   personal: boolean;
+  organization?: boolean;
   created_at?: string | null;
   updated_at?: string | null;
   id: string;
@@ -766,6 +777,21 @@ export interface PaginatedPermissionsSpaceMember {
   permissions?: PaginatedPermissionsSpaceMemberPermissionsEnum[];
 }
 
+export interface SpaceGroupMember {
+  name: string;
+  role: SpaceGroupMemberRoleEnum;
+  user_count?: number;
+  created_at?: string | null;
+  updated_at?: string | null;
+  id: string;
+}
+
+export interface PaginatedPermissionsSpaceGroupMember {
+  items: SpaceGroupMember[];
+  count: number;
+  permissions?: PaginatedPermissionsSpaceGroupMemberPermissionsEnum[];
+}
+
 export interface SpaceRole {
   value: SpaceRoleValueEnum;
   label: string;
@@ -776,8 +802,10 @@ export interface SpacePublic {
   embedding_models: EmbeddingModelPublic[];
   completion_models: CompletionModelPublic[];
   transcription_models: TranscriptionModelPublic[];
+  mcp_servers: object[];
   knowledge: Knowledge;
   members: PaginatedPermissionsSpaceMember;
+  group_members: PaginatedPermissionsSpaceGroupMember;
   default_assistant: any;
   available_roles: SpaceRole[];
   security_classification: SecurityClassificationPublic | null;
@@ -788,6 +816,7 @@ export interface SpacePublic {
   name: string;
   description?: string | null;
   personal: boolean;
+  organization?: boolean;
 }
 
 export interface PaginatedResponseSpaceSparse {
@@ -821,188 +850,6 @@ export enum PaginatedPermissionsDefaultsPermissionsEnum {
   Publish = 'publish',
   InsightView = 'insight_view',
   InsightToggle = 'insight_toggle',
-}
-
-export enum EmbeddingModelPublicFamilyEnum {
-  Openai = 'openai',
-  Mistral = 'mistral',
-  Vllm = 'vllm',
-  Claude = 'claude',
-  Azure = 'azure',
-  Ovhcloud = 'ovhcloud',
-  E5 = 'e5',
-}
-
-export enum EmbeddingModelPublicStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum EmbeddingModelPublicHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum EmbeddingModelPublicOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
-}
-
-export enum TranscriptionModelPublicFamilyEnum {
-  Openai = 'openai',
-  Mistral = 'mistral',
-  Vllm = 'vllm',
-  Claude = 'claude',
-  Azure = 'azure',
-  Ovhcloud = 'ovhcloud',
-  E5 = 'e5',
-}
-
-export enum TranscriptionModelPublicStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum TranscriptionModelPublicHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum TranscriptionModelPublicOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
-}
-
-export enum EmbeddingModelPublicLegacyFamilyEnum {
-  Openai = 'openai',
-  MiniLm = 'mini_lm',
-  E5 = 'e5',
-}
-
-export enum EmbeddingModelPublicLegacyStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum EmbeddingModelPublicLegacyHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum EmbeddingModelPublicLegacyOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
-}
-
-export enum CompletionModelSparseFamilyEnum {
-  Openai = 'openai',
-  Mistral = 'mistral',
-  Vllm = 'vllm',
-  Claude = 'claude',
-  Azure = 'azure',
-  Ovhcloud = 'ovhcloud',
-  E5 = 'e5',
-}
-
-export enum CompletionModelSparseStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum CompletionModelSparseHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum CompletionModelSparseOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
-}
-
-export enum CompletionModelFamilyEnum {
-  Openai = 'openai',
-  Mistral = 'mistral',
-  Vllm = 'vllm',
-  Claude = 'claude',
-  Azure = 'azure',
-  Ovhcloud = 'ovhcloud',
-  E5 = 'e5',
-}
-
-export enum CompletionModelStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum CompletionModelHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum CompletionModelOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
-}
-
-export enum CompletionModelPublicFamilyEnum {
-  Openai = 'openai',
-  Mistral = 'mistral',
-  Vllm = 'vllm',
-  Claude = 'claude',
-  Azure = 'azure',
-  Ovhcloud = 'ovhcloud',
-  E5 = 'e5',
-}
-
-export enum CompletionModelPublicStabilityEnum {
-  Stable = 'stable',
-  Experimental = 'experimental',
-}
-
-export enum CompletionModelPublicHostingEnum {
-  Usa = 'usa',
-  Eu = 'eu',
-  Swe = 'swe',
-}
-
-export enum CompletionModelPublicOrgEnum {
-  OpenAI = 'OpenAI',
-  Meta = 'Meta',
-  Microsoft = 'Microsoft',
-  Anthropic = 'Anthropic',
-  Mistral = 'Mistral',
-  KBLab = 'KBLab',
-  Google = 'Google',
 }
 
 export enum CollectionPublicPermissionsEnum {
@@ -1056,6 +903,8 @@ export enum WebsitePublicCrawlTypeEnum {
 
 export enum WebsitePublicUpdateIntervalEnum {
   Never = 'never',
+  Daily = 'daily',
+  EveryOtherDay = 'every_other_day',
   Weekly = 'weekly',
 }
 
@@ -1082,7 +931,7 @@ export enum RolePublicPermissionsEnum {
   Editor = 'editor',
   Admin = 'admin',
   Websites = 'websites',
-  IntegrationKnowledgeList = 'integration_knowledge_list',
+  Integrations = 'integrations',
 }
 
 export enum PromptPublicPermissionsEnum {
@@ -1182,6 +1031,9 @@ export enum JobPublicTaskEnum {
   RunApp = 'run_app',
   PullConfluenceContent = 'pull_confluence_content',
   PullSharepointContent = 'pull_sharepoint_content',
+  SyncSharepointDelta = 'sync_sharepoint_delta',
+  UpdateModelUsageStats = 'update_model_usage_stats',
+  AnalyzeConversationInsights = 'analyze_conversation_insights',
 }
 
 export enum SessionFeedbackValueEnum {
@@ -1317,6 +1169,24 @@ export enum SpaceMemberRoleEnum {
 }
 
 export enum PaginatedPermissionsSpaceMemberPermissionsEnum {
+  Read = 'read',
+  Create = 'create',
+  Edit = 'edit',
+  Delete = 'delete',
+  Add = 'add',
+  Remove = 'remove',
+  Publish = 'publish',
+  InsightView = 'insight_view',
+  InsightToggle = 'insight_toggle',
+}
+
+export enum SpaceGroupMemberRoleEnum {
+  Admin = 'admin',
+  Editor = 'editor',
+  Viewer = 'viewer',
+}
+
+export enum PaginatedPermissionsSpaceGroupMemberPermissionsEnum {
   Read = 'read',
   Create = 'create',
   Edit = 'edit',

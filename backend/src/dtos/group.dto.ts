@@ -3,5 +3,5 @@ import { IsString } from 'class-validator';
 
 export class UpdateGroupDto implements CollectionUpdate {
   @IsString()
-  name: string;
+  name!: string;
 }

@@ -9,6 +9,7 @@ export const getApiKey = async (req: Request) => {
   }
 
   const app = req.headers['_skapp'] ? (req.headers['_skapp'] as string) : undefined;
+  const assistant_id = req.headers['_skassistant'] ? (req.headers['_skassistant'] as string) : undefined;
   if (typeof app !== 'string') {
     console.log('Application id missing');
     return false;
@@ -17,7 +18,10 @@ export const getApiKey = async (req: Request) => {
 
   try {
     const assistant = await prisma.assistant.findUnique({ where: { app } });
-    return assistant.apiKey;
+    if (assistant_id !== assistant.id) {
+      throw new Error('Application not found');
+    }
+    return assistant?.apiKey;
   } catch (err) {
     console.log('Not in database');
     throw new Error('Application not found');

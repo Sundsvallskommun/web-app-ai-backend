@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   AssistantPublic as AssistantPublicInterface,
   CursorPaginatedResponseSessionMetadataPublic as CursorPaginatedResponseSessionMetadataPublicInterface,
@@ -7,6 +7,7 @@ import {
   SessionPublic as SessionPublicInterface,
 } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { UpdateAssistantDto } from '@/dtos/assistant.dto';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 import applicationModeMiddleware from '@/middlewares/application-mode.middleware';
 import hashMiddleware from '@/middlewares/hash.middleware';
 import { validationMiddleware } from '@/middlewares/validation.middleware';
@@ -35,8 +36,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class AssistantController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/assistants')
   @OpenAPI({
@@ -45,7 +45,7 @@ export class AssistantController {
   @ResponseSchema(PaginatedResponseAssistantPublic)
   @UseBefore(hashMiddleware)
   async get_assistants(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @Res() response: Response<PaginatedResponseAssistantPublicInterface>,
   ): Promise<Response<PaginatedResponseAssistantPublicInterface>> {
     const url = `${this.basePath}/assistants/`;
@@ -55,7 +55,7 @@ export class AssistantController {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting assistants: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get assistants');
     }
@@ -68,7 +68,7 @@ export class AssistantController {
   @UseBefore(hashMiddleware)
   @ResponseSchema(PaginatedResponseAssistantPublic)
   async batch_get_assistants_by_id(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @QueryParam('id', { required: true, isArray: true }) ids: string[],
     @Res() response: Response<PaginatedResponseAssistantPublicInterface>,
   ): Promise<Response<PaginatedResponseAssistantPublicInterface>> {
@@ -86,7 +86,7 @@ export class AssistantController {
         if (res) {
           items.push(res.data);
         }
-      } catch (e) {
+      } catch (e: any) {
         logger.error(e);
       }
     }
@@ -105,7 +105,7 @@ export class AssistantController {
   @UseBefore(hashMiddleware)
   @ResponseSchema(AssistantPublic)
   async get_assistant_by_id(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @Param('id') id: string,
     @Res() response: Response<AssistantPublicInterface>,
   ): Promise<Response<AssistantPublicInterface>> {
@@ -114,7 +114,7 @@ export class AssistantController {
     try {
       const res = await this.apiService.get<AssistantPublicInterface>(url, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting assistant: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get assistant');
     }
@@ -140,7 +140,7 @@ export class AssistantController {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating assistant: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not update assistant');
     }
@@ -157,7 +157,7 @@ export class AssistantController {
     try {
       await this.apiService.delete<AssistantPublic>(url, { headers: { 'api-key': apiKey } });
       return response.send();
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting assistant: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not delete assistant');
     }
@@ -170,7 +170,7 @@ export class AssistantController {
   @UseBefore(hashMiddleware)
   @ResponseSchema(CursorPaginatedResponseSessionMetadataPublic)
   async get_assistant_sessions(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @Param('id') id: string,
     @Res() response: Response<CursorPaginatedResponseSessionMetadataPublicInterface>,
   ): Promise<Response<CursorPaginatedResponseSessionMetadataPublicInterface>> {
@@ -181,7 +181,7 @@ export class AssistantController {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting assistant sessions: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get assistant sessions');
     }
@@ -194,7 +194,7 @@ export class AssistantController {
   @UseBefore(hashMiddleware)
   @ResponseSchema(SessionPublic)
   async get_assistant_session(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @Param('id') id: string,
     @Param('session_id') session_id: string,
     @Res() response: Response<SessionPublicInterface>,
@@ -205,7 +205,7 @@ export class AssistantController {
     try {
       const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting session: ', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get session');
     }
