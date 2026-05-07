@@ -2,6 +2,7 @@ import { HttpException } from '@/exceptions/HttpException';
 import { devconsole } from '@/utils/devconsole';
 import { apiURL } from '@/utils/util';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { Request } from 'express';
 import ApiTokenService from './api-token.service';
 
 interface ApiResponse<T> {
@@ -40,24 +41,34 @@ class ApiService {
     }
   }
 
-  public async get<T>(url: string, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async get<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('GET to url', url);
-    return this.request<T>({ url, ...config, method: 'GET' });
+    return this.request<T>({ url, headers: { origin: req.headers.origin }, ...config, method: 'GET' });
   }
 
-  public async post<T, D = any>(url: string, data: D, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async post<T, D = any>(
+    url: string,
+    data: D,
+    req: Request,
+    config: AxiosRequestConfig = {},
+  ): Promise<ApiResponse<T>> {
     devconsole.log('POST to url', url);
-    return this.request<T>({ url, data, ...config, method: 'POST' });
+    return this.request<T>({ url, headers: { origin: req.headers.origin }, data, ...config, method: 'POST' });
   }
 
-  public async patch<T, D = any>(url: string, data: D, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async patch<T, D = any>(
+    url: string,
+    data: D,
+    req: Request,
+    config: AxiosRequestConfig = {},
+  ): Promise<ApiResponse<T>> {
     devconsole.log('PATCH to url', url);
-    return this.request<T>({ url, data, ...config, method: 'PATCH' });
+    return this.request<T>({ url, headers: { origin: req.headers.origin }, data, ...config, method: 'PATCH' });
   }
 
-  public async delete<T>(url: string, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async delete<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('DELETE to url', url);
-    return this.request<T>({ url, ...config, method: 'DELETE' });
+    return this.request<T>({ url, headers: { origin: req.headers.origin }, ...config, method: 'DELETE' });
   }
 }
 

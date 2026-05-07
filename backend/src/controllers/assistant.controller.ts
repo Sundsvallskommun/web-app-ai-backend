@@ -16,7 +16,7 @@ import { CursorPaginatedResponseSessionMetadataPublic, SessionPublic } from '@/r
 import ApiService from '@/services/api.service';
 import { getApiKey } from '@/services/eneo-api-key.service';
 import { logger } from '@/utils/logger';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import {
   Body,
   Controller,
@@ -51,7 +51,7 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseAssistantPublicInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseAssistantPublicInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -80,7 +80,7 @@ export class AssistantController {
     }
     for (let index = 0; index < ids.length; index++) {
       try {
-        const res = await this.apiService.get<AssistantPublicInterface>(`${url}${ids[index]}`, {
+        const res = await this.apiService.get<AssistantPublicInterface>(`${url}${ids[index]}`, req, {
           headers: { 'api-key': apiKey },
         });
         if (res) {
@@ -112,7 +112,7 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<AssistantPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<AssistantPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting assistant: ', e);
@@ -128,7 +128,7 @@ export class AssistantController {
   @UseBefore(validationMiddleware(UpdateAssistantDto, 'body'))
   @ResponseSchema(AssistantPublic)
   async update_assistant(
-    @Req() req: Request,
+    @Req() req: RequestWithUser,
     @Param('id') id: string,
     @Body() body: UpdateAssistantDto,
     @Res() response: Response<AssistantPublicInterface>,
@@ -136,7 +136,7 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<AssistantPublicInterface, PartialAssistantUpdatePublic>(url, body, {
+      const res = await this.apiService.post<AssistantPublicInterface, PartialAssistantUpdatePublic>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -151,11 +151,15 @@ export class AssistantController {
     summary: 'Delete Eneo assistant',
   })
   @UseBefore(hashMiddleware)
-  async delete_assistant(@Req() req: Request, @Param('id') id: string, @Res() response: Response): Promise<Response> {
+  async delete_assistant(
+    @Req() req: RequestWithUser,
+    @Param('id') id: string,
+    @Res() response: Response,
+  ): Promise<Response> {
     const url = `${this.basePath}/assistants/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      await this.apiService.delete<AssistantPublic>(url, { headers: { 'api-key': apiKey } });
+      await this.apiService.delete<AssistantPublic>(url, req, { headers: { 'api-key': apiKey } });
       return response.send();
     } catch (e: any) {
       logger.error('Error deleting assistant: ', e);
@@ -177,7 +181,7 @@ export class AssistantController {
     const url = `${this.basePath}/assistants/${id}/sessions/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, {
+      const res = await this.apiService.get<CursorPaginatedResponseSessionMetadataPublicInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -203,7 +207,7 @@ export class AssistantController {
 
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<SessionPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SessionPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting session: ', e);

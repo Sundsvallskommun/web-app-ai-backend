@@ -18,7 +18,7 @@ export const getApiKey = async (req: Request) => {
 
   try {
     const assistant = await prisma.assistant.findUnique({ where: { app } });
-    if (assistant_id !== assistant.id) {
+    if (assistant_id !== assistant?.id) {
       throw new Error('Application not found');
     }
     return assistant?.apiKey;

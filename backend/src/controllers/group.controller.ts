@@ -60,7 +60,7 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<CollectionPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<CollectionPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
     } catch (e: any) {
       logger.error('Error getting group:', e);
@@ -84,7 +84,7 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<CollectionPublicInterface, CollectionUpdate>(url, body, {
+      const res = await this.apiService.post<CollectionPublicInterface, CollectionUpdate>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -103,7 +103,7 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
+      await this.apiService.delete(url, req, { headers: { 'api-key': apiKey } });
       return res.send();
     } catch (e: any) {
       logger.error('Error deleting group:', e);
@@ -125,7 +125,7 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
@@ -154,6 +154,7 @@ export class GroupController {
       const res = await this.apiService.post<PaginatedResponseInfoBlobPublicInterface, InfoBlobUpsertRequest>(
         url,
         body,
+        req,
         {
           headers: { 'api-key': apiKey },
         },
@@ -186,7 +187,7 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/upload-files/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<JobPublicInterface, FormData>(url, data, {
+      const res = await this.apiService.post<JobPublicInterface, FormData>(url, data, req, {
         headers: { 'Content-Type': 'multipart/form-data', 'api-key': apiKey },
       });
 

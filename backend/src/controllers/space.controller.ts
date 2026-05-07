@@ -47,13 +47,13 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       if (personal) {
         try {
           const personal_url = `${this.basePath}/spaces/type/personal/`;
-          const personal = await this.apiService.get<SpacePublic>(personal_url, { headers: { 'api-key': apiKey } });
+          const personal = await this.apiService.get<SpacePublic>(personal_url, req, { headers: { 'api-key': apiKey } });
           const { applications, embedding_models, completion_models, knowledge, ...personalSpace } = personal.data;
 
           return response.send({ ...res.data, count: res.data.count + 1, items: [personalSpace, ...res.data.items] });
@@ -81,7 +81,7 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/type/personal/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<SpacePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SpacePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
     } catch (e: any) {
@@ -111,7 +111,7 @@ export class SpaceController {
 
     for (let index = 0; index < ids.length; index++) {
       try {
-        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}/`, {
+        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}/`, req, {
           headers: { 'api-key': apiKey },
         });
         if (res) {
@@ -144,7 +144,7 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<SpacePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SpacePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
     } catch (e: any) {
@@ -168,7 +168,7 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/applications/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<ApplicationsInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<ApplicationsInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
     } catch (e: any) {
@@ -194,7 +194,7 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/applications/assistants/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.post<AssistantPublicInterface, CreateSpaceAssistantRequest>(url, body, {
+      const res = await this.apiService.post<AssistantPublicInterface, CreateSpaceAssistantRequest>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
 
