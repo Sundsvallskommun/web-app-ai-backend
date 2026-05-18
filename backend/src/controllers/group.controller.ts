@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   CollectionPublic as CollectionPublicInterface,
   CollectionUpdate,
@@ -44,8 +44,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class GroupController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/groups/:id')
   @OpenAPI({
@@ -61,9 +60,9 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<CollectionPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<CollectionPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -85,11 +84,11 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<CollectionPublicInterface, CollectionUpdate>(url, body, {
+      const res = await this.apiService.post<CollectionPublicInterface, CollectionUpdate>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -104,9 +103,9 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
+      await this.apiService.delete(url, req, { headers: { 'api-key': apiKey } });
       return res.send();
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting group:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -126,11 +125,11 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting group info blobs:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -155,12 +154,13 @@ export class GroupController {
       const res = await this.apiService.post<PaginatedResponseInfoBlobPublicInterface, InfoBlobUpsertRequest>(
         url,
         body,
+        req,
         {
           headers: { 'api-key': apiKey },
         },
       );
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error adding group info blobs:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }
@@ -187,12 +187,12 @@ export class GroupController {
     const url = `${this.basePath}/groups/${id}/info-blobs/upload-files/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<JobPublicInterface, FormData>(url, data, {
+      const res = await this.apiService.post<JobPublicInterface, FormData>(url, data, req, {
         headers: { 'Content-Type': 'multipart/form-data', 'api-key': apiKey },
       });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error uploading files:', e);
       throw new HttpError(e?.httpCode ?? 500, 'Server error');
     }

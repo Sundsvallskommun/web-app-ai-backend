@@ -22,25 +22,25 @@ export class DatesAndId {
   @IsNullable()
   updated_at?: string | null;
   @IsString()
-  id: string;
+  id!: string;
 }
 
 export class ModelId implements ModelIdInterface {
   @IsString()
-  id: string;
+  id!: string;
 }
 
 class ToolAssistant implements ToolAssistantInterface {
   @IsString()
-  id: string;
+  id!: string;
   @IsString()
-  handle: string;
+  handle!: string;
 }
 
 export class UseTools implements UseToolsInterface {
   @ValidateNested({ each: true })
   @Type(() => ToolAssistant)
-  assistants: ToolAssistantInterface[];
+  assistants!: ToolAssistantInterface[];
 }
 
 export class ModelKwargs implements ModelKwargsInterface {
@@ -56,7 +56,7 @@ export class ModelKwargs implements ModelKwargsInterface {
 
 export class PaginatedDefaults implements Pick<PaginatedPermissionsAppSparse, 'count' | 'permissions'> {
   @IsInt()
-  count: number;
+  count!: number;
 }
 export class PaginatedPermissionsDefaults
   extends PaginatedDefaults
@@ -68,21 +68,21 @@ export class PaginatedPermissionsDefaults
 }
 export class SecurityClassificationPublic extends DatesAndId implements SecurityClassificationPublicInterface {
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
   @IsNullable()
-  description: string | null;
+  description!: string | null;
   @IsNumber()
-  security_level: number;
+  security_level!: number;
 }
 
 export class WebSearchResultPublic implements WebSearchResultPublicInterface {
   @IsString()
-  id: string;
+  id!: string;
   @IsString()
-  title: string;
+  title!: string;
   @IsString()
-  url: string;
+  url!: string;
 }
 
 export type {

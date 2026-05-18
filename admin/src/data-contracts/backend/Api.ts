@@ -485,6 +485,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
     assistantId: string,
     query?: {
       stream?: boolean;
+      version?: string;
     },
     data?: any,
     params: RequestParams = {}
@@ -510,6 +511,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
     sessionId: string,
     query?: {
       stream?: boolean;
+      version?: string;
     },
     data?: any,
     params: RequestParams = {}
@@ -803,10 +805,17 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @summary Chat with an assistant or group chat
    * @request POST:/api/conversations
    */
-  conversationControllerConversation = (data?: ConversationRequestDto, params: RequestParams = {}) =>
+  conversationControllerConversation = (
+    query?: {
+      version?: string;
+    },
+    data?: ConversationRequestDto,
+    params: RequestParams = {}
+  ) =>
     this.request<AskResponse, any>({
       path: `/api/conversations`,
       method: 'POST',
+      query: query,
       body: data,
       type: ContentType.Json,
       ...params,

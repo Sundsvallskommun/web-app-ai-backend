@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   AskAssistant,
   AskResponse as AskResponseInterface,
@@ -21,8 +21,7 @@ import { Stream } from 'stream';
 @Controller()
 export class QueryController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Post('/assistants/:assistant_id/sessions')
   @OpenAPI({
@@ -34,6 +33,7 @@ export class QueryController {
     @Req() req: Request,
     @Param('assistant_id') assistant_id: string,
     @QueryParam('stream') stream: boolean,
+    @QueryParam('version') version: string,
     @Body() body: Pick<AskAssistant, 'question' | 'files'> & { body?: string },
     @Res() response: Response<AskResponseInterface | Stream>,
   ): Promise<AskResponseInterface | Stream> {
@@ -51,9 +51,10 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, req, {
         headers: { 'api-key': apiKey },
         responseType,
+        params: { version },
       });
       const datastream = res.data;
       datastream.on('data', (buf: Buffer) => {
@@ -64,7 +65,7 @@ export class QueryController {
         return response.end();
       });
       return res.data;
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error sending question to assistant.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not communicate with assistant');
     }
@@ -81,6 +82,7 @@ export class QueryController {
     @Param('assistant_id') assistant_id: string,
     @Param('session_id') session_id: string,
     @QueryParam('stream') stream: boolean,
+    @QueryParam('version') version: string,
     @Body() body: Pick<AskAssistant, 'question' | 'files'> & { body?: string },
     @Res() response: Response<AskResponseInterface>,
   ): Promise<Stream> {
@@ -98,9 +100,10 @@ export class QueryController {
       stream,
     };
     try {
-      const res = await this.apiService.post<Stream, AskAssistant>(url, data, {
+      const res = await this.apiService.post<Stream, AskAssistant>(url, data, req, {
         headers: { 'api-key': apiKey },
         responseType,
+        params: { version },
       });
       const datastream = res.data;
       datastream.on('data', (buf: Buffer) => {
@@ -111,7 +114,7 @@ export class QueryController {
         return response.end();
       });
       return res.data;
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error sending question to assistant.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not communicate with assistant');
     }
@@ -137,11 +140,11 @@ export class QueryController {
     const url = `${this.basePath}/assistants/${assistant_id}/sessions/${session_id}/feedback/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, {
+      const res = await this.apiService.post<SessionPublic, SessionFeedbackInterface>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error leaving feedback', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not give feedback');
     }

@@ -32,11 +32,14 @@ export class AzureController {
     summary: 'Get translation of text',
   })
   @ResponseSchema(ApiResponseTranslation)
-  async translate(@Body() body: TranslationDto, @Res() res: Response<ApiResponse<string[]>>): Promise<Response<ApiResponse<string[]>>> {
+  async translate(
+    @Body() body: TranslationDto,
+    @Res() res: Response<ApiResponse<string[]>>,
+  ): Promise<Response<ApiResponse<string[]>>> {
     try {
       const texts = await getTranslations(body);
       return res.send({ data: texts, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error("Error in AzureController's translate method", e);
       throw new HttpError(500, e.message);
     }

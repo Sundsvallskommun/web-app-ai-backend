@@ -5,27 +5,27 @@ import ApiResponse from '../interfaces/api-service.interface';
 
 export class AssistantSetting implements AssistantSettingInterface {
   @IsInt()
-  id: number;
+  id!: number;
   @IsString()
-  app: string;
+  app!: string;
   @IsString()
-  assistantId: string;
+  assistantId!: string;
   @IsString()
-  apiKey: string;
+  apiKey!: string;
 }
 
 export class AssistantSettingsApiResponse implements ApiResponse<AssistantSettingInterface[]> {
   @ValidateNested({ each: true })
   @Type(() => AssistantSetting)
-  data: AssistantSetting[];
+  data!: AssistantSetting[];
   @IsString()
-  message: string;
+  message!: string;
 }
 
 export class AssistantSettingApiResponse implements ApiResponse<AssistantSettingInterface> {
   @ValidateNested()
   @Type(() => AssistantSetting)
-  data: AssistantSetting;
+  data!: AssistantSetting;
   @IsString()
-  message: string;
+  message!: string;
 }

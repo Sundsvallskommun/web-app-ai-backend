@@ -1,5 +1,6 @@
 import { ResourceName } from '@interfaces/resource-name';
 import { Card, Spinner } from '@sk-web-gui/react';
+import { appURL } from '@utils/app-url';
 import { useResource } from '@utils/use-resource';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -21,7 +22,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
   }, [loaded, refresh]);
 
   return (
-    <Link href={`/${resource}`}>
+    <Link href={appURL(`/${resource}`, true)}>
       <Card layout="horizontal" useHoverEffect color="vattjom" invert data-cy={`resource-card-${resource}`}>
         <Card.Body className="py-16">
           <Card.Header>

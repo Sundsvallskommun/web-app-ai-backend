@@ -1,3 +1,3 @@
 export class UploadFileDto {
-  upload_file: File;
+  upload_file!: File;
 }

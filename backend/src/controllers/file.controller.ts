@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   FilePublic as FilePublicInterface,
   PaginatedResponseFilePublic as PaginatedResponseFilePublicInterface,
@@ -30,8 +30,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class FileController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/files')
   @OpenAPI({
@@ -46,11 +45,11 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseFilePublicInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting files', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Internal server error');
     }
@@ -70,9 +69,9 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/${id}`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<FilePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<FilePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting file', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Internal server error');
     }
@@ -95,11 +94,11 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.post<FilePublicInterface, any>(url, data, {
+      const res = await this.apiService.post<FilePublicInterface, any>(url, data, req, {
         headers: { 'api-key': apiKey, Accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data' },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error uploading file', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Internal server error');
     }
@@ -114,11 +113,9 @@ export class FileController {
     try {
       const url = `${this.basePath}/files/${id}/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.delete(url, { headers: { 'api-key': apiKey } });
-      if (res) {
-        return response.send();
-      }
-    } catch (e) {
+      await this.apiService.delete(url, req, { headers: { 'api-key': apiKey } });
+      return response.send();
+    } catch (e: any) {
       logger.error('Error deleting file', e);
       throw new HttpError(e?.code ?? 500, e?.message ?? 'Internal server error');
     }

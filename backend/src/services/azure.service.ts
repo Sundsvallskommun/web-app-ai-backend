@@ -31,7 +31,11 @@ export const getToken = async () => {
   }
 };
 
-export const getTranslations: (options: GetTranslationOptions) => Promise<string[]> = async ({ text, sourcelanguage, targetlanguage }) => {
+export const getTranslations: (options: GetTranslationOptions) => Promise<string[]> = async ({
+  text,
+  sourcelanguage,
+  targetlanguage,
+}) => {
   const url = 'https://api.cognitive.microsofttranslator.com/translate?api-version=3.0';
 
   const headers = {
@@ -58,8 +62,9 @@ export const getTranslations: (options: GetTranslationOptions) => Promise<string
       return Promise.resolve(data);
     }
     logger.error('Translation failed - no data');
+    return [];
   } catch (e) {
     logger.error('Error translating text');
-    Promise.reject(e);
+    return Promise.reject(e);
   }
 };

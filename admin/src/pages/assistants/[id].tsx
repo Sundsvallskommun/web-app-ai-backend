@@ -11,6 +11,7 @@ import {
 import EditLayout from '@layouts/edit-layout/edit-layout.component';
 import { useUserStore } from '@services/user-service/user-service';
 import { Button, FormControl, FormLabel, Icon, Input, useSnackbar } from '@sk-web-gui/react';
+import { appURL } from '@utils/app-url';
 import { getFormattedFields } from '@utils/formatted-field';
 import { useRouteGuard } from '@utils/routeguard.hook';
 import { useCrudHelper } from '@utils/use-crud-helpers';
@@ -131,7 +132,7 @@ export const EditAssistant: React.FC = () => {
 
   useEffect(() => {
     if (navigate) {
-      router.push(`/${resource}/${formdata?.id}`);
+      router.push(appURL(`/${resource}/${formdata?.id}`, true));
     }
   }, [navigate]);
 

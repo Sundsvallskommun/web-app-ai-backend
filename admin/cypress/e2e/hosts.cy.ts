@@ -1,4 +1,4 @@
-import { host1, host1Updated, hostsWithNew, newHost } from 'cypress/fixtures/hosts';
+import { host1, host1Updated, hostsWithNew, newHost } from '../fixtures/hosts';
 
 describe('Hosts', () => {
   beforeEach(() => {

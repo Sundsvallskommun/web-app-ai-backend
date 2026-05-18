@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import { ApiKey } from '@/data-contracts/eneo-sundsvall/data-contracts';
 import { HttpException } from '@/exceptions/HttpException';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -17,8 +17,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class AdminApiKeyController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}/api/v1`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/admin/apikey/:id')
   @OpenAPI({ summary: 'Get apikey for assistant' })
@@ -34,17 +33,17 @@ export class AdminApiKeyController {
     }
 
     try {
-      const { apiKey } = await prisma.userSettings.findFirst({ where: { userId } });
+      const assistant = await prisma.userSettings.findFirst({ where: { userId } });
 
-      if (!apiKey) {
+      if (!assistant?.apiKey) {
         throw new HttpException(403, 'No private api key found');
       }
 
       const url = `${this.basePath}/assistants/${id}/api-keys/`;
 
-      const res = await this.apiService.get<ApiKey>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<ApiKey>(url, req, { headers: { 'api-key': assistant.apiKey } });
       return response.send({ data: res.data.key, message: 'success' });
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting api key for assistant', e);
       throw new HttpException(e?.httpCode ?? 500, e?.message ?? 'Could not get api key');
     }

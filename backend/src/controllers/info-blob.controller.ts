@@ -1,4 +1,5 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { APIS } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   InfoBlobPublic as InfoBlobPublicInterface,
   InfoBlobUpdatePublic,
@@ -22,7 +23,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 export class InfoBlobController {
   private apiService = new ApiService();
   private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/info-blobs')
   @OpenAPI({
@@ -36,11 +37,11 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseInfoBlobPublicNoTextInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting info blobs.', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get info blobs');
     }
@@ -59,9 +60,9 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.get<InfoBlobPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<InfoBlobPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting info blob', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get info blob');
     }
@@ -82,11 +83,11 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.post<InfoBlobPublicInterface, InfoBlobUpdatePublic>(url, body, {
+      const res = await this.apiService.post<InfoBlobPublicInterface, InfoBlobUpdatePublic>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error updating info blob', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not update info blob');
     }
@@ -105,9 +106,9 @@ export class InfoBlobController {
     const url = `${this.basePath}/info-blobs/${id}/`;
     const apiKey = await getApiKey(req);
     try {
-      const res = await this.apiService.delete<InfoBlobPublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.delete<InfoBlobPublicInterface>(url, req, { headers: { 'api-key': apiKey } });
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error deleting info blob', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not delete info blob');
     }

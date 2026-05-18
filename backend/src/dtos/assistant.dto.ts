@@ -12,7 +12,7 @@ import { IsBoolean, IsOptional, IsString, ValidateNested } from 'class-validator
 
 export class NewPrompt implements PromptCreate {
   @IsString()
-  text: string;
+  text!: string;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -34,15 +34,15 @@ export class UpdateAssistantDto implements PartialAssistantUpdatePublic {
   @IsString()
   @IsOptional()
   @IsNullable()
-  name: string | null;
+  name!: string | null;
   @IsOptional()
   @Type(() => NewPrompt)
   @ValidateNested()
-  prompt: PromptCreate;
+  prompt!: PromptCreate;
   @IsNullable()
   @IsOptional()
   @Type(() => ModelId)
-  completion_model: ModelIdInterface;
+  completion_model!: ModelIdInterface;
   @IsOptional()
   @IsNullable()
   @ValidateNested()

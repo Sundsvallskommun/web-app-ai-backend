@@ -2,15 +2,61 @@ import { HttpException } from '@/exceptions/HttpException';
 import { devconsole } from '@/utils/devconsole';
 import { apiURL } from '@/utils/util';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { Request } from 'express';
 import ApiTokenService from './api-token.service';
 
-class ApiResponse<T> {
+interface ApiResponse<T> {
   data: T;
   message: string;
 }
 
 class ApiService {
   private apiTokenService = new ApiTokenService();
+
+  private resolveOrigin(req: Request): string | undefined {
+    const originHeader = req.get('origin') ?? req.headers.origin;
+    if (typeof originHeader === 'string' && originHeader.trim() !== '') {
+      return originHeader;
+    }
+
+    const referer = req.get('referer');
+    if (referer) {
+      try {
+        return new URL(referer).origin;
+      } catch {
+        // Ignore invalid referer and continue with fallback logic.
+      }
+    }
+
+    const forwardedProto = req.get('x-forwarded-proto')?.split(',')[0]?.trim();
+    const forwardedHost = req.get('x-forwarded-host')?.split(',')[0]?.trim();
+    const host = forwardedHost ?? req.get('host');
+
+    if (!host) {
+      return undefined;
+    }
+
+    const protocol = forwardedProto ?? req.protocol;
+    return `${protocol}://${host}`;
+  }
+
+  private withOriginHeader(req: Request, config: AxiosRequestConfig = {}): AxiosRequestConfig {
+    const origin = this.resolveOrigin(req);
+    if (!origin) {
+      return config;
+    }
+
+    const existingHeaders = config.headers as Record<string, unknown> | undefined;
+    if (existingHeaders?.origin || existingHeaders?.Origin) {
+      return config;
+    }
+
+    return {
+      ...config,
+      headers: { ...(config.headers as Record<string, unknown> | undefined), origin },
+    } as AxiosRequestConfig;
+  }
+
   private async request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
     const token = await this.apiTokenService.getToken();
 
@@ -24,7 +70,7 @@ class ApiService {
       ...config,
       headers: { ...defaultHeaders, ...config.headers },
       params: { ...defaultParams, ...config.params },
-      url: apiURL(config.url),
+      url: apiURL(config.url ?? ''),
     };
 
     try {
@@ -40,24 +86,34 @@ class ApiService {
     }
   }
 
-  public async get<T>(url: string, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async get<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('GET to url', url);
-    return this.request<T>({ url, ...config, method: 'GET' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, method: 'GET' });
   }
 
-  public async post<T, D = any>(url: string, data: D, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async post<T, D = any>(
+    url: string,
+    data: D,
+    req: Request,
+    config: AxiosRequestConfig = {},
+  ): Promise<ApiResponse<T>> {
     devconsole.log('POST to url', url);
-    return this.request<T>({ url, data, ...config, method: 'POST' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, data, method: 'POST' });
   }
 
-  public async patch<T, D = any>(url: string, data: D, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async patch<T, D = any>(
+    url: string,
+    data: D,
+    req: Request,
+    config: AxiosRequestConfig = {},
+  ): Promise<ApiResponse<T>> {
     devconsole.log('PATCH to url', url);
-    return this.request<T>({ url, data, ...config, method: 'PATCH' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, data, method: 'PATCH' });
   }
 
-  public async delete<T>(url: string, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
+  public async delete<T>(url: string, req: Request, config: AxiosRequestConfig = {}): Promise<ApiResponse<T>> {
     devconsole.log('DELETE to url', url);
-    return this.request<T>({ url, ...config, method: 'DELETE' });
+    return this.request<T>({ ...this.withOriginHeader(req, config), url, method: 'DELETE' });
   }
 }
 

@@ -1,4 +1,4 @@
-import { APIS, ENEO_BASEPATH } from '@/config';
+import { getApiBase } from '@/config/api-config';
 import {
   Applications as ApplicationsInterface,
   AssistantPublic as AssistantPublicInterface,
@@ -29,8 +29,7 @@ import { OpenAPI, ResponseSchema } from 'routing-controllers-openapi';
 @Controller()
 export class SpaceController {
   private apiService = new ApiService();
-  private api = APIS.find(api => api.name === 'eneo-sundsvall');
-  private basePath = `${ENEO_BASEPATH || this.api.name}/${this.api.version}`;
+  private basePath = getApiBase('eneo-sundsvall');
 
   @Get('/spaces')
   @OpenAPI({
@@ -48,18 +47,14 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, {
+      const res = await this.apiService.get<PaginatedResponseSpaceSparseInterface>(url, req, {
         headers: { 'api-key': apiKey },
       });
       if (personal) {
         try {
           const personal_url = `${this.basePath}/spaces/type/personal/`;
-          const personal = await this.apiService.get<SpacePublic>(personal_url, { headers: { 'api-key': apiKey } });
-          const personalSpace = { ...personal.data };
-          delete personalSpace.applications;
-          delete personalSpace.embedding_models;
-          delete personalSpace.completion_models;
-          delete personalSpace.knowledge;
+          const personal = await this.apiService.get<SpacePublic>(personal_url, req, { headers: { 'api-key': apiKey } });
+          const { applications, embedding_models, completion_models, knowledge, ...personalSpace } = personal.data;
 
           return response.send({ ...res.data, count: res.data.count + 1, items: [personalSpace, ...res.data.items] });
         } catch {
@@ -67,7 +62,7 @@ export class SpaceController {
         }
       }
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting spaces', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get spaces');
     }
@@ -86,10 +81,10 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/type/personal/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<SpacePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SpacePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting space', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Error getting personal space');
     }
@@ -116,13 +111,13 @@ export class SpaceController {
 
     for (let index = 0; index < ids.length; index++) {
       try {
-        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}/`, {
+        const res = await this.apiService.get<SpacePublicInterface>(`${url}${ids[index]}/`, req, {
           headers: { 'api-key': apiKey },
         });
         if (res) {
           spaces.push(res.data);
         }
-      } catch (e) {
+      } catch (e: any) {
         logger.error('Error getting space', e);
       }
     }
@@ -149,10 +144,10 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<SpacePublicInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<SpacePublicInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting space', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get space');
     }
@@ -173,10 +168,10 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/applications/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.get<ApplicationsInterface>(url, { headers: { 'api-key': apiKey } });
+      const res = await this.apiService.get<ApplicationsInterface>(url, req, { headers: { 'api-key': apiKey } });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error getting applications from space', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not get applications');
     }
@@ -199,12 +194,12 @@ export class SpaceController {
     try {
       const url = `${this.basePath}/spaces/${id}/applications/assistants/`;
       const apiKey = await getApiKey(req);
-      const res = await this.apiService.post<AssistantPublicInterface, CreateSpaceAssistantRequest>(url, body, {
+      const res = await this.apiService.post<AssistantPublicInterface, CreateSpaceAssistantRequest>(url, body, req, {
         headers: { 'api-key': apiKey },
       });
 
       return response.send(res.data);
-    } catch (e) {
+    } catch (e: any) {
       logger.error('Error saving assistant to space', e);
       throw new HttpError(e?.httpCode ?? 500, e?.message ?? 'Could not save assistant');
     }

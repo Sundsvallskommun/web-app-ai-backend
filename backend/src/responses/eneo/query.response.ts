@@ -17,7 +17,7 @@ import { CompletionModelPublic } from './models.response';
 class InfoBlobAskAssistantPublic extends DatesAndId implements InfoBlobAskAssistantPublicInterface {
   @ValidateNested()
   @Type(() => InfoBlobMetadata)
-  metadata: InfoBlobMetadataInterface;
+  metadata!: InfoBlobMetadataInterface;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -27,31 +27,31 @@ class InfoBlobAskAssistantPublic extends DatesAndId implements InfoBlobAskAssist
   @IsNullable()
   website_id?: string | null;
   @IsNumber()
-  score: number;
+  score!: number;
 }
 
 export class AskResponse implements AskResponseInterface {
   @IsString()
-  session_id: string;
+  session_id!: string;
   @IsString()
-  question: string;
+  question!: string;
   @IsString()
-  answer: string;
+  answer!: string;
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  files: FilePublicInterface[];
+  files!: FilePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  generated_files: FilePublicInterface[];
+  generated_files!: FilePublicInterface[];
   @ValidateNested({ each: true })
   @Type(() => InfoBlobAskAssistantPublic)
-  references: InfoBlobAskAssistantPublicInterface[];
+  references!: InfoBlobAskAssistantPublicInterface[];
   @ValidateNested()
   @Type(() => UseTools)
-  tools: UseToolsInterface;
+  tools!: UseToolsInterface;
   @ValidateNested({ each: true })
   @Type(() => WebSearchResultPublic)
-  web_search_references: WebSearchResultPublicInterface[];
+  web_search_references!: WebSearchResultPublicInterface[];
   @ValidateNested()
   @Type(() => CompletionModelPublic)
   @IsOptional()

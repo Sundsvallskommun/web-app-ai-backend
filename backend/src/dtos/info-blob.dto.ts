@@ -23,12 +23,12 @@ export class UpdateInfoBlobDto implements InfoBlobUpdatePublic {
   @IsOptional()
   @ValidateNested()
   @Type(() => InfoBlobMetadata)
-  metadata: InfoBlobMetadataUpsertPublic;
+  metadata!: InfoBlobMetadataUpsertPublic;
 }
 
 export class UpdateInfoBlobsDto implements InfoBlobUpsertRequest {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => UpdateInfoBlobDto)
-  info_blobs: InfoBlobAddPublic[];
+  info_blobs!: InfoBlobAddPublic[];
 }

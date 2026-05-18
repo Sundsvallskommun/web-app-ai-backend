@@ -8,13 +8,13 @@ export class AppSparse extends DatesAndId implements AppSparseInterface {
   @IsOptional()
   permissions?: ResourcePermission[];
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
   @IsOptional()
   @IsNullable()
   description?: string | null;
   @IsBoolean()
-  published: boolean;
+  published!: boolean;
   @IsString()
-  user_id: string;
+  user_id!: string;
 }

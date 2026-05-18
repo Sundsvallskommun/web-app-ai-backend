@@ -12,11 +12,11 @@ import { DatesAndId } from './common';
 
 export class FilePublic extends DatesAndId implements FilePublicInterface {
   @IsString()
-  name: string;
+  name!: string;
   @IsString()
-  mimetype: string;
+  mimetype!: string;
   @IsNumber()
-  size: number;
+  size!: number;
   @IsString()
   @IsOptional()
   @IsNullable()
@@ -25,31 +25,31 @@ export class FilePublic extends DatesAndId implements FilePublicInterface {
 
 export class AcceptedFileType implements AcceptedFileTypeInterface {
   @IsString()
-  mimetype: string;
+  mimetype!: string;
   @IsNumber()
-  size_limit: number;
+  size_limit!: number;
 }
 
 export class Limit implements LimitInterface {
   @IsNumber()
-  max_files: number;
+  max_files!: number;
   @IsNumber()
-  max_size: number;
+  max_size!: number;
 }
 
 export class FileRestrictions implements FileRestrictionsInterface {
   @ValidateNested({ each: true })
   @Type(() => AcceptedFileType)
-  accepted_file_types: AcceptedFileTypeInterface[];
+  accepted_file_types!: AcceptedFileTypeInterface[];
   @ValidateNested()
   @Type(() => Limit)
-  limit: LimitInterface;
+  limit!: LimitInterface;
 }
 
 export class PaginatedResponseFilePublic implements PaginatedResponseFilePublicInterface {
   @ValidateNested({ each: true })
   @Type(() => FilePublic)
-  items: FilePublicInterface[];
+  items!: FilePublicInterface[];
   @IsInt()
-  count: number;
+  count!: number;
 }
