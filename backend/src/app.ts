@@ -302,13 +302,13 @@ class App {
           let successRedirect: URL, failureRedirect: URL;
           const urls = req?.body?.RelayState.split(',');
 
-          if (isValidUrl(urls[0]) && isValidOrigin(urls[0])) {
+          if (isValidUrl(urls?.[0]) && isValidOrigin(urls?.[0])) {
             successRedirect = new URL(urls[0]);
           } else {
             successRedirect = new URL(defaultRedirect);
           }
 
-          if (isValidUrl(urls[1]) && isValidOrigin(urls[1])) {
+          if (isValidUrl(urls?.[1]) && isValidOrigin(urls?.[1])) {
             failureRedirect = new URL(urls[1]);
           } else {
             failureRedirect = successRedirect;
@@ -317,7 +317,7 @@ class App {
           const queries = new URLSearchParams(failureRedirect.searchParams);
 
           if (req.session.messages?.length > 0) {
-            queries.append('failMessage', req.session.messages[0]);
+            queries.append('failMessage', req.session.messages?.[0]);
           } else {
             queries.append('failMessage', 'SAML_UNKNOWN_ERROR');
           }
@@ -339,15 +339,15 @@ class App {
 
         let urls = req?.body?.RelayState.split(',');
 
-        if (isValidUrl(urls[0]) && isValidOrigin(urls[0])) {
+        if (isValidUrl(urls?.[0]) && isValidOrigin(urls?.[0])) {
           successRedirect = new URL(urls[0]);
         } else {
           successRedirect = new URL(defaultRedirect);
         }
-        if (isValidUrl(urls[1]) && isValidOrigin(urls[1])) {
+        if (isValidUrl(urls?.[1]) && isValidOrigin(urls?.[1])) {
           failureRedirect = new URL(urls[1]);
         } else {
-          failureRedirect = new URL(urls[0]);
+          failureRedirect = successRedirect;
         }
 
         passport.authenticate('saml', (err: Error, user: Express.User) => {

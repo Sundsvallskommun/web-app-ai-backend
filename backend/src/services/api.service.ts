@@ -28,8 +28,8 @@ class ApiService {
       }
     }
 
-    const forwardedProto = req.get('x-forwarded-proto')?.split(',')[0]?.trim();
-    const forwardedHost = req.get('x-forwarded-host')?.split(',')[0]?.trim();
+    const forwardedProto = req.get('x-forwarded-proto')?.split(',')?.[0]?.trim();
+    const forwardedHost = req.get('x-forwarded-host')?.split(',')?.[0]?.trim();
     const host = forwardedHost ?? req.get('host');
 
     if (!host) {
