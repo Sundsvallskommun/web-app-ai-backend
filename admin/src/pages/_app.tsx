@@ -6,7 +6,7 @@ import 'dayjs/locale/sv';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import utc from 'dayjs/plugin/utc';
 import { appWithTranslation } from 'next-i18next';
-import type { AppProps /*, AppContext */ } from 'next/app';
+import type { AppProps } from 'next/app';
 import nextI18NextConfig from '../../next-i18next.config';
 import { AppWrapper } from '../contexts/app.context';
 import { useLocalStorage } from '@utils/use-localstorage.hook';
