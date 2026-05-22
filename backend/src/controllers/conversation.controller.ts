@@ -62,7 +62,7 @@ export class ConversationController {
     const apiKey = await getApiKey(req);
     const responseType = body?.stream ? 'stream' : 'json';
 
-    const data: ConversationRequestInterface = {
+    const data: ConversationRequest = {
       ...body,
       assistant_id: body.session_id ? undefined : body.assistant_id,
       group_chat_id: body.session_id ? undefined : body.group_chat_id,
