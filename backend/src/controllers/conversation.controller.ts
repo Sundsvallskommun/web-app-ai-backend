@@ -61,7 +61,13 @@ export class ConversationController {
     const url = `${this.apiBase}/conversations/`;
     const apiKey = await getApiKey(req);
     const responseType = body?.stream ? 'stream' : 'json';
-    const data: ConversationRequest = body;
+
+    const data: ConversationRequestInterface = {
+      ...body,
+      assistant_id: body.session_id ? undefined : body.assistant_id,
+      group_chat_id: body.session_id ? undefined : body.group_chat_id,
+    };
+
     try {
       if (responseType === 'json') {
         const res = await this.apiService.post<AskResponseInterface, ConversationRequest>(url, data, req, {
