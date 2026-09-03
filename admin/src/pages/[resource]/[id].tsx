@@ -36,7 +36,7 @@ export const EditAssistant: React.FC = () => {
   const { create, update, getOne, defaultValues } = resources[resource];
 
   if (!create || !update) {
-    return <></>;
+    return <div>Bad resource</div>;
   }
 
   const { refresh } = useResource(resource);
