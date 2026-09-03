@@ -35,12 +35,8 @@ export const EditAssistant: React.FC = () => {
 
   const { create, update, getOne, defaultValues } = resources[resource];
 
-  useEffect(() => {
-    console.log('resource');
-  }, [resource]);
-
   if (!create || !update) {
-    return <p>Bajskorv</p>;
+    return <div>Bad resource</div>;
   }
 
   const { refresh } = useResource(resource);
@@ -96,7 +92,7 @@ export const EditAssistant: React.FC = () => {
 
   useEffect(() => {
     if (navigate) {
-      router.push(`/${resource}/${formdata?.id}`);
+      router.push(appURL(`/${resource}/${formdata?.id}`, true));
     }
   }, [navigate]);
 

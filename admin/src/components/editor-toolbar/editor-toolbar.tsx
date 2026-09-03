@@ -1,6 +1,7 @@
 import resources from '@config/resources';
 import { ResourceName } from '@interfaces/resource-name';
 import { Button, Icon, useConfirm } from '@sk-web-gui/react';
+import { appURL } from '@utils/app-url';
 import { useCrudHelper } from '@utils/use-crud-helpers';
 import { useResource } from '@utils/use-resource';
 import { Save, Trash } from 'lucide-react';
@@ -43,13 +44,13 @@ export const EditorToolbar: React.FC<ToolbarProps> = ({ resource, isDirty, id })
               if (res) {
                 reset();
                 refresh();
-                router.push(parentPath);
+                router.push(appURL(parentPath, true));
               }
             });
           }
         });
     } else if (!id) {
-      router.push(parentPath);
+      router.push(appURL(parentPath, true));
     }
   };
 
