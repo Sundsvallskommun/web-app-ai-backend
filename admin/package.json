@@ -6,6 +6,7 @@
     "dev": "dotenv next dev",
     "build": "dotenv next build",
     "start": "dotenv next start",
+    "test:app-url": "node --experimental-strip-types --test --test-concurrency=1 tests/app-url.test.mjs",
     "generate:contracts": "cross-env NODE_ENV=development npx tsx ./src/swagger-typescript-api.ts",
     "lint": "next lint --no-cache",
     "analyze": "cross-env ANALYZE=true next build",
